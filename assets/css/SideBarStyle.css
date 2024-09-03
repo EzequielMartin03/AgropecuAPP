@@ -1,0 +1,14 @@
+.sidebar {
+    min-height: 100vh; 
+}
+.btn-sidebar {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px; 
+    text-align: left;
+    width: 100%;
+    border: none;
+}
+.btn-sidebar i {
+    margin-right: 10px; 
+}

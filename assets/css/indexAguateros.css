@@ -1,0 +1,10 @@
+.btn-add-work {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para mejor visibilidad */
+}
+.btn-custom {
+    margin: 0 5px; 
+}

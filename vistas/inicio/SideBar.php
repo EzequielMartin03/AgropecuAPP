@@ -36,19 +36,19 @@
                         <i class="bi-person fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Clientes</span>
                     </a>
 
-                    <a href="aguateros.html" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
+                    <a href="?c=aguatero" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
                         <i class="bi-water fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Aguateros</span>
                     </a>
 
-                    <a href="fumigadores.html" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
+                    <a href="?c=fumigador" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
                         <i class="bi-gear fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Fumigadores</span>
                     </a>
                     
-                    <a href="trabajos.html" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
+                    <a href="?c=Trabajo" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
                         <i class="bi-briefcase fs-4"></i> <span class="ms-1 d-none d-sm-inline">Trabajos Realizados</span>
                     </a>
 
-                    <a href="cobros.html" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
+                    <a href="?c=cobros" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
                         <i class="bi-cash fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Cobros</span>
                     </a>
 

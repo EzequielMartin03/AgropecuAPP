@@ -1,16 +1,25 @@
 <?php
 
+require_once "modelos/TrabajoRealizado.php";
+
 class inicioControlador {
-    private $modelo;
+    private $modeloo;
 
     public function _CONSTRUCT() {
-        //$this-> modelo new  Producto();
+        $db = database::connection();
+        $this->modeloo = new TrabajoRealizado($db);
+        
+        
     }
 
     public function Inicio() {
 
-        $db = database::connection(); 
+       
+        
+        
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/inicio/principal.php";
     }
+
+ 
 }

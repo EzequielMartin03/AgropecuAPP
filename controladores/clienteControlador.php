@@ -12,7 +12,15 @@ class clienteControlador {
 
     public function Inicio() {
        
-        $clientes = $this->modelo->Listar();
+        $termino = isset($_GET['q']) ? $_GET['q'] : ''; 
+       
+        if (!empty($termino)) {
+            
+            $clientes = $this->modelo->BuscarCliente($termino);
+        } else {
+            
+            $clientes = $this->modelo->ListarCliente();
+        }
         
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/clientes/indexClientes.php";
@@ -25,29 +33,29 @@ class clienteControlador {
         $cliente-> setTelefono($_POST['Telefono']);
         $cliente-> setCuit($_POST['Cuit']);
 
-        $this->modelo->Insertar($cliente);    
+        $this->modelo->InsertarCliente($cliente);    
 
         header ("location:?c=cliente");
     }
 
     public function Modificar() {                           
         $cliente = new Cliente();                                   
-        $cliente -> setIdCliente($_POST['Id_cliente']);
+        $cliente -> setIdCliente($_POST['IdCliente']);
         $cliente-> setNombre($_POST['Nombre']);
         $cliente-> setDireccion($_POST['Direccion']);
         $cliente-> setTelefono($_POST['Telefono']);
         $cliente-> setCuit($_POST['Cuit']);
 
-        $this->modelo->Actualizar($cliente);    
+        $this->modelo->ActualizarCliente($cliente);    
 
         header ("location:?c=cliente");
     }
 
     public function eliminar() {
         $cliente = new Cliente();
-        $cliente -> setIdCliente($_POST['Id_cliente']);
+        $cliente -> setIdCliente($_POST['IdCliente']);
         
-        $this->modelo->Eliminar($cliente);    
+        $this->modelo->EliminarCliente($cliente);    
 
         header ("location:?c=cliente");
     }

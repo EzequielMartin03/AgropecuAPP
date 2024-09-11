@@ -533,7 +533,7 @@
 
 <!-- Modal para Nuevo Trabajo -->
  
-<form action="?c=Trabajo&a=guardar" method="post">
+<form action="?c=Trabajo&a=Guardar" method="post">
 <div class="modal fade" id="altaClienteModal" tabindex="-1" aria-labelledby="altaClienteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -554,19 +554,20 @@
             </select>
           </div>
        
-            <label for="nuevoAguateroSelect" class="form-label">Aguatero</label>
-            <select id="mySelect" name="nuevoAguateroSelect" multiple="multiple" style="width: 100%;">
-                <option value="1">Opción 1</option>
-                <option value="2">Opción 2</option>
-                <option value="3">Opción 3</option>
-            <!-- Agrega más opciones según sea necesario -->
+            <label for="myselect" class="form-label">Aguatero</label>
+            <select id="mySelect" name="mySelect[]" multiple="multiple" style="width: 100%;">
+            <?php foreach ($ListaAguateros as $aguatero): ?>
+
+                <option value="<?= $aguatero->IdAguatero ?>"><?= $aguatero->NombreAguatero ?></option>
+
+            <?php endforeach; ?>
             </select>
       
           <div class="mb-3">
-            <label for="nuevoFumigadorSelect" class="form-label">Fumigador</label>
-            <select id="mySelect2" name="nuevoFumigadorSelect" multiple="multiple" style="width: 100%;">
+            <label for="myselect2" class="form-label">Fumigador</label>
+            <select id="mySelect2" name="mySelect2[]" multiple="multiple" style="width: 100%;">
 
-            <?php foreach ($fumigadores as $fumigador): ?>
+            <?php foreach ($ListaFumigadores as $fumigador): ?>
 
                 <option value="<?= $fumigador->IdFumigador ?>"><?= $fumigador->NombreFumigador ?></option>
 
@@ -616,14 +617,12 @@
 </a>
 
 </div>
-   
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Select2 JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- CSS de Select2 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
@@ -631,7 +630,11 @@
 <!-- JS de Select2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
-
+<!-- Tu JavaScript personalizado -->
 <script src="../assets/js/indexTrabajoJS.js"></script>
+
+
 </body>
+
+
 </html>

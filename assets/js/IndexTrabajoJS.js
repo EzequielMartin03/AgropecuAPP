@@ -32,17 +32,10 @@ $(document).ready(function() {
 
 
   $(document).ready(function() {
-  $('#mySelect').select2({
-    placeholder: 'Selecciona una o más opciones',
-    allowClear: true,
-    width: 'resolve'  // Asegúrate de que el ancho se ajuste correctamente
+    $('#mySelect, #mySelect2').select2({
+      placeholder: 'Selecciona una o más opciones',
+      allowClear: true,
+      width: 'resolve'
+    });
   });
-});
-
-$(document).ready(function() {
-  $('#mySelect2').select2({
-    placeholder: 'Selecciona una o más opciones',
-    allowClear: true,
-    width: 'resolve'  // Asegúrate de que el ancho se ajuste correctamente
-  });
-});
+  

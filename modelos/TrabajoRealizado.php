@@ -142,70 +142,77 @@ class TrabajoRealizado {
     // }
 
 
-    class TrabajoRealizado {
-        // Otros métodos existentes...
     
-        public function InsertarTrabajo(TrabajoRealizado $trabajo) {
+        public function InsertarTrabajo(TrabajoRealizado $trabajo, $fumigadores, $aguateros) {
             // Insertar el trabajo en la tabla de trabajos
-            $query = "INSERT INTO trabajos (descripcion, fecha_trabajo, fecha_pago, cantidad_hectareas, nro_factura) VALUES (?, ?, ?, ?, ?)";
-            $stmt = $this->db->prepare($query);
+            $query = "INSERT INTO trabajorealizado (Descripcion, FechaTrabajo, FechaPago, CantidadHectareasTrabajadas, NroFacturaAfip,EstadoTrabajo,IdCliente) VALUES (?, ?, ?, ?, ?,?,?)";
+            $stmt = $this->pdo->prepare($query);
             $stmt->execute([
                 $trabajo->getDescripcion(),
                 $trabajo->getFechaTrabajo(),
                 $trabajo->getFechaPago(),
                 $trabajo->getCantidadHectareasTrabajadas(),
-                $trabajo->getNroFacturaAfip()
+                $trabajo->getNroFacturaAfip(),
+                'Activo',
+
+                $trabajo->getIdCliente()
+
             ]);
     
-            $idTrabajo = $this->db->lastInsertId();
+            $idTrabajo = $this->pdo->lastInsertId();
+            
+    // Debugging: Verifica los datos de fumigadores y aguateros
+    echo "Fumigadores: " . implode(", ", $fumigadores) . "<br>";
+    echo "Aguateros: " . implode(", ", $aguateros) . "<br>";
+    echo "IdTrabajo: " . $idTrabajo . "<br>";
+       
     
             // Insertar las relaciones en la tabla trabajo_fumigador
             foreach ($fumigadores as $idFumigador) {
-                $query = "INSERT INTO trabajo_fumigador (id_trabajo, id_fumigador) VALUES (?, ?)";
-                $stmt = $this->db->prepare($query);
+                $query = "INSERT INTO fumigadortrabajo (IdTrabajo, IdFumigador) VALUES (?, ?)";
+                $stmt = $this->pdo->prepare($query);
                 $stmt->execute([$idTrabajo, $idFumigador]);
             }
     
             // Insertar las relaciones en la tabla trabajo_aguatero
             foreach ($aguateros as $idAguatero) {
-                $query = "INSERT INTO trabajo_aguatero (id_trabajo, id_aguatero) VALUES (?, ?)";
-                $stmt = $this->db->prepare($query);
+                $query = "INSERT INTO aguaterotrabajo (IdTrabajo, IdAguatero) VALUES (?, ?)";
+                $stmt = $this->pdo->prepare($query);
                 $stmt->execute([$idTrabajo, $idAguatero]);
             }
         }
     
-        public function ObtenerTrabajoConRelaciones($idTrabajo, $fechaInicio, $fechaFin) {
+        public function FiltrarTrabajosFumigador($idTrabajo, $fechaInicio, $fechaFin) {
             // Consulta el trabajo solo si está dentro del rango de fechas
-            $query = "SELECT * FROM trabajosrealizado WHERE id = ? AND FechaTrabajo BETWEEN ? AND ?";
-            $stmt = $this->db->prepare($query);
+            $query = "SELECT * FROM trabajorealizado WHERE id = ? AND FechaTrabajo BETWEEN ? AND ?";
+            $stmt = $this->pdo->prepare($query);
             $stmt->execute([$idTrabajo, $fechaInicio, $fechaFin]);
             $trabajo = $stmt->fetch(PDO::FETCH_ASSOC);
         
             if ($trabajo) {
                 // Obtener fumigadores relacionados si el trabajo está dentro del rango de fechas
-                $query = "SELECT id_fumigador FROM trabajo_fumigador WHERE id_trabajo = ? AND fecha_trabajo BETWEEN ? AND ?";
-                $stmt = $this->db->prepare($query);
+                $query = "SELECT IdFumigador FROM TrabajoFumigador WHERE IdTrabajo = ? AND FechaTrabajo BETWEEN ? AND ?";
+                $stmt = $this->pdo->prepare($query);
                 $stmt->execute([$idTrabajo, $fechaInicio, $fechaFin]);
                 $fumigadores = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        
-                // Obtener aguateros relacionados si el trabajo está dentro del rango de fechas
-                $query = "SELECT id_aguatero FROM trabajo_aguatero WHERE id_trabajo = ? AND fecha_trabajo BETWEEN ? AND ?";
-                $stmt = $this->db->prepare($query);
-                $stmt->execute([$idTrabajo, $fechaInicio, $fechaFin]);
-                $aguateros = $stmt->fetchAll(PDO::FETCH_COLUMN);
         
                 return [
                     'trabajo' => $trabajo,
                     'fumigadores' => $fumigadores,
-                    'aguateros' => $aguateros
+                    
                 ];
             }
         
             // Si no se encuentra el trabajo en el rango de fechas, devolver null
             return null;
         }
+
+
+
+
+      
         
-    }
+    
     
     
        
@@ -234,50 +241,39 @@ class TrabajoRealizado {
     }
     
 
-    public function FiltrarTrabajosAguatero($IdAguatero, $FechaInicio, $FechaFin) { 
-        try {
-            $consulta = "
-                SELECT 
-                    c.Nombre,
-                    tr.Descripcion,
-                    a.NombreAguatero,
-                    tr.CantidadHectareasTrabajadas,
-                    tr.FechaTrabajo
-                FROM 
-                    TrabajoRealizado tr
-                JOIN 
-                    Clientes c ON tr.IdCliente = c.IdCliente
-                JOIN 
-                    Aguateros a ON tr.IdAguatero = a.IdAguatero
-                WHERE 
-                    tr.IdAguatero = ? 
-                    AND tr.FechaTrabajo BETWEEN ? AND ?
-                ORDER BY 
-                    tr.FechaTrabajo DESC
-            ";
+     public function FiltrarTrabajosAguatero($IdAguatero, $FechaInicio, $FechaFin) { 
+   try {
+     
+      $consulta = "
+         
+         select Aguateros.NombreAguatero, trabajorealizado.Descripcion,trabajorealizado.CantidadHectareasTrabajadas,trabajorealizado.FechaTrabajo from trabajorealizado  LEFT JOIN aguaterotrabajo ON trabajorealizado.IdTrabajo = aguaterotrabajo.IdTrabajo
+        LEFT JOIN aguateros ON aguaterotrabajo.IdAguatero = aguateros.IdAguatero
+        WHERE aguateros.IdAguatero = ? AND trabajorealizado.FechaTrabajo BETWEEN ? AND ?;
+        ";
+
             
-            $stm = $this->pdo->prepare($consulta);
-            $stm->execute(array($IdAguatero, $FechaInicio, $FechaFin));
+      $stm = $this->pdo->prepare($consulta);
+       $stm->execute(array($IdAguatero, $FechaInicio, $FechaFin));
             
-            return $stm->fetchAll(PDO::FETCH_OBJ);
+       return $stm->fetchAll(PDO::FETCH_OBJ);
     
-        } catch (Exception $e) {
-            die($e->getMessage());
-        }
+   } catch (Exception $e) {
+       die($e->getMessage());
     }
+ }
     
 
-    public function FiltrarTrabajosFumigador($IdFumigador,$FechaInicio, $FechaFin) { 
+    // public function FiltrarTrabajosFumigador($IdFumigador,$FechaInicio, $FechaFin) { 
 
-        $consulta = "SELECT * FROM trabajorealizado WHERE IdFumigador = ? AND FechaTrabajo BETWEEN ? AND ? ORDER BY FechaTrabajo DESC";
-        $stm = $this->pdo->prepare($consulta);
-        $stm->execute(array(
-            $IdFumigador,
-            $FechaInicio,
-            $FechaFin
-        ));
-        return $stm->fetchAll(PDO::FETCH_OBJ);
-    }
+    //     $consulta = "SELECT * FROM trabajorealizado WHERE IdFumigador = ? AND FechaTrabajo BETWEEN ? AND ? ORDER BY FechaTrabajo DESC";
+    //     $stm = $this->pdo->prepare($consulta);
+    //     $stm->execute(array(
+    //         $IdFumigador,
+    //         $FechaInicio,
+    //         $FechaFin
+    //     ));
+    //     return $stm->fetchAll(PDO::FETCH_OBJ);
+    // }
 
 
 

@@ -30,7 +30,7 @@ class TrabajoControlador {
        
 
         $clientes = $this->modeloCliente->ListarCliente();
-        $fumigadoress = $this->modeloFumigador->ListarFumigador();
+        $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
         $ListaAguateros = $this->modeloAguatero->ListarAguatero();
         $AllTrabajos = $this->modelo->ListarTrabajos();
 
@@ -59,6 +59,7 @@ class TrabajoControlador {
 
     public function Guardar() {
         $trabajo = new TrabajoRealizado();
+        $trabajo-> setIdCliente($_POST['nuevoClienteSelect']);
         $trabajo->setDescripcion($_POST['Descripcion']);
         $trabajo->setFechaTrabajo($_POST['FechaTrabajo']);
         $trabajo->setFechaPago($_POST['FechaPago']);
@@ -66,13 +67,13 @@ class TrabajoControlador {
         $trabajo->setNroFacturaAfip($_POST['NroFactura']);
     
         // Obtener los IDs seleccionados
-        $fumigadores = isset($_POST['nuevoFumigadorSelect']) ? $_POST['nuevoFumigadorSelect'] : [];
-        $aguateros = isset($_POST['nuevoAguateroSelect']) ? $_POST['nuevoAguateroSelect'] : [];
+        $fumigadores =  isset($_POST['mySelect2']) ? $_POST['mySelect2'] : [];
+        $aguateros = isset($_POST['mySelect']) ? $_POST['mySelect'] : [];
     
         // Insertar el trabajo y las relaciones
         $this->modelo->InsertarTrabajo($trabajo, $fumigadores, $aguateros);
     
-        header("Location: ?c=Trabajo");
+        
     }
     
 
@@ -147,5 +148,7 @@ class TrabajoControlador {
         require_once "vistas/Trabajos/IndexTrabajo.php";
         
     }
+
+    
    
 }

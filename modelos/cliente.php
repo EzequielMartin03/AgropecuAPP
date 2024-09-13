@@ -1,7 +1,11 @@
 <?php
 
 class cliente {
+<<<<<<< HEAD
     private $IdCliente;
+=======
+    private $Id_cliente;
+>>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
     private $Nombre;
     private $Direccion;
     private $Telefono;
@@ -15,7 +19,11 @@ class cliente {
 
     
     public function getIdCliente() {
+<<<<<<< HEAD
         return $this->IdCliente;
+=======
+        return $this->Id_cliente;
+>>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
     }
 
     public function getNombre() {
@@ -36,8 +44,13 @@ class cliente {
 
 
 
+<<<<<<< HEAD
     public function setIdCliente($IdCliente) {
         $this->IdCliente = $IdCliente;
+=======
+    public function setIdCliente($Id_cliente) {
+        $this->Id_cliente = $Id_cliente;
+>>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
     }
 
     public function setNombre($Nombre) {
@@ -56,6 +69,7 @@ class cliente {
         $this->Cuit = $Cuit;
     }
 
+<<<<<<< HEAD
     public function ListarCliente() {
         try {
             $consulta=$this->pdo->prepare("SELECT * FROM CLIENTES WHERE EstadoCliente = 'Activo' ;");
@@ -123,3 +137,64 @@ class cliente {
     }
 
 }
+=======
+public function Listar() {
+    try {
+        $consulta=$this->pdo->prepare("SELECT * FROM CLIENTES WHERE EstadoCliente = 'Activo' ;");
+        $consulta->execute();
+        return $consulta->fetchAll(PDO::FETCH_OBJ);
+    }catch(Exception $e) {
+        die($e->getMessage());
+
+    }
+
+}
+ 
+public function Insertar(Cliente $cliente) {
+    try {
+        $consulta = "INSERT INTO CLIENTES (Nombre,Direccion,Telefono,Cuit,EstadoCliente) VALUES (?,?,?,?,?);";
+        $this->pdo->prepare($consulta)->execute(array(
+            $cliente->getNombre(),
+            $cliente->getDireccion(),
+            $cliente->getTelefono(),
+            $cliente->getCuit(),
+            'Activo'
+
+
+        ));
+
+    }catch(Exception $e) {
+        die($e->getMessage());
+    }
+
+}
+
+public function Actualizar(Cliente $cliente) {
+    try {
+        $consulta = "UPDATE CLIENTES SET Nombre = ?,Direccion = ?,Telefono = ?,Cuit = ? WHERE Id_cliente = ?;";
+        $this->pdo->prepare($consulta)->execute(array(
+            $cliente->getNombre(),
+            $cliente->getDireccion(),
+            $cliente->getTelefono(),
+            $cliente->getCuit(),
+            $cliente-> getIdCliente()
+        ));
+    }catch(Exception $e) {
+        die($e->getMessage());
+    }
+}
+
+
+public function Eliminar(Cliente $cliente) {
+    try {
+        $consulta = "UPDATE CLIENTES SET EstadoCliente = 'Inactivo' WHERE Id_cliente = ?";
+        $this->pdo->prepare($consulta)->execute(array(
+
+            $cliente-> getIdCliente()
+        ));
+    }catch(Exception $e) {
+        die($e->getMessage());
+    }
+}
+}
+>>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661

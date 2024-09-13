@@ -1,6 +1,9 @@
 .sidebar {
     min-height: 100vh; 
+<<<<<<< HEAD
     overflow: hidden;
+=======
+>>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
 }
 .btn-sidebar {
     display: flex;

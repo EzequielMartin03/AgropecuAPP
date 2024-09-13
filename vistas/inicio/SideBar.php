@@ -36,6 +36,7 @@
                         <i class="bi-person fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Clientes</span>
                     </a>
 
+<<<<<<< HEAD
                     <a href="?c=aguatero" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
                         <i class="bi-water fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Aguateros</span>
                     </a>
@@ -49,6 +50,21 @@
                     </a>
 
                     <a href="?c=cobros" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
+=======
+                    <a href="aguateros.html" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
+                        <i class="bi-water fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Aguateros</span>
+                    </a>
+
+                    <a href="fumigadores.html" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
+                        <i class="bi-gear fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Fumigadores</span>
+                    </a>
+                    
+                    <a href="trabajos.html" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
+                        <i class="bi-briefcase fs-4"></i> <span class="ms-1 d-none d-sm-inline">Trabajos Realizados</span>
+                    </a>
+
+                    <a href="cobros.html" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
+>>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
                         <i class="bi-cash fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Cobros</span>
                     </a>
 

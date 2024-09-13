@@ -6,38 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" rel="stylesheet">
     
     <title>Clientes</title>
     <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
-<<<<<<< HEAD
-
     <link rel="stylesheet" href="../assets/css/indexClientes.css">
 </head>
 <body>
-
     <div class="col py-3">
-        
-        <!-- barra de busqueda -->
-        <form class="d-flex mb-3 " method="GET" action="index.php" >
+        <!-- Barra de búsqueda -->
+        <form class="d-flex mb-3" method="GET" action="index.php">
             <input type="hidden" name="c" value="cliente">
             <input class="form-control me-2 w-50" type="search" placeholder="Buscar por nombre o CUIT" name="q" value="<?= isset($_GET['q']) ? $_GET['q'] : '' ?>">
-            <button class="btn btn btn-success" type="submit">Buscar</button>
+            <button class="btn btn-success" type="submit">Buscar</button>
         </form>
 
-        <!-- Modal para nuevo cliente -->
-=======
-</head>
-<body>
-    <div class="col py-3">
+        <!-- Botón para dar de alta un cliente -->
         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#altaClienteModal">
             <i class="bi-plus-circle"></i> Dar de alta cliente
         </button>
 
->>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
+        <!-- Modal para nuevo cliente -->
         <div class="modal fade" id="altaClienteModal" tabindex="-1" aria-labelledby="altaClienteModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -72,20 +64,9 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
-            <!-- Tabla de Clientes -->
-            <?php include './vistas/Clientes/tablaClientes.php'; ?>
 
-        <!-- Botón para dar de alta un cliente -->
-        <button type="button" class="btn btn-primary btn-add-work mb-3" data-bs-toggle="modal" data-bs-target="#altaClienteModal">
-            <i class="bi-plus-circle"></i> Dar de alta cliente
-        </button>
-         
-    </div>
-
-   
-
-=======
+        <!-- Tabla de Clientes -->
+        <?php include './vistas/Clientes/tablaClientes.php'; ?>
 
         <table class="table table-striped" id="tabla">
             <thead>
@@ -178,8 +159,7 @@
         </table>
     </div>
 
->>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

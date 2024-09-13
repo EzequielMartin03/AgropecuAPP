@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <title>AgropecuApp</title>
 </head>
 <body>
-<<<<<<< HEAD
-    <div class="container">
+    <!-- Content area -->
+    <div class="container py-3">
+        <!-- Panel de Indicadores Clave -->
         <h1 class="my-4 text-center">Panel de Indicadores Clave</h1>
         <div class="row">
             <!-- Total de Hectáreas Trabajadas -->
@@ -45,23 +56,16 @@
                 </div>
             </div>
         </div>
+
+        <!-- Bienvenida -->
+        <div class="col py-3">
+            <h1>Bienvenido/a a AgropecuApp</h1>
+            <h3>Seleccione en el menú donde desea dirigirse!</h3>
+            <h4>Gracias por utilizar nuestros servicios!</h4>
+        </div>
     </div>
 
     <!-- Scripts de Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-=======
-            <!-- Content area -->
-            <div class="col py-3">
-              
-                <h1>Bienvenido/a a AgropecuApp</h1>
-                <h3>Seleccione en el menú donde desea dirigirse!</h3>
-                <h4>Gracias por utilizar nuestros servicios!</h4>
-    </div>
-    
-    <!-- Bootstrap JS (opcional, pero necesario para funcionalidades como dropdowns, etc.) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
->>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
 </body>
 </html>

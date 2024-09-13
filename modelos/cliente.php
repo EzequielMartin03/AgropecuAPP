@@ -1,29 +1,18 @@
 <?php
 
-class cliente {
-<<<<<<< HEAD
+class Cliente {
     private $IdCliente;
-=======
-    private $Id_cliente;
->>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
     private $Nombre;
     private $Direccion;
     private $Telefono;
     private $Cuit;
 
     public function __construct() {
- 
-        $this-> pdo = database::connection();
+        $this->pdo = database::connection();
     }
 
-
-    
     public function getIdCliente() {
-<<<<<<< HEAD
         return $this->IdCliente;
-=======
-        return $this->Id_cliente;
->>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
     }
 
     public function getNombre() {
@@ -42,15 +31,8 @@ class cliente {
         return $this->Cuit;
     }
 
-
-
-<<<<<<< HEAD
     public function setIdCliente($IdCliente) {
         $this->IdCliente = $IdCliente;
-=======
-    public function setIdCliente($Id_cliente) {
-        $this->Id_cliente = $Id_cliente;
->>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661
     }
 
     public function setNombre($Nombre) {
@@ -69,132 +51,60 @@ class cliente {
         $this->Cuit = $Cuit;
     }
 
-<<<<<<< HEAD
     public function ListarCliente() {
         try {
-            $consulta=$this->pdo->prepare("SELECT * FROM CLIENTES WHERE EstadoCliente = 'Activo' ;");
+            $consulta = $this->pdo->prepare("SELECT * FROM CLIENTES WHERE EstadoCliente = 'Activo';");
             $consulta->execute();
             return $consulta->fetchAll(PDO::FETCH_OBJ);
-        }catch(Exception $e) {
+        } catch (Exception $e) {
             die($e->getMessage());
-
         }
-
     }
- 
+
     public function InsertarCliente(Cliente $cliente) {
         try {
-            $consulta = "INSERT INTO CLIENTES (Nombre,Direccion,Telefono,Cuit,EstadoCliente) VALUES (?,?,?,?,?);";
+            $consulta = "INSERT INTO CLIENTES (Nombre, Direccion, Telefono, Cuit, EstadoCliente) VALUES (?, ?, ?, ?, ?);";
             $this->pdo->prepare($consulta)->execute(array(
                 $cliente->getNombre(),
                 $cliente->getDireccion(),
                 $cliente->getTelefono(),
                 $cliente->getCuit(),
                 'Activo'
-
-
             ));
-
-        }catch(Exception $e) {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
-
     }
 
     public function ActualizarCliente(Cliente $cliente) {
         try {
-            $consulta = "UPDATE CLIENTES SET Nombre = ?,Direccion = ?,Telefono = ?,Cuit = ? WHERE IdCliente = ?;";
+            $consulta = "UPDATE CLIENTES SET Nombre = ?, Direccion = ?, Telefono = ?, Cuit = ? WHERE IdCliente = ?;";
             $this->pdo->prepare($consulta)->execute(array(
                 $cliente->getNombre(),
                 $cliente->getDireccion(),
                 $cliente->getTelefono(),
                 $cliente->getCuit(),
-                $cliente-> getIdCliente()
+                $cliente->getIdCliente()
             ));
-        }catch(Exception $e) {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
-
 
     public function EliminarCliente(Cliente $cliente) {
         try {
             $consulta = "UPDATE CLIENTES SET EstadoCliente = 'Inactivo' WHERE IdCliente = ?";
             $this->pdo->prepare($consulta)->execute(array(
-
-                $cliente-> getIdCliente()
+                $cliente->getIdCliente()
             ));
-        }catch(Exception $e) {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
-
     public function BuscarCliente($termino) {
         $consulta = $this->pdo->prepare("SELECT * FROM CLIENTES WHERE (Nombre LIKE ? OR Cuit LIKE ?) AND EstadoCliente = ?");
-        $consulta->execute(array("%$termino%", "%$termino%",'Activo'));
+        $consulta->execute(array("%$termino%", "%$termino%", 'Activo'));
         return $consulta->fetchAll(PDO::FETCH_OBJ);
     }
-
 }
-=======
-public function Listar() {
-    try {
-        $consulta=$this->pdo->prepare("SELECT * FROM CLIENTES WHERE EstadoCliente = 'Activo' ;");
-        $consulta->execute();
-        return $consulta->fetchAll(PDO::FETCH_OBJ);
-    }catch(Exception $e) {
-        die($e->getMessage());
-
-    }
-
-}
- 
-public function Insertar(Cliente $cliente) {
-    try {
-        $consulta = "INSERT INTO CLIENTES (Nombre,Direccion,Telefono,Cuit,EstadoCliente) VALUES (?,?,?,?,?);";
-        $this->pdo->prepare($consulta)->execute(array(
-            $cliente->getNombre(),
-            $cliente->getDireccion(),
-            $cliente->getTelefono(),
-            $cliente->getCuit(),
-            'Activo'
-
-
-        ));
-
-    }catch(Exception $e) {
-        die($e->getMessage());
-    }
-
-}
-
-public function Actualizar(Cliente $cliente) {
-    try {
-        $consulta = "UPDATE CLIENTES SET Nombre = ?,Direccion = ?,Telefono = ?,Cuit = ? WHERE Id_cliente = ?;";
-        $this->pdo->prepare($consulta)->execute(array(
-            $cliente->getNombre(),
-            $cliente->getDireccion(),
-            $cliente->getTelefono(),
-            $cliente->getCuit(),
-            $cliente-> getIdCliente()
-        ));
-    }catch(Exception $e) {
-        die($e->getMessage());
-    }
-}
-
-
-public function Eliminar(Cliente $cliente) {
-    try {
-        $consulta = "UPDATE CLIENTES SET EstadoCliente = 'Inactivo' WHERE Id_cliente = ?";
-        $this->pdo->prepare($consulta)->execute(array(
-
-            $cliente-> getIdCliente()
-        ));
-    }catch(Exception $e) {
-        die($e->getMessage());
-    }
-}
-}
->>>>>>> 80d9cf3793cae5d8d0dcba0297bb03da0b3a4661

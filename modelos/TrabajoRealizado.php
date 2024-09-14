@@ -197,4 +197,11 @@ class TrabajoRealizado {
             die($e->getMessage());
         }
     }
+
+    public function filtrarCobrosXFecha($FechaInicio, $FechaFin) {
+        $query = "SELECT trabajorealizado.IdTrabajo,trabajorealizado.CantidadHectareasTrabajadas,trabajorealizado.Descripcion, clientes.Nombre FROM trabajorealizado WHERE FechaTrabajo BETWEEN ? AND ?";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$FechaInicio, $FechaFin]);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }

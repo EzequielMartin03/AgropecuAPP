@@ -10,7 +10,7 @@ class clienteControlador {
     }
 
     public function Inicio() {
-        $clientes = $this->modelo->Listar();
+        $clientes = $this->modelo->ListarCliente();
         
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/clientes/indexClientes.php";
@@ -23,12 +23,12 @@ class clienteControlador {
         $cliente-> setTelefono($_POST['Telefono']);
         $cliente-> setCuit($_POST['Cuit']);
 
-        $this->modelo->Insertar($cliente);    
+        $this->modelo->InsertarCliente($cliente);    
 
         header ("location:?c=cliente");
     }
 
-    public function Modificar() {                           
+    public function ModificarCliente() {                           
         $cliente = new Cliente();                                   
         $cliente -> setIdCliente($_POST['Id_cliente']);
         $cliente-> setNombre($_POST['Nombre']);
@@ -36,12 +36,12 @@ class clienteControlador {
         $cliente-> setTelefono($_POST['Telefono']);
         $cliente-> setCuit($_POST['Cuit']);
 
-        $this->modelo->Actualizar($cliente);    
+        $this->modelo->ActualizarCliente($cliente);    
 
         header ("location:?c=cliente");
     }
 
-    public function eliminar() {
+    public function EliminarCliente() {
         $cliente = new Cliente();
         $cliente -> setIdCliente($_POST['Id_cliente']);
         

@@ -11,6 +11,9 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
 
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
 
@@ -46,8 +49,10 @@
                         <i class="bi-cash fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Cobros</span>
                     </a>
                     
+                    
+                    <div class="mt-auto">
                     <hr>
-                    <div class="dropdown pb-4">
+                    <div class="dropdown pb-4 " >
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1">EzequielMartin</span>
@@ -60,6 +65,7 @@
                             <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
                         </ul>
                     </div>
+                    </div>
                 </div>
             </div>
 
@@ -67,5 +73,8 @@
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap CSS -->
+
+
 </body>
 </html>

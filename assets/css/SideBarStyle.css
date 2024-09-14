@@ -1,0 +1,15 @@
+.usuario-info {
+    margin-bottom: 10px; /* Un pequeño margen inferior opcional */
+    padding: 10px;
+    background-color: #333; /* Cambia el color de fondo si es necesario */
+    color: white; /* Color de texto */
+    text-align: center; /* Centra el texto */
+}
+
+.sidebar {
+    position: relative; /* Hace que los elementos hijos se posicionen en relación con el contenedor */
+    height: 100vh; /* Hace que la barra lateral ocupe toda la altura de la pantalla */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Espacia los elementos para que el último quede abajo */
+}

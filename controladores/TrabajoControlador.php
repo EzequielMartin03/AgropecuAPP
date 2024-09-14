@@ -18,6 +18,11 @@ class TrabajoControlador {
         $this->modeloFumigador = new Fumigador();
         $this->modeloAguatero = new Aguatero();
 
+        if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+            header('Location: ?c=Usuario&a=Inicio');
+            exit();
+        }
+
 
         
     }

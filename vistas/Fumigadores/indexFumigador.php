@@ -14,7 +14,7 @@
     <title>Fumigadores</title>
     <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
 
-    <link rel="stylesheet" href="../assets/css/indexFumigadores.css">
+    <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
 </head>
 <body>
 

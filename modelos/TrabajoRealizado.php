@@ -130,17 +130,18 @@ class TrabajoRealizado {
 
         // Insertar las relaciones en la tabla trabajo_fumigador
         foreach ($fumigadores as $IdFumigador) {
-            $query = "INSERT INTO trabajo_fumigador (IdTrabajo, IdFumigador) VALUES (?, ?)";
+            $query = "INSERT INTO fumigadortrabajo (IdTrabajo, IdFumigador) VALUES (?, ?)";
             $stmt = $this->pdo->prepare($query);
             $stmt->execute([$idTrabajo, $IdFumigador]);
         }
 
         // Insertar las relaciones en la tabla trabajo_aguatero
         foreach ($aguateros as $IdAguatero) {
-            $query = "INSERT INTO trabajo_aguatero (IdTrabajo, IdAguatero) VALUES (?, ?)";
+            $query = "INSERT INTO aguaterotrabajo (IdTrabajo, IdAguatero) VALUES (?, ?)";
             $stmt = $this->pdo->prepare($query);
             $stmt->execute([$idTrabajo, $IdAguatero]);
         }
+        header ("location:?c=Trabajo");
     }
 
     public function FiltrarTrabajosFumigador($IdFumigador, $FechaInicio, $FechaFin) {
@@ -199,7 +200,13 @@ class TrabajoRealizado {
     }
 
     public function filtrarCobrosXFecha($FechaInicio, $FechaFin) {
-        $query = "SELECT trabajorealizado.IdTrabajo,trabajorealizado.CantidadHectareasTrabajadas,trabajorealizado.Descripcion, clientes.Nombre FROM trabajorealizado WHERE FechaTrabajo BETWEEN ? AND ?";
+        $query = "SELECT trabajorealizado.IdTrabajo, 
+                 trabajorealizado.CantidadHectareasTrabajadas, 
+                 trabajorealizado.Descripcion, 
+                 Clientes.Nombre 
+                FROM trabajorealizado
+                INNER JOIN Clientes ON trabajorealizado.IdCliente = Clientes.IdCliente
+                WHERE FechaTrabajo BETWEEN ? AND ?";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([$FechaInicio, $FechaFin]);
         return $stmt->fetchAll(PDO::FETCH_OBJ);

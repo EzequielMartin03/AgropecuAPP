@@ -1,20 +1,21 @@
 <?php
 
 class Usuario {
-    private $id_usuario;
-    private $usuario;
+    private $IdUsuario;
+    private $Usuario;
     private $clave;
 
     public function __construct() {
+        $this->pdo = database::connection();
     }
 
     // Getters
     public function getIdUsuario() {
-        return $this->id_usuario;
+        return $this->IdUsuario;
     }
 
     public function getUsuario() {
-        return $this->usuario;
+        return $this->Usuario;
     }
 
     public function getClave() {
@@ -22,17 +23,25 @@ class Usuario {
     }
 
     // Setters
-    public function setIdUsuario($id_usuario) {
-        $this->id_usuario = $id_usuario;
+    public function setIdUsuario($IdUsuario) {
+        $this->IdUsuario = $IdUsuario;
     }
 
-    public function setUsuario($usuario) {
-        $this->usuario = $usuario;
+    public function setUsuario($Usuario) {
+        $this->Usuario = $Usuario;
     }
 
     public function setClave($clave) {
         $this->clave = $clave;
     }
-
+ 
+        public function getUserByUsername($username) {
+            $stmt = $this->pdo->prepare("SELECT * FROM usuario WHERE Usuario = ?");
+            $stmt->execute([$username]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+    
+    
+    
 
 }

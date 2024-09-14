@@ -13,7 +13,7 @@
     
     <title>aguateros</title>
     <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
-    <link rel="stylesheet" href="../assets/css/indexAguateros.css">
+    <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
  
 </head>
 <body>

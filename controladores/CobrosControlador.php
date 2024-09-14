@@ -1,27 +1,32 @@
 <?php
 
 require_once "modelos/TrabajoRealizado.php";
+require_once "modelos/cliente.php";
 
 class CobrosControlador {
     private $modelo;
 
     public function __construct() {
         $this->modelo = new TrabajoRealizado();
+        $this->modeloCliente = new Cliente();
     }
 
     public function Inicio() {
        
+        $clientes = $this->modeloCliente->ListarCliente();
         
         require_once "vistas/inicio/SideBar.php";
-        require_once "vistas/inicio/principal.php";
+        require_once "vistas/cobros/indexCobros.php";
     }
 
 
     public function FiltarCobrosXFecha() { 
-        $fechaInicio = $_POST['FechaInicio'];
-        $fechaFin = $_POST['FechaFin'];
+        $fechaInicio = $_POST['fechaInicio'];
+        $fechaFin = $_POST['fechaFin'];
 
-        $resultadosCobros = $this->modelo->filtrarCobrosXFecha($fechaInicio, $fechaFin);
+        $cobros = $this->modelo->filtrarCobrosXFecha($fechaInicio, $fechaFin);
+
+        require_once "vistas/Cobros/indexCobros.php";
     }
 
    

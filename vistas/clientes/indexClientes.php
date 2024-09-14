@@ -13,7 +13,7 @@
     
     <title>Clientes</title>
     <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
-    <link rel="stylesheet" href="../assets/css/indexClientes.css">
+    <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
 </head>
 <body>
     <div class="col py-3">
@@ -25,7 +25,7 @@
         </form>
 
         <!-- Botón para dar de alta un cliente -->
-        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#altaClienteModal">
+        <button type="button" class="btn btn-primary mb-3 btn-add-work" data-bs-toggle="modal" data-bs-target="#altaClienteModal">
             <i class="bi-plus-circle"></i> Dar de alta cliente
         </button>
 

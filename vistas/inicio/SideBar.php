@@ -23,14 +23,12 @@
 
 <div class="container-fluid">
         <div class="row flex-nowrap">
-            <!-- Sidebar -->
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                 <div class="d-flex flex-column align-items-stretch px-3 pt-2 text-white min-vh-100">
-                  
-                        <a href="?c=Inicio" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                            <span class="fs-5 d-none d-sm-inline">AgropecuApp</span>
-                        </a>
-                        <hr>
+                <a href="?c=Inicio" class="d-flex  text-decoration-none">
+                    <img src="../assets/img/logo_agropecuapp.png" alt="AgropecuApp Logo" class="img-fluid" style="max-width: 100%;">
+            </a>
+                   <hr>
                     <!-- Botones fijos alineados -->
                     <a href="?c=Cliente" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
                         <i class="bi-person fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Clientes</span>
@@ -55,14 +53,14 @@
                     <div class="dropdown pb-4 " >
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">EzequielMartin</span>
+                            <span class="d-none d-sm-inline mx-1"> Hola <?php  $usuario = $_SESSION['user']['Usuario'];; echo $usuario ?>!</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="#">Ajustes</a></li>
+                            <li><a class="dropdown-item" href="?c=Usuario&a=Ajustes">Ajustes</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                            <li><a class="dropdown-item" href="?c=Usuario&a=CerrarSesion">Cerrar Sesión</a></li>
                         </ul>
                     </div>
                     </div>

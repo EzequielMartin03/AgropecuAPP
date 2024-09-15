@@ -37,7 +37,7 @@
                         <form id="formAltaFumigador" method="POST" action="?c=Fumigador&a=Guardar">
                             <div class="mb-3">
                                 <label for="Nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="Nombre" name="Nombre" required>
+                                <input type="text"  class="form-control" id="Nombre" name="Nombre" required>
                             </div>
                             <div class="mb-3">
                                 <label for="Direccion" class="form-label">Dirección</label>

@@ -28,10 +28,10 @@ class FumigadorControlador {
 
     public function Guardar() {
         $Fumigador = new Fumigador();
-        $Fumigador-> setNombre($_POST['Nombre']);
-        $Fumigador-> setDireccion($_POST['Direccion']);
-        $Fumigador-> setTelefono($_POST['Telefono']);
-        $Fumigador-> setCuit($_POST['Cuit']);
+        $Fumigador-> setNombreFumigador($_POST['Nombre']);
+        $Fumigador-> setDireccionFumigador($_POST['Direccion']);
+        $Fumigador-> setTelefonoFumigador($_POST['Telefono']);
+        $Fumigador-> setCuitFumigador($_POST['Cuit']);
 
         $this->modelo->InsertarFumigador($Fumigador);    
 
@@ -41,10 +41,10 @@ class FumigadorControlador {
     public function Modificar() {                           
         $Fumigador = new Fumigador();                                   
         $Fumigador -> setIdFumigador($_POST['IdFumigador']);
-        $Fumigador-> setNombre($_POST['Nombre']);
-        $Fumigador-> setDireccion($_POST['Direccion']);
-        $Fumigador-> setTelefono($_POST['Telefono']);
-        $Fumigador-> setCuit($_POST['Cuit']);
+        $Fumigador-> setNombreFumigador($_POST['Nombre']);
+        $Fumigador-> setDireccionFumigador($_POST['Direccion']);
+        $Fumigador-> setTelefonoFumigador($_POST['Telefono']);
+        $Fumigador-> setCuitFumigador($_POST['Cuit']);
 
         $this->modelo->ActualizarFumigador($Fumigador);    
 

@@ -70,8 +70,14 @@
 
     <div class="login-container">
         <img src="../assets/img/logo_agropecuapp.png" alt="AgropecuApp Logo">
-
         
+            <!-- Mostrar el error si existe -->
+        <?php if (!empty($error)): ?>
+            <div class="alert alert-danger">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
+            
         <form action="?c=Usuario&a=login" method="POST">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Correo Electrónico" name="usuario" required>

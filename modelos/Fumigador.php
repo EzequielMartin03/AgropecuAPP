@@ -66,4 +66,24 @@ class Fumigador {
         $consulta->execute(array("%$termino%", "%$termino%", 'Activo'));
         return $consulta->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function InsertarFumigador(Fumigador $fumigador) {
+        try {
+            $consulta = $this->pdo->prepare("INSERT INTO fumigadores (NombreFumigador, DireccionFumigador, TelefonoFumigador, CuitFumigador, EstadoFumigador) VALUES (?, ?, ?, ?, ?)");
+            $consulta->execute(array($fumigador->getNombreFumigador(), $fumigador->getDireccionFumigador(), $fumigador->getTelefonoFumigador(), $fumigador->getCuitFumigador(), 'Activo'));
+            
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function ActualizarFumigador(Fumigador $fumigador) {
+        try {
+            $consulta = $this->pdo->prepare("UPDATE fumigadores SET NombreFumigador = ?, DireccionFumigador = ?, TelefonoFumigador = ?, CuitFumigador = ? WHERE IdFumigador = ?");
+            $consulta->execute(array($fumigador->getNombreFumigador(), $fumigador->getDireccionFumigador(), $fumigador->getTelefonoFumigador(), $fumigador->getCuitFumigador(), $fumigador->getIdFumigador()));
+            
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
 }

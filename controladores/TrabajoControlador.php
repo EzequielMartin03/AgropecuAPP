@@ -50,23 +50,6 @@ class TrabajoControlador {
         require_once "vistas/Trabajos/indexTrabajo.php";
     }
 
-    // public function Guardar() {
-    //     $Trabajo = new TrabajoRealizado();
-    //     $Trabajo-> setIdFumigador($_POST['nuevoFumigadorSelect']);
-    //     $Trabajo-> setIdAguatero($_POST['nuevoAguateroSelect']);
-    //     $Trabajo-> setIdCliente($_POST['nuevoClienteSelect']);
-    //     $Trabajo-> setCantidadHectareasTrabajadas($_POST['Hectareas']);
-    //     $Trabajo-> setFechaTrabajo($_POST['FechaTrabajo']);
-    //     $Trabajo-> setDescripcion($_POST['Descripcion']);
-    //     $Trabajo-> setFechaPago($_POST['FechaPago']);
-    //     //$Trabajo-> setIdUsuario($_POST['IdUsuario']);
-    //     $Trabajo-> setNroFacturaAfip($_POST['NroFactura']);
-
-
-    //     $this->modelo->InsertarTrabajo($Trabajo);    
-
-    //     header ("location:?c=Trabajo");
-    // }
 
     public function Guardar() {
         $trabajo = new TrabajoRealizado();

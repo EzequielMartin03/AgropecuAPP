@@ -34,19 +34,19 @@
                                                 <input type="hidden" name="IdFumigador" value="<?= $Fumigador->IdFumigador ?>">
                                                 <div class="mb-3">
                                                     <label for="Nombre" class="form-label">Nombre</label>
-                                                    <input type="text" class="form-control" id="Nombre" name="Nombre" value="<?= $Fumigador->Nombre ?>" required>
+                                                    <input type="text" class="form-control" id="Nombre" name="Nombre" value="<?= $Fumigador->NombreFumigador ?>" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="Direccion" class="form-label">Dirección</label>
-                                                    <input type="text" class="form-control" id="Direccion" name="Direccion" value="<?= $Fumigador->Direccion ?>" required>
+                                                    <input type="text" class="form-control" id="Direccion" name="Direccion" value="<?= $Fumigador->DireccionFumigador ?>" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="Telefono" class="form-label">Teléfono</label>
-                                                    <input type="tel" class="form-control" id="Telefono" name="Telefono" value="<?= $Fumigador->Telefono ?>" required>
+                                                    <input type="tel" class="form-control" id="Telefono" name="Telefono" value="<?= $Fumigador->TelefonoFumigador ?>" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="Cuit" class="form-label">Cuit</label>
-                                                    <input type="number" class="form-control" id="Cuit" name="Cuit" value="<?= $Fumigador->Cuit ?>" required>
+                                                    <input type="number" class="form-control" id="Cuit" name="Cuit" value="<?= $Fumigador->CuitFumigador ?>" required>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

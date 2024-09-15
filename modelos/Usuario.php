@@ -40,6 +40,35 @@ class Usuario {
             $stmt->execute([$username]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
+
+        public function ListarUsuarios() {
+            try {
+                $consulta = $this->pdo->prepare("SELECT * FROM usuario;");
+                $consulta->execute();
+                return $consulta->fetchAll(PDO::FETCH_OBJ);
+            } catch (Exception $e) {
+                die($e->getMessage());
+            }
+        }
+
+        public function InsertarUsuario($Usuario, $clave) {
+            try {
+                $consulta = $this->pdo->prepare("INSERT INTO usuario (Usuario, Clave) VALUES (?, ?)");
+                $consulta->execute(array($Usuario, $clave));
+            } catch (Exception $e) {
+                die($e->getMessage());
+            }
+        }
+
+        public function BlanquearClaveUsuario($IdUsuario, $Usuario, $clave) {
+            try {
+                $consulta = $this->pdo->prepare("UPDATE usuario SET Clave = ?, Usuario = ? WHERE IdUsuario = ?");
+                $consulta->execute(array($clave,$Usuario,$IdUsuario));
+                
+            } catch (Exception $e) {
+                die($e->getMessage());
+            }
+        }
     
     
     

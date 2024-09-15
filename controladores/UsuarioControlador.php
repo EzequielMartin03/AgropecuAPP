@@ -12,16 +12,18 @@ class UsuarioControlador {
         require_once 'vistas/Usuario/loginUsuario.php';
     }
 
+    public function GestionUsuarios() {
+        $Usuarios = $this->modeloUsuario->ListarUsuarios();
+        require_once 'vistas/Inicio/SideBar.php';
+        require_once 'vistas/Usuario/gestionUsuarios.php';
+    }
+
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['usuario'];
             $password = $_POST['contrasena'];
 
-            echo 'Username: ' . htmlspecialchars($username) . '<br>';
-            echo 'Password: ' . htmlspecialchars($password) . '<br>';
-
-
-
+          
 
             $user = $this->modeloUsuario->getUserByUsername($username);
 
@@ -31,7 +33,8 @@ class UsuarioControlador {
                 header('Location: ?c=inicio'); // Redirige al usuario a la página principal después del login
                 exit();
             } else {
-                echo 'Nombre de usuario o contraseña incorrectos';
+                $error = 'Nombre de usuario o contraseña incorrectos';
+                include 'vistas/Usuario/loginUsuario.php';
             }
         } else {
             // Mostrar formulario de inicio de sesión
@@ -53,6 +56,23 @@ class UsuarioControlador {
         require_once 'vistas/inicio/SideBar.php';
         require_once 'vistas/Usuario/indexAjustes.php';
         
-    }   
+    }
+
+    public function AgregarUsuario() { 
+        $Usuario = $_POST['Usuario'];
+        $Clave = $_POST['Clave'];
+        $nuevoHash = password_hash($Clave, PASSWORD_DEFAULT);
+        $this->modeloUsuario->InsertarUsuario($Usuario, $nuevoHash);
+        header("Location: ?c=Usuario&a=GestionUsuarios");
+    }
+    
+    public function BlanquearClaveUsuario() {
+        $Usuario = $_POST['Usuario'];
+        $NuevaClave = $_POST['Clave'];
+        $IdUsuario = $_POST['IdUsuario'];
+        $nuevoHash = password_hash($NuevaClave, PASSWORD_DEFAULT);
+        $this->modeloUsuario->BlanquearClaveUsuario($IdUsuario, $Usuario, $nuevoHash);
+        header("Location: ?c=Usuario&a=GestionUsuarios");
+    }
 }
 ?>

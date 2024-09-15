@@ -16,6 +16,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
+    
 
     
 </head>
@@ -45,6 +46,9 @@
                     </a>
                     <a href="?c=Cobros" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
                         <i class="bi-cash fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Cobros</span>
+                    </a>
+                    <a href="?c=Usuario&a=GestionUsuarios" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">
+                        <i class="bi-people fs-4"></i> <span class="ms-1 d-none d-sm-inline">Gestionar Usuarios</span>
                     </a>
                     
                     

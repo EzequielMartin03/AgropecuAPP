@@ -4,6 +4,12 @@ require_once "modelos/trabajoRealizado.php";
 require_once "modelos/cliente.php";
 require_once "modelos/fumigador.php";
 require_once "modelos/aguatero.php";
+require_once 'pdf/vendor/autoload.php';  // Ajusta la ruta según tu estructura de directorios
+
+
+    use Dompdf\Dompdf;
+    use Dompdf\Options;
+
 
 class TrabajoControlador {
     private $modelo;
@@ -114,9 +120,15 @@ class TrabajoControlador {
             $resultados = $this->modelo->FiltrarTrabajosCliente($IdCliente, $fechaInicio, $fechaFin);
             $clientes = $this->modeloCliente->ListarCliente();
             $AllTrabajos = $this->modelo->ListarTrabajos();
+            $nombreCliente =  $resultados[0]->Nombre;
+            $_SESSION['resultados_filtrados'] = $resultados;
+            $_SESSION['NombreCliente'] = $nombreCliente;
+            
 
             require_once "vistas/inicio/SideBar.php";
-            require_once "vistas/Trabajos/IndexTrabajo.php"; 
+            require_once "vistas/Trabajos/IndexTrabajo.php";
+
+        
         
 
     }
@@ -154,6 +166,52 @@ class TrabajoControlador {
         
     }
 
+    
+    public function generarPDF() {
+        // Verificar si los resultados están en la sesión
+        if (!isset($_SESSION['resultados_filtrados'])) {
+            die('No hay resultados para generar el PDF.');
+        }
+    
+        $resultados = $_SESSION['resultados_filtrados'];
+        $cliente = $_SESSION['NombreCliente'];
+    
+   
+    
+        // Crear una instancia de Dompdf
+        $dompdf = new Dompdf();
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+        $options->set('isPhpEnabled', true);
+        $dompdf->setOptions($options);
+    
+        // Obtener la plantilla HTML, pasarle $resultados
+        ob_start();
+        include './vistas/Informes/index.php'; // La plantilla HTML debe usar $resultados
+        $html = ob_get_clean();
+    
+        // Cargar el HTML en Dompdf
+        $dompdf->loadHtml($html);
+    
+        // Configurar el tamaño del papel y la orientación
+        $dompdf->setPaper('A4', 'portrait');
+    
+        // Renderizar el PDF
+        $dompdf->render();
+    
+        // Enviar el archivo PDF al navegador para descargar
+        $dompdf->stream("reporte_cliente.pdf", ["Attachment" => true]);
+    
+        // Opcional: Limpiar la sesión después de generar el PDF
+        unset($_SESSION['resultados_filtrados']);
+    }
+
+
+  
+    
+    
+    
     
    
 }

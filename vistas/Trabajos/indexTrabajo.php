@@ -82,11 +82,15 @@
     <a href="#" class="btn btn-primary btn-add-work" data-bs-toggle="modal" data-bs-target="#altaClienteModal">
     <i class="bi-plus-circle"></i> Nuevo Trabajo
 </a>
+
+<form action="?c=Trabajo&a=generarPDF" method="POST">
     <!-- Boton para PDF -->
-    <a href="#" class="btn btn-primary btn-add-work2">
+   <button type="submit" class="btn btn-primary btn-add-work2">
         <i class="bi-file-text"></i> Detalle PDF
     
-</a>
+</button>
+
+</form>
       
 
 <!-- jQuery -->

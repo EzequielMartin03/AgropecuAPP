@@ -4,12 +4,19 @@ require_once "modelos/database.php";
 
 // Verifica si el usuario está autenticado
 function checkAuth() {
-    // Si el usuario no está autenticado
+    // Lista de controladores y acciones permitidas sin autenticación
+    $allowedActions = [
+        'Usuario' => ['Inicio', 'login'] // Aquí defines las acciones que no requieren autenticación
+    ];
+
+    $currentController = isset($_GET['c']) ? $_GET['c'] : 'Inicio';
+    $currentAction = isset($_GET['a']) ? $_GET['a'] : 'Inicio';
+
+    // Si el usuario NO está autenticado
     if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-        // Si el usuario está intentando acceder a la página de inicio de sesión, no redirijas
-        $currentPage = isset($_GET['c']) ? $_GET['c'] : 'Inicio';
-        if ($currentPage !== 'Usuario') {
-            header('Location: ?c=Usuario&a=Inicio');
+        // Si el controlador actual NO es Usuario o la acción no es permitida, redirige al login
+        if (!isset($allowedActions[$currentController]) || !in_array($currentAction, $allowedActions[$currentController])) {
+            header('Location: ?c=Usuario&a=Inicio'); // Redirige al login
             exit();
         }
     }

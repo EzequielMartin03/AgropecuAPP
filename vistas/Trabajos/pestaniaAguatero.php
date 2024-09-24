@@ -1,8 +1,5 @@
 
-        <!-- Pestaña Aguatero -->
-    
-        
-        <div>
+     <div>
                 <form class="mt-3" method="POST" action="?c=Trabajo&a=FiltrarTrabajoAguatero&tab=aguatero">
                     <div class="row mb-3">
                         <div class="col-md-4">

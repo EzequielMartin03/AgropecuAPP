@@ -200,9 +200,12 @@ class TrabajoRealizado {
     }
 
     public function filtrarCobrosXFecha($FechaInicio, $FechaFin) {
+        try {
         $query = "SELECT trabajorealizado.IdTrabajo, 
                  trabajorealizado.CantidadHectareasTrabajadas, 
-                 trabajorealizado.Descripcion, 
+                 trabajorealizado.Descripcion,
+                 trabajorealizado.FechaTrabajo,
+                 trabajorealizado.FechaPago, 
                  Clientes.Nombre 
                 FROM trabajorealizado
                 INNER JOIN Clientes ON trabajorealizado.IdCliente = Clientes.IdCliente
@@ -210,5 +213,8 @@ class TrabajoRealizado {
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([$FechaInicio, $FechaFin]);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 }

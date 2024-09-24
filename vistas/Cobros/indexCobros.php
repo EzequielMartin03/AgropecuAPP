@@ -12,11 +12,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
     
     <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
+    <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
+
+
 </head>
 <body>
-<?php include './vistas/Cobros/FiltrarCobros.php'; ?>
-<?php include './vistas/Cobros/FiltrarCobros.php'; ?>
 
+<?php include './vistas/Cobros/tablaCobros.php'; ?>
+    
 <!-- Bootstrap JS -->
 <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -16,15 +16,15 @@ class CobrosControlador {
         $clientes = $this->modeloCliente->ListarCliente();
         
         require_once "vistas/inicio/SideBar.php";
-        require_once "vistas/cobros/indexCobros.php";
+        require_once "vistas/Cobros/indexCobros.php";
     }
 
 
-    public function FiltarCobrosXFecha() { 
+    public function filtrarCobrosXFecha() { 
         $fechaInicio = $_POST['fechaInicio'];
         $fechaFin = $_POST['fechaFin'];
 
-        $cobros = $this->modelo->filtrarCobrosXFecha($fechaInicio, $fechaFin);
+        $cobros = $this->modelo->filtrarCobrosXFecha($fechaInicio, $fechaFin); 
 
         require_once "vistas/Cobros/indexCobros.php";
     }

@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="Clave" class="form-label">Nueva Clave</label>
-                                        <input type="text" class="form-control" id="Clave" name="Clave"required>
+                                        <input type="password" class="form-control" id="Clave" name="Clave"required>
                                     </div>
                                    
                                     <div class="modal-footer">
@@ -87,7 +87,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <p>¿Estás seguro de que quieres eliminar a <strong><?= $usuario->Usuario ?></strong>?</p>
+                                <p>¿Estás seguro de que quieres eliminar al usuario <strong><?= $usuario->Usuario ?></strong>?</p>
                             </div>
                             <div class="modal-footer">
                                 <form method="POST" action="?c=usuario&a=Eliminar">

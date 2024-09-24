@@ -58,11 +58,11 @@ class TrabajoControlador {
         $trabajo->setFechaTrabajo($_POST['FechaTrabajo']);
         $trabajo->setFechaPago($_POST['FechaPago']);
         $trabajo->setCantidadHectareasTrabajadas($_POST['Hectareas']);
-        $trabajo->setNroFacturaAfip($_POST['NroFactura']);
+        $trabajo->setNroFacturaAfip($_POST['NroFactura']); 
     
         // Obtener los IDs seleccionados
         $fumigadores =  isset($_POST['mySelect2']) ? $_POST['mySelect2'] : [];
-        $aguateros = isset($_POST['mySelect']) ? $_POST['mySelect'] : [];
+        $aguateros = isset($_POST['mySelect']) ? $_POST['mySelect' ] : [];
     
         // Insertar el trabajo y las relaciones
         $this->modelo->InsertarTrabajo($trabajo, $fumigadores, $aguateros);
@@ -88,7 +88,7 @@ class TrabajoControlador {
     }
 
     public function eliminar() {
-        $Trabajo = new TrabajoRealziado();
+        $Trabajo = new TrabajoRealizado();
         $Trabajo -> setIdTrabajo($_POST['IdTrabajo']);
         
         $this->modelo->EliminarTrabajo($Trabajo);    
@@ -96,6 +96,10 @@ class TrabajoControlador {
         header ("location:?c=Trabajo");
     }
     public function filtrarPorCliente() {
+        $clientes = $this->modeloCliente->ListarCliente();
+        $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
+        $ListaAguateros = $this->modeloAguatero->ListarAguatero();
+        $AllTrabajos = $this->modelo->ListarTrabajos();
             
             $IdCliente = $_POST['ClienteSelect'];
             $fechaInicio = $_POST['fechaInicio'];
@@ -106,6 +110,8 @@ class TrabajoControlador {
             $nombreCliente =  $resultados[0]->Nombre;
             $_SESSION['resultados_filtrados'] = $resultados;
             $_SESSION['NombreCliente'] = $nombreCliente;
+
+            
             
 
             require_once "vistas/inicio/SideBar.php";
@@ -153,7 +159,11 @@ class TrabajoControlador {
     public function generarPDF() {
         // Verificar si los resultados están en la sesión
         if (!isset($_SESSION['resultados_filtrados'])) {
-            die('No hay resultados para generar el PDF.');
+            echo "<script>
+            alert('No hay resultados para generar el PDF.');
+            window.history.back(); 
+          </script>";
+         exit(); // Termina la ejecución aquí para que no intente seguir generando el PDF
         }
     
         $resultados = $_SESSION['resultados_filtrados'];

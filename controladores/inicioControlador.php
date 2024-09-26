@@ -5,11 +5,11 @@ class inicioControlador {
 
     public function _CONSTRUCT() {
        
-        session_start(); // Iniciar la sesión
+        session_start(); 
 
         // Verificar si el usuario no está autenticado
         if (!isset($_SESSION['usuario'])) {
-            header("Location: index.php?c=Usuario&a=Inicio"); // Redirigir al login
+            header("Location: index.php?c=Usuario&a=Inicio"); 
             exit();
         }
     }

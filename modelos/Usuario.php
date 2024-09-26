@@ -36,9 +36,9 @@ class Usuario {
     }
  
         public function getUserByUsername($username) {
-            $stmt = $this->pdo->prepare("SELECT * FROM usuario WHERE Usuario = ?");
-            $stmt->execute([$username]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $stm = $this->pdo->prepare("SELECT * FROM usuario WHERE Usuario = ?");
+            $stm->execute([$username]);
+            return $stm->fetch(PDO::FETCH_ASSOC);
         }
 
         public function ListarUsuarios() {

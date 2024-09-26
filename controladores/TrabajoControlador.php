@@ -60,11 +60,10 @@ class TrabajoControlador {
         $trabajo->setCantidadHectareasTrabajadas($_POST['Hectareas']);
         $trabajo->setNroFacturaAfip($_POST['NroFactura']); 
     
-        // Obtener los IDs seleccionados
         $fumigadores =  isset($_POST['mySelect2']) ? $_POST['mySelect2'] : [];
         $aguateros = isset($_POST['mySelect']) ? $_POST['mySelect' ] : [];
     
-        // Insertar el trabajo y las relaciones
+       
         $this->modelo->InsertarTrabajo($trabajo, $fumigadores, $aguateros);
     
         
@@ -108,7 +107,10 @@ class TrabajoControlador {
             $clientes = $this->modeloCliente->ListarCliente();
             $AllTrabajos = $this->modelo->ListarTrabajos();
             $nombreCliente =  $resultados[0]->Nombre;
+
+            //variable de sesión para guardar los resultados filtrados
             $_SESSION['resultados_filtrados'] = $resultados;
+            //variable de sesión para guardar el nombre del cliente
             $_SESSION['NombreCliente'] = $nombreCliente;
 
             
@@ -157,13 +159,13 @@ class TrabajoControlador {
 
     
     public function generarPDF() {
-        // Verificar si los resultados están en la sesión
+      
         if (!isset($_SESSION['resultados_filtrados'])) {
             echo "<script>
             alert('No hay resultados para generar el PDF.');
             window.history.back(); 
           </script>";
-         exit(); // Termina la ejecución aquí para que no intente seguir generando el PDF
+         exit(); 
         }
     
         $resultados = $_SESSION['resultados_filtrados'];
@@ -171,7 +173,7 @@ class TrabajoControlador {
     
    
     
-        // Crear una instancia de Dompdf
+       
         $dompdf = new Dompdf();
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
@@ -179,24 +181,24 @@ class TrabajoControlador {
         $options->set('isPhpEnabled', true);
         $dompdf->setOptions($options);
     
-        // Obtener la plantilla HTML, pasarle $resultados
+    
         ob_start();
-        include './vistas/Informes/index.php'; // La plantilla HTML debe usar $resultados
+        include './vistas/Informes/index.php';
         $html = ob_get_clean();
     
-        // Cargar el HTML en Dompdf
+    
         $dompdf->loadHtml($html);
     
-        // Configurar el tamaño del papel y la orientación
+        
         $dompdf->setPaper('A4', 'portrait');
     
-        // Renderizar el PDF
+      
         $dompdf->render();
     
-        // Enviar el archivo PDF al navegador para descargar
+       
         $dompdf->stream("reporte_cliente.pdf", ["Attachment" => true]);
     
-        // Opcional: Limpiar la sesión después de generar el PDF
+    
         unset($_SESSION['resultados_filtrados']);
     }
 

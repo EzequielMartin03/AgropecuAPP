@@ -26,13 +26,9 @@
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                 <div class="d-flex flex-column align-items-stretch px-3 pt-2 text-white min-vh-100">
-               
-                <div class="sidebar-header">
-                <img src="../assets/img/logo_agropecuapp.png" class="logo d-none d-md-block w-75" alt="Logo" style="max-width: 100%; height: auto;">
-                <img src="../assets/img/logo2.png" class="logo-small d-block d-md-none w-75" alt="Logo pequeño">
-            </div>
-
-            
+                <a href="?c=Inicio" class="d-flex  text-decoration-none">
+                    <img src="../assets/img/logo_agropecuapp.png" alt="AgropecuApp Logo" class="img-fluid" style="max-width: 100%;">
+            </a>
                    <hr>
                     <!-- Botones fijos alineados -->
                     <a href="?c=Cliente" class="btn btn-dark text-white w-100 mb-2 btn-sidebar">

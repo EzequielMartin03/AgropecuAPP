@@ -39,7 +39,7 @@
 
 <body>
 
-
+<div class ="container">
     
 <div class="col py-3">
     <!-- Pestañas de filtros -->
@@ -58,7 +58,6 @@
         </li>
         
     </ul>
-    <div class ="container">
     <div class="tab-content" id="filterTabsContent">
 
     <div class="tab-pane fade show active" id="todos" role="tabpanel" aria-labelledby="todos-tab">

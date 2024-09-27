@@ -1,56 +1,22 @@
+.btn-add-work {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para mejor visibilidad */
+}
+.btn-custom {
+    margin: 0 5px; 
+}
 
-    .sidebar {
-        min-height: 100vh; 
-    }
-    .btn-custom {
-        margin: 0 5px; 
-    }
-    .btn-sidebar {
-        display: flex;
-        align-items: center;
-        padding: 10px 15px; 
-        text-align: left;
-        width: 100%;
-        border: none;
-    }
-    .btn-sidebar i {
-        margin-right: 10px; 
-    }
-    .dropdown-menu {
-        min-width: 200px;
-    }
-    .form-control {
-        box-sizing: border-box;
-    }
-    .table-container {
-        position: relative;
-        margin-top: 20px;
-    }
-    .btn-add-work {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
-    }
-    .btn-add-work2 {
-        position: fixed;
-        bottom: 20px;
-        right: 171px;
-        z-index: 1000;
-    }
-    .container {
-        flex: 1;
-        height: 100vh; 
-        
-   
-    }
+.btn-add-work2 {
+    position: fixed;
+    bottom: 20px;
+    right: 171px;
+    z-index: 1000; /* Asegura que el botón esté sobre otros elementos */
+}
 
-    .table-container {
-        overflow-x: auto;
-        overflow-y: auto;
-    }
-
-  
-
-   
-
+.table-container {
+    position: relative;
+    margin-top: 20px;
+}

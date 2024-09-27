@@ -40,14 +40,8 @@
     }
     .container {
         flex: 1;
-        height: 100vh; 
-        
-   
-    }
-
-    .table-container {
-        overflow-x: auto;
-        overflow-y: auto;
+        height: 100vh; /* Ocupa toda la altura visible de la ventana */
+        overflow-y: auto; /* Permite scroll vertical en el contenedor principal */
     }
 
   

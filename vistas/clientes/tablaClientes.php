@@ -31,7 +31,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form id="formModificarCliente<?= $cliente->IdCliente ?>" method="POST" action="?c=cliente&a=Modificar">
+                                            <form id="formModificarCliente<?= $cliente->IdCliente ?>" method="POST" action="?c=cliente&a=ModificarCliente">
                                                 <input type="hidden" name="IdCliente" value="<?= $cliente->IdCliente ?>">
                                                 <div class="mb-3">
                                                     <label for="Nombre" class="form-label">Nombre</label>

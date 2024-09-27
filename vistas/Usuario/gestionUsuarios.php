@@ -9,21 +9,12 @@
     
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/SideBarStyle.css"> 
+
     <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
 
 
-    <style>
-          .container {
-                flex: 1;
-                height: 100vh; /* Ocupa toda la altura visible de la ventana */
-                overflow-y: auto; /* Permite scroll vertical en el contenedor principal */
-             }
-
-         
-        
-            
-    </style>
-    
 </head>
 <body>
 
@@ -107,13 +98,11 @@
         </table>
 
          <!-- Botones flotantes -->
+
      <!-- Boton para nuevo trabajo -->
      <a href="#" class="btn btn-primary btn-add-work" data-bs-toggle="modal" data-bs-target="#AgregarUsuario">
     <i class="bi-plus-circle"></i> Nuevo Usuario
 </a>
-
-
-
  </div>   
 
 <!-- Modal para agregar un nuevo usuario -->

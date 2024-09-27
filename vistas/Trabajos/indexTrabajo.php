@@ -15,6 +15,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
+    <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
 
     <title>Filtrar Trabajos</title>
 

@@ -86,4 +86,15 @@ class Fumigador {
             die($e->getMessage());
         }
     }
+
+    public function EliminarFumigador(Fumigador $fumigador) {
+        try {
+            $consulta = "UPDATE fumigadores SET EstadoFumigador = 'Inactivo' WHERE IdFumigador = ?";
+            $this->pdo->prepare($consulta)->execute(array(
+                $fumigador->getIdFumigador()
+            ));
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
 }

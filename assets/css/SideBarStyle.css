@@ -1,15 +1,36 @@
 .usuario-info {
-    margin-bottom: 10px; /* Un pequeño margen inferior opcional */
+    margin-bottom: 10px; 
     padding: 10px;
-    background-color: #333; /* Cambia el color de fondo si es necesario */
-    color: white; /* Color de texto */
-    text-align: center; /* Centra el texto */
+    background-color: #333; 
+    color: white; 
+    text-align: center; 
 }
 
 .sidebar {
-    position: relative; /* Hace que los elementos hijos se posicionen en relación con el contenedor */
-    height: 100vh; /* Hace que la barra lateral ocupe toda la altura de la pantalla */
+    position: relative; 
+    height: 100vh; 
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Espacia los elementos para que el último quede abajo */
+    justify-content: space-between; 
+}
+
+.sidebar {
+    min-height: 100vh; 
+}
+.btn-custom {
+    margin: 0 5px; 
+}
+.btn-sidebar {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px; 
+    text-align: left;
+    width: 100%;
+    border: none;
+}
+.btn-sidebar i {
+    margin-right: 10px; 
+}
+.dropdown-menu {
+    min-width: 200px;
 }

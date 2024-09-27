@@ -13,17 +13,13 @@ class AguateroControlador {
     public function Inicio() {
        
         $termino = isset($_GET['q']) ? $_GET['q'] : ''; 
-       
+
         if (!empty($termino)) {
-            
             $Aguateros = $this->modelo->BuscarAguatero($termino);
         } else {
-            
             $Aguateros = $this->modelo->ListarAguatero();
         }
 
-        
-        
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/aguateros/indexAguateros.php";
     }
@@ -56,9 +52,7 @@ class AguateroControlador {
     public function eliminar() {
         $Aguatero = new Aguatero();
         $Aguatero -> setIdAguatero($_POST['IdAguatero']);
-        
         $this->modelo->EliminarAguatero($Aguatero);    
-
         header ("location:?c=Aguatero");
     }
 }

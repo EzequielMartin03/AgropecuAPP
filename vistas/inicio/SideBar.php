@@ -27,12 +27,9 @@
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
                 <div class="d-flex flex-column align-items-stretch px-3 pt-2 text-white min-vh-100">
                 <a href="?c=Inicio" class="d-flex  text-decoration-none">
-                  <!-- Imagen para pantallas pequeñas y tablets (hasta tamaño iPad incluido) -->
-<img src="../assets/img/logo2.png" alt="AgropecuApp Logo" class="img-fluid d-block mx-auto d-lg-none" style="max-width: 100%;">
-
-<!-- Imagen para pantallas grandes (escritorio) -->
-<img src="../assets/img/logo_agropecuapp.png" alt="AgropecuApp Logo" class="img-fluid d-none d-lg-block" style="max-width: 100%;">
-
+              
+                    <img src="../assets/img/logo2.png" alt="AgropecuApp Logo" class="img-fluid d-block mx-auto d-lg-none" style="max-width: 100%;">
+                    <img src="../assets/img/logo_agropecuapp.png" alt="AgropecuApp Logo" class="img-fluid d-none d-lg-block" style="max-width: 100%;">
             </a>
                    <hr>
                     <!-- Botones fijos alineados -->
@@ -65,7 +62,7 @@
                             <span class="d-none d-sm-inline mx-1"> Hola <?php  $usuario = $_SESSION['user']['Usuario'];; echo $usuario ?>!</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="?c=Usuario&a=Ajustes">Ajustes</a></li>
+                            <li><a class="dropdown-item" href="?c=Ajustes">Ajustes</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

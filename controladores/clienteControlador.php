@@ -30,22 +30,23 @@ class clienteControlador {
 
     public function ModificarCliente() {                           
         $cliente = new Cliente();                                   
-        $cliente -> setIdCliente($_POST['Id_cliente']);
-        $cliente-> setNombre($_POST['Nombre']);
-        $cliente-> setDireccion($_POST['Direccion']);
-        $cliente-> setTelefono($_POST['Telefono']);
-        $cliente-> setCuit($_POST['Cuit']);
+        $cliente -> setIdCliente($_POST['IdCliente']);
+        $cliente-> setNombre($_POST['NombreModificar']);
+        $cliente-> setDireccion($_POST['DireccionModificar']);
+        $cliente-> setTelefono($_POST['TelefonoModificar']);
+        $cliente-> setCuit($_POST['CuitModificar']);
 
         $this->modelo->ActualizarCliente($cliente);    
 
         header ("location:?c=cliente");
+
     }
 
     public function EliminarCliente() {
         $cliente = new Cliente();
-        $cliente -> setIdCliente($_POST['Id_cliente']);
+        $cliente -> setIdCliente($_POST['IdCliente']);
         
-        $this->modelo->Eliminar($cliente);    
+        $this->modelo->EliminarCliente($cliente);    
 
         header ("location:?c=cliente");
     }

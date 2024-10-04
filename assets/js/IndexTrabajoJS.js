@@ -12,7 +12,7 @@ $(document).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
     const activeTab = urlParams.get('tab') || 'todos'; // Por defecto a 'Cliente' si no hay parámetro
 
-    // Activa la pestaña correcta
+
     const tabButton = document.querySelector(`#${activeTab}-tab`);
     const tabContent = document.querySelector(`#${activeTab}`);
     if (tabButton && tabContent) {

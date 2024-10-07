@@ -31,7 +31,11 @@
                         <i class="bi bi-search"></i> Filtrar
                     </button>
                 </form>
+
+                <?php include 'vistas/Cobros/tablaCobros.php';?>
             </div>
+
+            
 
             
             </div>

@@ -15,6 +15,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
+    
     <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
 
     <title>Filtrar Trabajos</title>
@@ -45,11 +46,9 @@
 <div class="col py-3">
     <!-- Pestañas de filtros -->
     <ul class="nav nav-tabs" id="filterTabs" role="tablist">
+        
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="todos-tab" data-bs-toggle="tab" data-bs-target="#todos" type="button" role="tab" aria-controls="todos" aria-selected="false">Todos los Trabajos</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link " id="Cliente-tab" data-bs-toggle="tab" data-bs-target="#Cliente" type="button" role="tab" aria-controls="Cliente" aria-selected="true">Filtrar por Cliente</button>
+            <button class="nav-link active " id="Cliente-tab" data-bs-toggle="tab" data-bs-target="#Cliente" type="button" role="tab" aria-controls="Cliente" aria-selected="true">Filtrar por Cliente</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="aguatero-tab" data-bs-toggle="tab" data-bs-target="#aguatero" type="button" role="tab" aria-controls="aguatero" aria-selected="false">Filtrar por Aguatero</button>
@@ -61,11 +60,9 @@
     </ul>
     <div class="tab-content" id="filterTabsContent">
 
-    <div class="tab-pane fade show active" id="todos" role="tabpanel" aria-labelledby="todos-tab">
-    <?php include 'vistas/Trabajos/PestaniaTodos/pestaniaTodos.php';?>
-    </div>
+    
 
-    <div class="tab-pane fade show" id="Cliente" role="tabpanel" aria-labelledby="Cliente-tab">
+    <div class="tab-pane fade show active" id="Cliente" role="tabpanel" aria-labelledby="Cliente-tab">
     <?php include 'vistas/Trabajos/PestaniaCliente/pestaniaCliente.php';?>
      </div>   
 
@@ -111,6 +108,7 @@
 
 <!-- Tu JavaScript personalizado -->
 <script src="../assets/js/indexTrabajoJS.js"></script>
+
 
 
 

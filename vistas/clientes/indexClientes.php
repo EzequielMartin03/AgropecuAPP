@@ -42,7 +42,7 @@
 
 
         <!-- Validar modales -->
-        <script src="../assets/js/validarModal.js"></script>
+        <script src="../assets/js/validarModalCliente.js"></script>
 
        
    

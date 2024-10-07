@@ -19,8 +19,12 @@
                         <td><?= $cliente->Telefono ?></td>
                         <td><?= $cliente->Cuit ?></td>
                         <td>
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ModificarCliente<?= $cliente->IdCliente ?>">
-                                <i class="bi-pencil"></i> Modificar
+                            <button type="button" class="btn btn-warning " data-bs-toggle="modal" data-bs-target="#ModificarCliente<?= $cliente->IdCliente ?>">
+                                <i class="bi-pencil"></i>Modificar
+                            </button>
+
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#EliminarCliente<?= $cliente->IdCliente ?>">
+                                <i class="bi-trash"></i>Eliminar
                             </button>
 
 
@@ -28,9 +32,7 @@
 
                             <?php include './vistas/Clientes/clientesModales.php'; ?>
 
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#EliminarCliente<?= $cliente->IdCliente ?>">
-                                <i class="bi-trash"></i> Eliminar
-                            </button>
+                           
 
                            
                         </td>

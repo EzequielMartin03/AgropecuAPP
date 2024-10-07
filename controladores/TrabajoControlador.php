@@ -35,20 +35,19 @@ class TrabajoControlador {
 
     public function Inicio() {
 
-       
-
         $currentTab = isset($_POST['tab']) ? $_POST['tab'] : 'todos';
-       
-
+    
         $clientes = $this->modeloCliente->ListarCliente();
         $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
         $ListaAguateros = $this->modeloAguatero->ListarAguatero();
         $AllTrabajos = $this->modelo->ListarTrabajos();
+    
+        
 
-      
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/Trabajos/indexTrabajo.php";
     }
+    
 
 
     public function Guardar() {
@@ -67,52 +66,68 @@ class TrabajoControlador {
         // Insertar el trabajo y las relaciones
         $this->modelo->InsertarTrabajo($trabajo, $fumigadores, $aguateros);
     
-        
+        header("location:?c=Trabajo");
     }
     
 
-    public function Modificar() {                           
-        $Trabajo = new TrabajoRealizado();
-        $Trabajo-> setIdTrabajo($_POST['IdTrabajo']);
-        $Trabajo-> setIdFumigador($_POST['IdFumigador']);
-        $Trabajo-> setIdAguatero($_POST['IdAguatero']);
-        $Trabajo-> setIdCliente($_POST['IdCliente']);
-        $Trabajo-> setCantidadhectareasTrabajas($_POST['CantidadhectareasTrabajas']);
-        $Trabajo-> setFechaTrabajo($_POST['FechaTrabajo']);
-        $Trabajo-> setDescripcion($_POST['Descripcion']);
-
-        $this->modelo->ActualizarTrabajo($Trabajo);    
+   public function Modificar() {                           
+  
+    $Trabajo = new TrabajoRealizado();
+    $Trabajo->setIdTrabajo($_POST['IdTrabajo']);
+    
+    $aguateros = $_POST['aguatero'];
+    $fumigadores = $_POST['fumigador'];
 
 
-        header ("location:?c=Trabajo");
+    $Trabajo->setIdCliente($_POST['ClienteSelect']);
+    $Trabajo->setCantidadHectareasTrabajadas($_POST['CantidadHectareas']);
+    $Trabajo->setFechaTrabajo($_POST['FechaTrabajo']);
+    $Trabajo->setDescripcion($_POST['Descripcion']);
+
+
+    $this->modelo->ActualizarTrabajo($Trabajo);    
+
+
+    $this->modelo->ActualizarAguaterosTrabajo($Trabajo->getIdTrabajo(), $aguateros);
+    $this->modelo->ActualizarFumigadoresTrabajo($Trabajo->getIdTrabajo(), $fumigadores);
+
+    // Redirigir a la lista de trabajos
+    header("location:?c=Trabajo");
+}
+
+
+public function EliminarTrabajo() {
+    if (isset($_POST['IdTrabajo'])) {
+        $idTrabajo = $_POST['IdTrabajo'];
+
+        $this->modelo->EliminarTrabajo($idTrabajo);
+        header("Location: ?c=Trabajo"); 
     }
+}
 
-    public function eliminar() {
-        $Trabajo = new TrabajoRealizado();
-        $Trabajo -> setIdTrabajo($_POST['IdTrabajo']);
-        
-        $this->modelo->EliminarTrabajo($Trabajo);    
-
-        header ("location:?c=Trabajo");
-    }
     public function filtrarPorCliente() {
-        $clientes = $this->modeloCliente->ListarCliente();
-        $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
-        $ListaAguateros = $this->modeloAguatero->ListarAguatero();
-        $AllTrabajos = $this->modelo->ListarTrabajos();
-            
+
+            $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
+            $ListaAguateros = $this->modeloAguatero->ListarAguatero();
+           
+            $clientes = $this->modeloCliente->ListarCliente();
+
             $IdCliente = $_POST['ClienteSelect'];
             $fechaInicio = $_POST['fechaInicio'];
             $fechaFin = $_POST['fechaFin'];
+
+           
+            
+
             $resultados = $this->modelo->FiltrarTrabajosCliente($IdCliente, $fechaInicio, $fechaFin);
-            $clientes = $this->modeloCliente->ListarCliente();
-            $AllTrabajos = $this->modelo->ListarTrabajos();
             $nombreCliente =  $resultados[0]->Nombre;
             $_SESSION['resultados_filtrados'] = $resultados;
             $_SESSION['NombreCliente'] = $nombreCliente;
-
-            
-            
+            foreach ($resultados as $resultado) {
+                $resultado->aguaterosSeleccionados = $this->modelo->ObtenerAguaterosPorTrabajo($resultado->IdTrabajo);
+                $resultado->fumigadoresSeleccionados = $this->modelo->ObtenerFumigadoresPorTrabajo($resultado->IdTrabajo);
+            }
+        
 
             require_once "vistas/inicio/SideBar.php";
             require_once "vistas/Trabajos/IndexTrabajo.php";
@@ -122,15 +137,20 @@ class TrabajoControlador {
 
     }
     
-
     public function FiltrarTrabajoFumigador() {
-        $IdFumigador = $_POST['IdFumigador'];
-        $fechaInicio -> $_POST['FechaInicio'];
-        $fechaFin -> $_POST['FechaFin'];
+        $IdFumigador = $_POST['FumigadorSelect'];
+        $fechaInicio = $_POST['fechaInicio'];
+        $fechaFin = $_POST['fechaFin'];
+       
 
-        $resultados = $this->modelo->FiltrarTrabajosFumigador($IdFumigador,$fechaInicio, $fechaFin);
+        if (isset($_POST['FumigadorSelect'], $_POST['fechaInicio'], $_POST['fechaFin'])) {
+            $ResultadosFumigadores = $this->modelo->FiltrarTrabajosFumigador($IdFumigador, $fechaInicio, $fechaFin);
+        } else {
+            $ResultadosFumigadores = []; // Asegúrate de inicializar en caso de que no se envíen filtros
+        }
 
-   
+
+        require_once "vistas/inicio/SideBar.php";
         require_once "vistas/Trabajos/IndexTrabajo.php";
         
     }
@@ -144,7 +164,9 @@ class TrabajoControlador {
             $ResultadoAguateros = $this->modelo->FiltrarTrabajosAguatero($IdAguatero,$fechaInicio, $fechaFin);
         } else {
             header ("location:?c=Trabajo");
+            
         }
+    
       
 
      
@@ -201,10 +223,5 @@ class TrabajoControlador {
     }
 
 
-  
-    
-    
-    
-    
    
 }

@@ -34,33 +34,35 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Cliente</th>
-                <th scope="col">Descripcion</th>
-                <th scope="col">Hectareas</th>
-                <th scope="col">Fecha de Trabajo</th>
-                <th scope="col">Fecha de Pago</th>
-                <th scope="col">Numero de Factura</th>
-                <th scope="col">Acciones</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Hectareas</th>
+                    <th scope="col">Fecha de Trabajo</th>
+                    <th scope="col">fecha de Pago</th>
+                    <th scope="col">Fumigadores</th>
+                    <th scope="col">Aguateros</th>
+                    <th scope="col">Numero de Factura</th>
+                    <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php if (isset($resultados) && !empty($resultados)): ?>
-                <?php foreach ($resultados as $resultado): ?>
+                <?php foreach ($resultados as $Trabajo): ?>
                     <tr>
-                        <td><?= $resultado->Nombre ?></td>
-                        <td><?= $resultado->Descripcion ?></td>
-                        <td><?= $resultado->CantidadHectareasTrabajadas ?></td>
-                        <td><?= $resultado->FechaTrabajo ?></td>
-                        <td><?= $resultado->FechaPago ?></td>
-                        <td><?= $resultado->NroFacturaAfip ?></td>
+                        <td><?= $Trabajo->Nombre ?></td>
+                        <td><?= $Trabajo->Descripcion ?></td>
+                        <td><?= $Trabajo->CantidadHectareasTrabajadas ?></td>
+                        <td><?= $Trabajo->FechaTrabajo ?></td>
+                        <td><?= $Trabajo->FechaPago ?></td>
+                        <td><?php echo $Trabajo->NombreFumigador ? $Trabajo->NombreFumigador : 'No Asignado'; ?></td>
+                        <td><?php echo $Trabajo->NombreAguatero ? $Trabajo->NombreAguatero : 'No Asignado'; ?></td>
+                        <td><?= $Trabajo->NroFacturaAfip ?></td>
                         <td>
-                            <!-- Botón para modificar -->
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ModificarCliente<?= $resultado->IdCliente ?>">
-                                <i class="bi-pencil"></i> Modificar
-                            </button>
+                        <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#ModificarTrabajo<?= $Trabajo->IdTrabajo ?>">Modificar</button>
+
 
                             <!-- Botón para eliminar -->
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#EliminarCliente<?= $resultado->IdCliente ?>">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#EliminarTrabajo<?= $Trabajo->IdTrabajo ?>?>">
                                 <i class="bi-trash"></i> Eliminar
                             </button>
 

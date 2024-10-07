@@ -100,13 +100,33 @@ class TrabajoRealizado {
     public function ListarTrabajos() {
         try {
             $consulta = $this->pdo->prepare("
-                SELECT tr.*, c.Nombre
-                FROM trabajorealizado tr
-                JOIN clientes c ON tr.IdCliente = c.IdCliente
-                WHERE tr.EstadoTrabajo = 'Activo'
+                SELECT trabajorealizado.IdCliente, trabajorealizado.IdTrabajo,trabajorealizado.Descripcion,trabajorealizado.CantidadHectareasTrabajadas,
+                trabajorealizado.FechaTrabajo,trabajorealizado.FechaPago,trabajorealizado.NroFacturaAfip,
+                 clientes.Nombre,GROUP_CONCAT(DISTINCT fumigadores.NombreFumigador SEPARATOR ', ') AS NombreFumigador,
+                   GROUP_CONCAT(DISTINCT aguateros.NombreAguatero SEPARATOR ', ') AS NombreAguatero
+            FROM trabajorealizado
+            JOIN clientes ON trabajorealizado.IdCliente = clientes.IdCliente
+            LEFT JOIN fumigadortrabajo ON trabajorealizado.IdTrabajo = fumigadortrabajo.IdTrabajo
+            LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador
+            LEFT JOIN aguaterotrabajo ON trabajorealizado.IdTrabajo = aguaterotrabajo.IdTrabajo
+            LEFT JOIN aguateros ON aguaterotrabajo.IdAguatero = aguateros.IdAguatero
+            WHERE trabajorealizado.EstadoTrabajo = 'Activo'
+            GROUP BY trabajorealizado.IdTrabajo, trabajorealizado.Descripcion, clientes.Nombre
+
             ");
             $consulta->execute();
             return $consulta->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+
+    public function EliminarTrabajo($IdTrabajo) {
+        try {
+            $consulta = "UPDATE trabajorealizado SET EstadoTrabajo = 'Inactivo' WHERE IdTrabajo = ?";
+            $stmt = $this->pdo->prepare($consulta);
+            $stmt->execute([$IdTrabajo]);
         } catch (Exception $e) {
             die($e->getMessage());
         }
@@ -135,59 +155,110 @@ class TrabajoRealizado {
             $stmt->execute([$idTrabajo, $IdFumigador]);
         }
 
-        // Insertar las relaciones en la tabla trabajo_aguatero
+     
         foreach ($aguateros as $IdAguatero) {
             $query = "INSERT INTO aguaterotrabajo (IdTrabajo, IdAguatero) VALUES (?, ?)";
             $stmt = $this->pdo->prepare($query);
             $stmt->execute([$idTrabajo, $IdAguatero]);
         }
-        header ("location:?c=Trabajo");
+        
     }
 
-    public function FiltrarTrabajosFumigador($IdFumigador, $FechaInicio, $FechaFin) {
-        // Consulta el trabajo solo si está dentro del rango de fechas
-        $query = "SELECT * FROM trabajorealizado WHERE IdFumigador = ? AND FechaTrabajo BETWEEN ? AND ?";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute([$IdFumigador, $FechaInicio, $FechaFin]);
-        $trabajo = $stmt->fetch(PDO::FETCH_ASSOC);
+    public function ActualizarTrabajo($trabajo) {
+        $sql = "UPDATE trabajorealizado SET 
+                    IdCliente = ?, 
+                    CantidadHectareasTrabajadas = ?, 
+                    FechaTrabajo = ?, 
+                    Descripcion = ? 
+                WHERE IdTrabajo = ?";
 
-        if ($trabajo) {
-            // Obtener fumigadores relacionados si el trabajo está dentro del rango de fechas
-            $query = "SELECT IdFumigador FROM trabajo_fumigador WHERE IdTrabajo = ? AND FechaTrabajo BETWEEN ? AND ?";
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute([$IdFumigador, $FechaInicio, $FechaFin]);
-            $fumigadores = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        $stmt = $this->pdo->prepare($sql);
+        
+        $stmt->execute([
+            $trabajo->getIdCliente(),
+            $trabajo->getCantidadHectareasTrabajadas(),
+            $trabajo->getFechaTrabajo(),
+            $trabajo->getDescripcion(),
+            $trabajo->getIdTrabajo() 
+        ]);
+    }
 
-            return [
-                'trabajo' => $trabajo,
-                'fumigadores' => $fumigadores,
-            ];
+    public function ActualizarAguaterosTrabajo($idTrabajo, $aguateros) {
+ 
+        $sql = "DELETE FROM aguaterotrabajo WHERE IdTrabajo = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$idTrabajo]); 
+    
+     
+        foreach ($aguateros as $idAguatero) {
+            $sql = "INSERT INTO aguaterotrabajo (IdTrabajo, IdAguatero) VALUES (?, ?)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$idTrabajo, $idAguatero]); 
         }
+    }
 
-        // Si no se encuentra el trabajo en el rango de fechas, devolver null
-        return null;
+    public function ActualizarFumigadoresTrabajo($idTrabajo, $fumigadores) {
+ 
+        $sql = "DELETE FROM fumigadortrabajo WHERE IdTrabajo = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$idTrabajo]); 
+    
+     
+        foreach ($fumigadores as $IdFumigador) {
+            $sql = "INSERT INTO fumigadortrabajo (IdTrabajo, IdFumigador) VALUES (?, ?)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$idTrabajo, $IdFumigador]); 
+        }
+    }
+    
+    
+
+    public function FiltrarTrabajosFumigador($IdFumigador, $fechaInicio,$fechaFin) {
+        try {
+            $consulta = "
+                SELECT fumigadores.IdFumigador, fumigadores.NombreFumigador, trabajorealizado.Descripcion, trabajorealizado.CantidadHectareasTrabajadas, trabajorealizado.FechaTrabajo
+FROM trabajorealizado  
+LEFT JOIN fumigadortrabajo ON trabajorealizado.IdTrabajo = fumigadortrabajo.IdTrabajo
+LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador WHERE fumigadores.IdFumigador = ? AND trabajorealizado.FechaTrabajo BETWEEN ? AND ?;
+ ";
+            
+            $stm = $this->pdo->prepare($consulta);
+            $stm->execute([$IdFumigador, $fechaInicio,$fechaFin]);
+            return $stm->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+        
+
+       
     }
 
     public function FiltrarTrabajosCliente($IdCliente, $FechaInicio, $FechaFin) {
-        $consulta = "SELECT trabajorealizado.*, clientes.Nombre 
-                     FROM trabajorealizado 
-                     JOIN clientes ON trabajorealizado.IdCliente = clientes.IdCliente
-                     WHERE trabajorealizado.IdCliente = ? 
-                     AND trabajorealizado.FechaTrabajo BETWEEN ? AND ?
-                     ORDER BY trabajorealizado.FechaTrabajo DESC";
-                     
-        $stm = $this->pdo->prepare($consulta);
-        $stm->execute([$IdCliente, $FechaInicio, $FechaFin]);
-        return $stm->fetchAll(PDO::FETCH_OBJ);
+        $consulta = $this->pdo->prepare("
+                SELECT trabajorealizado.IdCliente, trabajorealizado.IdTrabajo,trabajorealizado.Descripcion,trabajorealizado.CantidadHectareasTrabajadas,
+                trabajorealizado.FechaTrabajo,trabajorealizado.FechaPago,trabajorealizado.NroFacturaAfip,
+                 clientes.Nombre,GROUP_CONCAT(DISTINCT fumigadores.NombreFumigador SEPARATOR ', ') AS NombreFumigador,
+                   GROUP_CONCAT(DISTINCT aguateros.NombreAguatero SEPARATOR ', ') AS NombreAguatero
+            FROM trabajorealizado
+            JOIN clientes ON trabajorealizado.IdCliente = clientes.IdCliente
+            LEFT JOIN fumigadortrabajo ON trabajorealizado.IdTrabajo = fumigadortrabajo.IdTrabajo
+            LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador
+            LEFT JOIN aguaterotrabajo ON trabajorealizado.IdTrabajo = aguaterotrabajo.IdTrabajo
+            LEFT JOIN aguateros ON aguaterotrabajo.IdAguatero = aguateros.IdAguatero
+            WHERE trabajorealizado.EstadoTrabajo = 'Activo' and clientes.IdCliente = ? AND trabajorealizado.FechaTrabajo BETWEEN ? AND ?
+            GROUP BY trabajorealizado.IdTrabajo, trabajorealizado.Descripcion, clientes.Nombre
+            ");
+        $consulta->execute([$IdCliente, $FechaInicio, $FechaFin]);
+        return $consulta->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function FiltrarTrabajosAguatero($IdAguatero, $FechaInicio, $FechaFin) { 
         try {
             $consulta = "
-                SELECT Aguateros.NombreAguatero, trabajorealizado.Descripcion, trabajorealizado.CantidadHectareasTrabajadas, trabajorealizado.FechaTrabajo 
+                SELECT Aguateros.IdAguatero, Aguateros.NombreAguatero, trabajorealizado.Descripcion, trabajorealizado.CantidadHectareasTrabajadas, trabajorealizado.FechaTrabajo
                 FROM trabajorealizado  
-                LEFT JOIN trabajo_aguatero ON trabajorealizado.IdTrabajo = trabajo_aguatero.IdTrabajo
-                LEFT JOIN aguateros ON trabajo_aguatero.IdAguatero = aguateros.IdAguatero
+                LEFT JOIN aguaterotrabajo ON trabajorealizado.IdTrabajo = aguaterotrabajo.IdTrabajo
+                LEFT JOIN aguateros ON aguaterotrabajo.IdAguatero = aguateros.IdAguatero
                 WHERE aguateros.IdAguatero = ? 
                 AND trabajorealizado.FechaTrabajo BETWEEN ? AND ?";
             
@@ -198,6 +269,31 @@ class TrabajoRealizado {
             die($e->getMessage());
         }
     }
+
+
+    public function ObtenerAguaterosPorTrabajo($idTrabajo) {
+        // Corregir la consulta SQL para usar el marcador de posición correctamente
+        $sql = "SELECT IdAguatero FROM aguaterotrabajo WHERE IdTrabajo = ?"; // Usar ? como marcador de posición
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$idTrabajo]); // Pasar el valor directamente en un array
+        return $stmt->fetchAll(PDO::FETCH_COLUMN); 
+    }
+
+
+     public function ObtenerFumigadoresPorTrabajo($idTrabajo) {
+        $consulta = "SELECT IdFumigador FROM Fumigadortrabajo WHERE IdTrabajo = ?";
+        $stmt = $this->pdo->prepare($consulta);
+        $stmt->execute([$idTrabajo]);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+     }
+
+
+
+    
+   
+    
+    
+
 
     public function filtrarCobrosXFecha($FechaInicio, $FechaFin) {
         try {
@@ -217,4 +313,9 @@ class TrabajoRealizado {
             die($e->getMessage());
         }
     }
+
+
+    
+
+   
 }

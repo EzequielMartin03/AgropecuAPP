@@ -25,7 +25,7 @@
                         <!-- Campo Aguatero -->
                         <div class="mb-3">
                             
-                            <select id="mySelect4<?= $Trabajo->IdTrabajo ?>" name="aguatero[]" multiple="multiple" class="form-select select2">
+                            <select id="mySelect4<?= $trabajo->IdTrabajo ?>" name="aguatero[]" multiple="multiple" class="form-select select2">
                                 <?php foreach ($ListaAguateros as $aguatero): ?>
                                     <option value="<?= $aguatero->IdAguatero ?>" 
                                         <?= in_array($aguatero->IdAguatero,  $Trabajo->aguaterosSeleccionados) ? 'selected' : '' ?>>
@@ -38,7 +38,7 @@
                          <!-- Campo Fumigador -->
                          <div class="mb-3">
                             
-                            <select id="mySelect5<?= $Trabajo->IdTrabajo ?>" name="fumigador[]" multiple="multiple" class="form-select select2">
+                            <select id="mySelect5<?= $trabajo->IdTrabajo ?>" name="fumigador[]" multiple="multiple" class="form-select select2">
                                 <?php foreach ($ListaFumigadores as $Fumigador): ?>
                                     <option value="<?= $Fumigador->IdFumigador ?>" 
                                         <?= in_array($Fumigador->IdFumigador,  $Trabajo->fumigadoresSeleccionados) ? 'selected' : '' ?>>
@@ -67,13 +67,6 @@
                         </div>
                     </div>
 
-                      <!-- Fecha de Pago -->
-                      <div class="mb-3">
-                            <label for="FechaPago<?= $Trabajo->IdTrabajo ?>" class="form-label">Fecha de Pago</label>
-                            <input type="date" class="form-control" id="FechaPago<?= $Trabajo->IdTrabajo ?>" name="FechaPago" value="<?= $Trabajo->FechaPago ?>" required>
-                        </div>
-                    </div>
-
                     <!-- Botones del Modal -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -84,30 +77,6 @@
         </div>
     </div>
 </div>
-
-
-<!-- Modal Eliminar Trabajo -->
-<div class="modal fade" id="EliminarTrabajo<?= $Trabajo->IdTrabajo ?>" tabindex="-1" aria-labelledby="EliminarTrabajoLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="EliminarTrabajoLabel">Eliminar Trabajo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>¿Estás seguro de que quieres eliminar el trabajo realizado el <strong><?= $Trabajo->FechaTrabajo ?></strong> del cliente: <strong><?= $Trabajo->Nombre ?></strong>?</p>
-            </div>
-            <div class="modal-footer">
-                <form method="POST" action="?c=trabajo&a=EliminarTrabajo">
-                    <input type="hidden" name="IdTrabajo" value="<?= $Trabajo->IdTrabajo ?>">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -155,5 +124,6 @@ $(document).ready(function() {
     </script>
 
         
+
 
 

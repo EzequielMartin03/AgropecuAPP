@@ -1,71 +1,59 @@
-  <!-- Pestaña Fumigador -->
-  
-            <div>
-                <form class="mt-3">
-                    <input type="hidden" name="tab" value="Fumigador">
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="fumigadorSelect" class="form-label">Selecciona Fumigador</label>
-                            <select id="fumigadorSelect" class="form-select">
-                                <option value="fumigador1">Fumigador 1</option>
-                                <option value="fumigador2">Fumigador 2</option>
-                                <option value="fumigador3">Fumigador 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
-                            <input type="date" class="form-control" id="fechaInicio">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="fechaFin" class="form-label">Fecha de Fin</label>
-                            <input type="date" class="form-control" id="fechaFin">
-                        </div>
-                    </div>
-                    
-                    <button type="button" class="btn btn-primary mt-3">Filtrar</button>
-                </form>
-            </div>
-
-            <div class="table-container mt-4">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Cliente</th>
-                            <th scope="col">Aguatero</th>
-                            <th scope="col">Fumigador</th>
-                            <th scope="col">Hectareas</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Cliente 1</td>
-                            <td>Aguatero 1</td>
-                            <td>Fumigador 1</td>
-                            <td>10</td>
-                            <td>2024-08-25</td>
-                            <td>
-                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#altaClienteModal">
-                                    <i class="bi-pencil"></i> Modificar
-                                </button>
-                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#altaClienteModal">
-                                    <i class="bi-trash"></i> Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+<div>
+    <form class="mt-3" method="POST" action="?c=Trabajo&a=FiltrarTrabajoFumigador&tab=fumigador">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="FumigadorSelect" class="form-label">Selecciona Aguatero</label>
+                <select id="FumigadorSelect" class="form-select" name="FumigadorSelect">
+                    <?php foreach ($ListaFumigadores as $Fumigador): ?>
+                        <option value="<?= $Fumigador->IdFumigador ?>"><?= $Fumigador->NombreFumigador ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
         </div>
-    </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
+                <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
+            </div>
+            <div class="col-md-4">
+                <label for="fechaFin" class="form-label">Fecha de Fin</label>
+                <input type="date" class="form-control" id="fechaFin" name="fechaFin">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary col-md-8">
+            <i class="bi bi-search"></i> Filtrar
+        </button>
+    </form>
 </div>
 
-
-  </div>
+<div class="table-container mt-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Fumigador</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Hectáreas</th>
+                <th scope="col">Fecha de Trabajo</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php if (isset($ResultadosFumigadores) && !empty($ResultadosFumigadores)): ?>
+            <?php foreach ($ResultadosFumigadores as $resultado): ?>
+                <tr>
+                    <td><?= htmlspecialchars($resultado->NombreFumigador) ?></td>
+                    <td><?= htmlspecialchars($resultado->Descripcion) ?></td>
+                    <td><?= htmlspecialchars($resultado->CantidadHectareasTrabajadas) ?></td>
+                    <td><?= htmlspecialchars($resultado->FechaTrabajo) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="4">No se encontraron resultados.</td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
 </div>
+

@@ -6,6 +6,8 @@ class FumigadorControlador {
     private $modelo;
 
 
+
+
     public function __construct() {
         $this->modelo = new Fumigador();
     }
@@ -28,10 +30,10 @@ class FumigadorControlador {
 
     public function Guardar() {
         $Fumigador = new Fumigador();
-        $Fumigador-> setNombreFumigador($_POST['Nombre']);
-        $Fumigador-> setDireccionFumigador($_POST['Direccion']);
-        $Fumigador-> setTelefonoFumigador($_POST['Telefono']);
-        $Fumigador-> setCuitFumigador($_POST['Cuit']);
+        $Fumigador-> setNombreFumigador($_POST['NombreFumigador']);
+        $Fumigador-> setDireccionFumigador($_POST['DireccionFumigador']);
+        $Fumigador-> setTelefonoFumigador($_POST['TelefonoFumigador']);
+        $Fumigador-> setCuitFumigador($_POST['CuitFumigador']);
 
         $this->modelo->InsertarFumigador($Fumigador);    
 

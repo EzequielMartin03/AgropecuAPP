@@ -32,13 +32,13 @@ if (!isset($_GET["c"])) {
     $accion = "Inicio";
 } else {
     $controlador = $_GET["c"];
-    require_once "controladores/" . $controlador . "Controlador.php";
+    require_once "controladores/" . $controlador . "Controlador.php";    
     $controlador = ucwords($controlador) . "Controlador";
 
     // Asegúrate de que el controlador existe antes de instanciarlo
     if (class_exists($controlador)) {
         $controlador = new $controlador;
-        $accion = isset($_GET['a']) ? $_GET['a'] : "Inicio";
+        $accion = isset($_GET['a']) ? $_GET['a'] : "Inicio";        
 
         // Verifica si el método (acción) existe en el controlador
         if (method_exists($controlador, $accion)) {

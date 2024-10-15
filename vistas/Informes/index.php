@@ -125,17 +125,15 @@
       </div>
     </div>
 
-    <!-- Flexbox para Fecha y Cliente en una fila -->
     <div class="px-14 mb-4 content-container">
       <div class="flex-row">
         <div class="flex-item text-right">
-          <p class="font-bold text-main">Cliente: <?= htmlspecialchars($_SESSION['NombreCliente']) ?></p>
-          <p class="font-bold text-main">Detalle de cuenta al <?= date('d/m/y') ?></p>
+          <p class="font-bold text-main"><?= htmlspecialchars($_SESSION['Tipo']) ?>: <?= htmlspecialchars($_SESSION['Nombre']) ?></p>
+          <p class="font-bold text-main">Detalle del <?= $_SESSION['fechainicio'] ?> al <?= $_SESSION['fechafin'] ?></p>
         </div>
       </div>
     </div>
 
-    <!-- Tabla de resultados con estilos mejorados -->
     <div class="px-14">
       <table class="table">
         <thead>

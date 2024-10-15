@@ -39,10 +39,10 @@ class AguateroControlador {
     public function Modificar() {                           
         $Aguatero = new Aguatero();                                   
         $Aguatero -> setIdAguatero($_POST['IdAguatero']);
-        $Aguatero-> setNombreAguatero($_POST['NombreAguatero']);
-        $Aguatero-> setDireccionAguatero($_POST['DireccionAguatero']);
-        $Aguatero-> setTelefonoAguatero($_POST['TelefonoAguatero']);
-        $Aguatero-> setCuitAguatero($_POST['CuitAguatero']);
+        $Aguatero-> setNombreAguatero($_POST['NombreModificarAguatero']);
+        $Aguatero-> setDireccionAguatero($_POST['DireccionModificarAguatero']);
+        $Aguatero-> setTelefonoAguatero($_POST['TelefonoModificarAguatero']);
+        $Aguatero-> setCuitAguatero($_POST['CuitModificarAguatero']);
 
         $this->modelo->ActualizarAguatero($Aguatero);    
 

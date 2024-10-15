@@ -35,12 +35,13 @@ class TrabajoControlador {
 
     public function Inicio() {
 
-        $currentTab = isset($_POST['tab']) ? $_POST['tab'] : 'todos';
+        
     
         $clientes = $this->modeloCliente->ListarCliente();
         $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
         $ListaAguateros = $this->modeloAguatero->ListarAguatero();
         $AllTrabajos = $this->modelo->ListarTrabajos();
+        
     
         
 
@@ -116,13 +117,20 @@ public function EliminarTrabajo() {
             $fechaInicio = $_POST['fechaInicio'];
             $fechaFin = $_POST['fechaFin'];
 
-           
-            
-
+        
             $resultados = $this->modelo->FiltrarTrabajosCliente($IdCliente, $fechaInicio, $fechaFin);
-            $nombreCliente =  $resultados[0]->Nombre;
+             
+
+            // Guardar los resultados en la sesión
             $_SESSION['resultados_filtrados'] = $resultados;
-            $_SESSION['NombreCliente'] = $nombreCliente;
+
+            // Guardar el nombre del cliente
+            $_SESSION['Nombre'] = $resultados[0]->Nombre;
+            // Guardar las fechas de inicio y fin
+            $_SESSION['fechainicio'] = $fechaInicio;
+            $_SESSION['fechafin'] = $fechaFin;
+            $_SESSION['Tipo'] = 'Cliente';
+
             foreach ($resultados as $resultado) {
                 $resultado->aguaterosSeleccionados = $this->modelo->ObtenerAguaterosPorTrabajo($resultado->IdTrabajo);
                 $resultado->fumigadoresSeleccionados = $this->modelo->ObtenerFumigadoresPorTrabajo($resultado->IdTrabajo);
@@ -145,8 +153,11 @@ public function EliminarTrabajo() {
 
         if (isset($_POST['FumigadorSelect'], $_POST['fechaInicio'], $_POST['fechaFin'])) {
             $ResultadosFumigadores = $this->modelo->FiltrarTrabajosFumigador($IdFumigador, $fechaInicio, $fechaFin);
+            $_SESSION['resultados_filtrados'] = $ResultadosFumigadores;
+            $_SESSION['Nombre'] = $ResultadosFumigadores[0]->NombreFumigador;
+            $_SESSION['Tipo'] = 'Fumigador';
         } else {
-            $ResultadosFumigadores = []; // Asegúrate de inicializar en caso de que no se envíen filtros
+            $ResultadosFumigadores = [];
         }
 
 
@@ -155,6 +166,7 @@ public function EliminarTrabajo() {
         
     }
 
+
     public function FiltrarTrabajoAguatero() {
         $IdAguatero = $_POST['AguateroSelect'];
         $fechaInicio = $_POST['fechaInicio'];
@@ -162,6 +174,9 @@ public function EliminarTrabajo() {
         if (isset($_POST['AguateroSelect'], $_POST['fechaInicio'], $_POST['fechaFin'])) {
 
             $ResultadoAguateros = $this->modelo->FiltrarTrabajosAguatero($IdAguatero,$fechaInicio, $fechaFin);
+            $_SESSION['resultados_filtrados'] = $ResultadoAguateros;
+            $_SESSION['Nombre'] = $ResultadoAguateros[0]->NombreAguatero;
+            $_SESSION['Tipo'] = 'Aguatero';
         } else {
             header ("location:?c=Trabajo");
             
@@ -169,7 +184,7 @@ public function EliminarTrabajo() {
     
       
 
-     
+
         $AllTrabajos = $this->modelo->ListarTrabajos();
         $ListaAguateros = $this->modeloAguatero->ListarAguatero();
         require_once "vistas/inicio/SideBar.php";
@@ -187,9 +202,17 @@ public function EliminarTrabajo() {
           </script>";
          exit(); // Termina la ejecución aquí para que no intente seguir generando el PDF
         }
+        
+       
     
         $resultados = $_SESSION['resultados_filtrados'];
-        $cliente = $_SESSION['NombreCliente'];
+
+        $fechaI = new DateTime($_SESSION['fechainicio']);
+        $fechaF = new DateTime($_SESSION['fechafin']);
+
+        $_SESSION['fechainicio'] = $fechaI->format('d-m-Y');
+        $_SESSION['fechafin'] = $fechaF->format('d-m-Y');
+        
     
    
     

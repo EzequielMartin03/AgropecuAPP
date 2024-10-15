@@ -1,22 +1,39 @@
 <?php
 
+require_once "modelos/trabajoRealizado.php";
+
 class inicioControlador {
-    private $modelo;
-
-    public function _CONSTRUCT() {
-       
-        session_start(); // Iniciar la sesión
+    private $modeloTrabajo;
+    
 
 
-        if (!isset($_SESSION['usuario'])) {
-            header("Location: index.php?c=Usuario&a=Inicio");
-            exit();
-        }
+
+    public function __construct() {
+      
+
+        $this->modeloTrabajo = new TrabajoRealizado();
+
+        
+        
     }
 
-    public function Inicio() {
-        $db = database::connection(); 
+
+    public function Inicio() { 
+
+        $totalHectareas = $this->modeloTrabajo->Totalhectareas();
+        $totalTrabajos = $this->modeloTrabajo->TotaltrabajosMesActual();
+        $ClienteMasActivo = $this->modeloTrabajo->ClienteMasActivo();
+        $Hectareasmensuales = $this->modeloTrabajo->HectareasPorMes();
+
+       
+        
+
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/inicio/principal.php";
     }
+
+    
+
+
+
 }

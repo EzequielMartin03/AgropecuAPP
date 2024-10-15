@@ -1,37 +1,79 @@
-document.getElementById("formAltaCliente").addEventListener("submit", function(e) {
-    e.preventDefault();
-    validarFormulario(
-        "Nombre",
-        "Cuit",
-        "Direccion",
-        "Telefono",
-        "errorNombre",
-        "errorCuit",
-        "errorDireccion",
-        "errortelefono"
-    );
+document.addEventListener("DOMContentLoaded", function() {
+    let formAltaCliente = document.getElementById("formAltaCliente");
+    let formModificarCliente = document.getElementById("formModificarCliente");
+    let formAltaAguatero = document.getElementById("formAltaAguatero");
+    let formAltaFumigador = document.getElementById("formAltaFumigador");
 
+    if (formAltaCliente) {
+        formAltaCliente.addEventListener("submit", function(e) {
+            e.preventDefault();
+            validarFormulario(
+                "NombreCliente",
+                "CuitCliente",
+                "DireccionCliente",
+                "TelefonoCliente",
+                "errorNombreCliente",
+                "errorCuitCliente",
+                "errorDireccionCliente",
+                "errortelefonoCliente"
+            );
+        });
+    }
 
+    if (formModificarCliente) {
+        formModificarCliente.addEventListener("submit", function(e) {
+            e.preventDefault();
+            validarFormulario(
+                "NombreModificar",
+                "CuitModificar",
+                "DireccionModificar",
+                "TelefonoModificar",
+                "errorNombreModificar",
+                "errorCuitModificar",
+                "errorDireccionModificar",
+                "errorTelefonoModificar"
+            );
+        });
+    }
+    
+
+    if (formAltaAguatero) {
+        formAltaAguatero.addEventListener("submit", function(e) {
+            e.preventDefault();
+            validarFormulario(
+                "NombreAguatero",
+                "CuitAguatero",
+                "DireccionAguatero",
+                "TelefonoAguatero",
+                "errorNombreAguatero",
+                "errorCuitAguatero",
+                "errorDireccionAguatero",
+                "errorTelefonoAguatero"
+            );
+        });
+    }
+
+    if (formAltaFumigador) {
+        formAltaFumigador.addEventListener("submit", function(e) {
+            e.preventDefault();
+            validarFormulario(
+                "NombreFumigador",
+                "CuitFumigador",
+                "DireccionFumigador",
+                "TelefonoFumigador",
+                "errorNombreFumigador",
+                "errorCuitFumigador",
+                "errorDireccionFumigador",
+                "errorTelefonoFumigador"
+            );
+        });
+    }
 });
 
 
 
-document.getElementById("formModificarCliente").addEventListener("submit", function(e) {
-    e.preventDefault();
-    validarFormulario(
-        "NombreModificar",
-        "CuitModificar",
-        "DireccionModificar",
-        "TelefonoModificar",
-        "errorNombreModificar",
-        "errorCuitModificar",
-        "errorDireccionModificar",
-        "errorTelefonoModificar"
-    );
-});
 
-
-function validarFormulario(nombre, cuit, direccion, telefono, errorNombre, errorCuit, errorDireccion, errorTelefono) {
+function validarFormulario(nombre,cuit, direccion, telefono, errorNombre, errorCuit, errorDireccion, errorTelefono) {
     let ExpresionNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+\s[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
     let expresionDireccion = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+\s\d+$/;
     let expresionTelefono = /^[0-9]{10}$/;
@@ -108,3 +150,59 @@ function validarFormulario(nombre, cuit, direccion, telefono, errorNombre, error
         });
     }
 }
+
+function validarFormularioSorporte() {
+    let nombreInput = document.getElementById("Nombre");
+    let emailInput = document.getElementById("Email");
+    let mensajeInput = document.getElementById("Mensaje");
+    
+    let ExpresionNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+\s[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+    let expresionEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let valido = true;
+
+
+    // Validar Nombre
+    if (nombreInput.value == "" || !ExpresionNombre.test(nombreInput.value)) {
+        nombreInput.classList.add('is-invalid');
+        document.getElementById(errorNombre).innerText = 'El nombre ingresado es inválido.';
+        valido = false;
+    }
+
+    // Validar Email
+    if (emailInput.value == "" || !expresionEmail.test(emailInput.value)) {
+        emailInput.classList.add('is-invalid');
+        document.getElementById(errorEmail).innerText = 'El email ingresado es inválido.';
+        valido = false;
+    }
+
+    //Validar Mensaje
+    if (mensajeInput.value == "") {
+        mensajeInput.classList.add('is-invalid');
+        document.getElementById(errorMensaje).innerText = 'El mensaje no puede estar vacío.';
+        valido = false;
+    }
+
+
+    if (valido) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Confirma que los datos son correctos",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, enviar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Enviado!',
+                'El registro ha sido enviado correctamente.',
+                'success'
+            ).then(() => {
+                document.getElementById('formSorporte').submit(); 
+            });
+        }
+    });
+    }
+}   

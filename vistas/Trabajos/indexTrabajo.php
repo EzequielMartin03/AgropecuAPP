@@ -58,11 +58,15 @@
         </li>
         
     </ul>
+
+
+    
     <div class="tab-content" id="filterTabsContent">
 
     
 
     <div class="tab-pane fade show active" id="Cliente" role="tabpanel" aria-labelledby="Cliente-tab">
+    
     <?php include 'vistas/Trabajos/PestaniaCliente/pestaniaCliente.php';?>
      </div>   
 
@@ -109,6 +113,17 @@
 <!-- Tu JavaScript personalizado -->
 <script src="../assets/js/indexTrabajoJS.js"></script>
 
+<?php
+$tab = isset($_GET['tab']) ? $_GET['tab'] : null;
+
+
+if (($tab == 'Cliente' ) || ($tab == 'aguatero' ) || ($tab == 'fumigador')): ?>
+
+    <script>
+        window.history.replaceState(null, null, '/MVCC/index.php/?c=Trabajo&tab=<?= $tab ?>');
+    </script>
+    
+<?php endif; ?>
 
 
 

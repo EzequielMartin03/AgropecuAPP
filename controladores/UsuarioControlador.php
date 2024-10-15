@@ -75,5 +75,27 @@ class UsuarioControlador {
         $this->modeloUsuario->BlanquearClaveUsuario($IdUsuario, $Usuario, $nuevoHash);
         header("Location: ?c=Usuario&a=GestionUsuarios");
     }
+
+    public function EnviarMail() {
+     
+        $Mensaje = $_POST['Mensaje'];
+        $Email = $_POST['Email'];
+        $Nombre = $_POST['Nombre']; 
+
+        $to = "ezequielmartin093@gmail.com"; // Cambia esto por tu correo
+        $subject = "mensaje de {$Nombre} ";
+        $message = "
+        nombre: {$Nombre}
+        email: {$Email}
+        mensaje: {$Mensaje}";
+        $headers = "From: ezequielmartin093@gmail.com"; // Cambia esto por tu correo
+
+        if(mail($to, $subject, $message, $headers)) {
+            header("Location: ?c=Cliente&a=Inicio");
+        } else {
+            echo "Error al enviar el correo.";
+        }
+
+    }
 }
-?>
+

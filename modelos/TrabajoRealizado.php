@@ -217,10 +217,9 @@ class TrabajoRealizado {
         try {
             $consulta = "
                 SELECT fumigadores.IdFumigador, fumigadores.NombreFumigador, trabajorealizado.Descripcion, trabajorealizado.CantidadHectareasTrabajadas, trabajorealizado.FechaTrabajo
-FROM trabajorealizado  
-LEFT JOIN fumigadortrabajo ON trabajorealizado.IdTrabajo = fumigadortrabajo.IdTrabajo
-LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador WHERE fumigadores.IdFumigador = ? AND trabajorealizado.FechaTrabajo BETWEEN ? AND ?;
- ";
+                FROM trabajorealizado  
+                LEFT JOIN fumigadortrabajo ON trabajorealizado.IdTrabajo = fumigadortrabajo.IdTrabajo
+                LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador WHERE fumigadores.IdFumigador = ? AND trabajorealizado.FechaTrabajo BETWEEN ? AND ? AND trabajorealizado.EstadoTrabajo = 'Activo';";
             
             $stm = $this->pdo->prepare($consulta);
             $stm->execute([$IdFumigador, $fechaInicio,$fechaFin]);
@@ -260,7 +259,7 @@ LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador 
                 LEFT JOIN aguaterotrabajo ON trabajorealizado.IdTrabajo = aguaterotrabajo.IdTrabajo
                 LEFT JOIN aguateros ON aguaterotrabajo.IdAguatero = aguateros.IdAguatero
                 WHERE aguateros.IdAguatero = ? 
-                AND trabajorealizado.FechaTrabajo BETWEEN ? AND ?";
+                AND trabajorealizado.FechaTrabajo BETWEEN ? AND ? AND trabajorealizado.EstadoTrabajo = 'Activo';";
             
             $stm = $this->pdo->prepare($consulta);
             $stm->execute([$IdAguatero, $FechaInicio, $FechaFin]);
@@ -272,10 +271,14 @@ LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador 
 
 
     public function ObtenerAguaterosPorTrabajo($idTrabajo) {
-        // Corregir la consulta SQL para usar el marcador de posición correctamente
-        $sql = "SELECT IdAguatero FROM aguaterotrabajo WHERE IdTrabajo = ?"; // Usar ? como marcador de posición
+       
+        $sql = "SELECT aguateros.IdAguatero FROM aguaterotrabajo 
+                inner join aguateros ON aguaterotrabajo.IdAguatero =  aguateros.IdAguatero
+                WHERE aguaterotrabajo.IdTrabajo = ? 
+                AND aguateros.EstadoAguatero = 'Activo';
+        " ; 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$idTrabajo]); // Pasar el valor directamente en un array
+        $stmt->execute([$idTrabajo]);
         return $stmt->fetchAll(PDO::FETCH_COLUMN); 
     }
 
@@ -286,14 +289,6 @@ LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador 
         $stmt->execute([$idTrabajo]);
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
      }
-
-
-
-    
-   
-    
-    
-
 
     public function filtrarCobrosXFecha($FechaInicio, $FechaFin) {
         try {
@@ -314,8 +309,79 @@ LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador 
         }
     }
 
-
+    public function Totalhectareas() {
+        $mes = date('n'); 
+        $anio = date('Y'); 
     
+        $consulta = "SELECT SUM(cantidadhectareastrabajadas) AS total_hectareas 
+                     FROM trabajorealizado 
+                     WHERE MONTH(FechaTrabajo) = ?
+                     AND YEAR(FechaTrabajo) = ? ";
+   
+        $stmt = $this->pdo->prepare($consulta);
+        $stmt->execute([$mes, $anio]); 
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado['total_hectareas'] ? $resultado['total_hectareas'] : 0;
+    }
+
+    public function TotalTrabajosMesActual() {
+        $mes = date('n'); 
+        $anio = date('Y'); 
+    
+        $consulta = "SELECT COUNT(trabajorealizado.IdTrabajo) AS total_Trabajos
+                     FROM trabajorealizado 
+                     WHERE MONTH(FechaTrabajo) = ?
+                     AND YEAR(FechaTrabajo) = ? ";
+   
+        $stmt = $this->pdo->prepare($consulta);
+        $stmt->execute([$mes, $anio]); 
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado['total_Trabajos'] ? $resultado['total_Trabajos'] : 0;
+    }
+
+    public function ClienteMasActivo() {
+        $mes = date('n'); 
+        $anio = date('Y'); 
+    
+        $consulta = "SELECT clientes.Nombre AS cliente, COUNT(trabajorealizado.IdTrabajo) AS cantidad_trabajos 
+                  FROM trabajorealizado
+                  INNER JOIN clientes ON trabajorealizado.IdCliente = clientes.IdCliente 
+                  WHERE MONTH(FechaTrabajo) = ? AND YEAR(FechaTrabajo) = ? 
+                  GROUP BY cliente 
+                  ORDER BY cantidad_trabajos DESC 
+                  LIMIT 1";
+   
+        $stmt = $this->pdo->prepare($consulta);
+        $stmt->execute([$mes, $anio]); 
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+
+        return $resultado['cliente'] ? $resultado['cliente'] : 'Sin datos'; 
+    }
+
+    public function HectareasPorMes() {
+        $consulta = "
+            SELECT 
+                MONTH(FechaTrabajo) AS mes, 
+                SUM(cantidadhectareastrabajadas) AS total_hectareas 
+            FROM trabajorealizado 
+            GROUP BY mes 
+            ORDER BY mes
+        ";
+
+        $stmt = $this->pdo->prepare($consulta);
+        $stmt->execute();
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Inicializa un arreglo para los hectáreas trabajadas
+        $hectareasMensuales = array_fill(1, 12, 0); // 12 meses inicializados a 0
+
+        foreach ($resultados as $row) {
+            $hectareasMensuales[(int)$row['mes']] = (float)$row['total_hectareas'];
+        }
+
+        return $hectareasMensuales; // Devuelve el arreglo con hectáreas trabajadas por mes
+    }
 
    
 }

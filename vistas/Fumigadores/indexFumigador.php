@@ -36,5 +36,15 @@
             <i class="bi-plus-circle"></i> Dar de alta Fumigador
         </button>
     </div>
+
+    <!-- Modal para dar de alta un nuevo fumigador -->
+    <?php include 'vistas/Fumigadores/AltaModalFumigador.php' ?>
+
+     <!-- Alertas Js -->
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <!-- Validar modales -->
+    <script src="../assets/js/validarModal.js"></script>
 </body>
 </html>

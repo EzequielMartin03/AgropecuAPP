@@ -29,9 +29,11 @@
             <i class="bi-plus-circle"></i> Dar de alta cliente
         </button>
 
+        
+
         <!-- Tabla de Clientes -->
         <?php include './vistas/Clientes/tablaClientes.php'; ?>
-        
+        <?php include './vistas/Clientes/AltamodalCliente.php'; ?>
 
     
         <!-- Bootstrap JS -->
@@ -42,7 +44,7 @@
 
 
         <!-- Validar modales -->
-        <script src="../assets/js/validarModalCliente.js"></script>
+        <script src="../assets/js/validarModal.js"></script>
 
        
    

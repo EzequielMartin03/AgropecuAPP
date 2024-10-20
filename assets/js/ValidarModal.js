@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let formModificarCliente = document.getElementById("formModificarCliente");
     let formAltaAguatero = document.getElementById("formAltaAguatero");
     let formAltaFumigador = document.getElementById("formAltaFumigador");
+    let formSoporte = document.getElementById("formSoporte");
 
     if (formAltaCliente) {
         formAltaCliente.addEventListener("submit", function(e) {
@@ -68,7 +69,22 @@ document.addEventListener("DOMContentLoaded", function() {
             );
         });
     }
-});
+
+    if (formSoporte) {
+        formSoporte.addEventListener("submit", function(e) {
+            e.preventDefault();
+            validarFormularioSorporte(
+                "Nombre",
+                "Email",
+                "mensaje",
+                "errorNombre",
+                "errorEmail",
+                "errorMensaje"
+            );
+        });
+    }
+
+
 
 
 
@@ -151,7 +167,7 @@ function validarFormulario(nombre,cuit, direccion, telefono, errorNombre, errorC
     }
 }
 
-function validarFormularioSorporte() {
+function validarFormularioSorporte(nombre, email, mensaje, errorNombre, errorEmail, errorMensaje) {
     let nombreInput = document.getElementById("Nombre");
     let emailInput = document.getElementById("Email");
     let mensajeInput = document.getElementById("Mensaje");
@@ -159,6 +175,15 @@ function validarFormularioSorporte() {
     let ExpresionNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+\s[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
     let expresionEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     let valido = true;
+
+    document.getElementById(errorNombre).innerText = '';
+    document.getElementById(errorEmail).innerText = '';
+    document.getElementById(errorMensaje).innerText = '';
+
+    nombreInput.classList.remove('is-invalid');
+    emailInput.classList.remove('is-invalid');
+    mensajeInput.classList.remove('is-invalid');
+   
 
 
     // Validar Nombre
@@ -205,4 +230,4 @@ function validarFormularioSorporte() {
         }
     });
     }
-}   
+}   })

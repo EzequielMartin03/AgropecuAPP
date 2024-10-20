@@ -64,8 +64,7 @@
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                             <li><a class="dropdown-item" href="?c=Ajustes">Ajustes</a></li>
                             
-                            <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#soporteModal">Contactar a Soporte</button>
-                            </li>
+                            <li><a class="dropdown-item" class="dropdown-item" href="?c=ajustes&a=Soporte">Formulario soporte</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -82,7 +81,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap CSS -->
 
-    <?php include 'vistas/Ajustes/ModalSoporte.php'; ?>
+ 
 
     <!-- Validar modal-->
     <script src="../assets/js/validarModal.js"></script>

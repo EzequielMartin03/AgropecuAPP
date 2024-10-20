@@ -82,14 +82,13 @@ class UsuarioControlador {
         $Email = $_POST['Email'];
         $Nombre = $_POST['Nombre']; 
 
-        $to = "ezequielmartin093@gmail.com"; // Cambia esto por tu correo
+        $to = "ezequielmartin093@gmail.com"; 
         $subject = "mensaje de {$Nombre} ";
         $message = "
         nombre: {$Nombre}
         email: {$Email}
         mensaje: {$Mensaje}";
-        $headers = "From: ezequielmartin093@gmail.com"; // Cambia esto por tu correo
-
+        $headers = "From: ezequielmartin093@gmail.com"; 
         if(mail($to, $subject, $message, $headers)) {
             header("Location: ?c=Cliente&a=Inicio");
         } else {

@@ -44,7 +44,9 @@
 
 
         <!-- Validar modales -->
-        <script src="../assets/js/validarModal.js"></script>
+        <script src="../assets/js/ValidarAlta.js"></script>
+        <script src="../assets/js/ValidarModificar.js"></script>
+
 
        
    

@@ -97,4 +97,11 @@ class Fumigador {
             die($e->getMessage());
         }
     }
+
+    public function obtenerCuitsFumigadores() {
+        $query = "SELECT CuitFumigador FROM fumigadores where EstadoFumigador = 'Activo'"; 
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN); // Devuelve un array de CUITs
+    }
 }

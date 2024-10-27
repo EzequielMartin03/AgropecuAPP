@@ -61,6 +61,8 @@ class Cliente {
         }
     }
 
+    
+
     public function InsertarCliente(Cliente $cliente) {
         try {
             $consulta = "INSERT INTO CLIENTES (Nombre, Direccion, Telefono, Cuit, EstadoCliente) VALUES (?, ?, ?, ?, ?);";
@@ -102,9 +104,17 @@ class Cliente {
         }
     }
 
-    public function BuscarCliente($termino) {
-        $consulta = $this->pdo->prepare("SELECT * FROM CLIENTES WHERE (Nombre LIKE ? OR Cuit LIKE ?) AND EstadoCliente = ?");
-        $consulta->execute(array("%$termino%", "%$termino%", 'Activo'));
+    public function obtenerCuitsClientes() {
+        $query = "SELECT Cuit FROM clientes where EstadoCliente = 'Activo'"; // Cambia 'clientes' y 'cuit' según tu tabla y campo
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN); // Devuelve un array de CUITs
+    }
+    public function BuscarCliente($Busqueda) {
+        $consulta = $this->pdo->prepare("SELECT * FROM clientes WHERE (Nombre LIKE ? OR Cuit LIKE ?) AND EstadoCliente = ?");
+        $consulta->execute(array("%$Busqueda%", "%$Busqueda%", 'Activo'));
         return $consulta->fetchAll(PDO::FETCH_OBJ);
     }
+
+
 }

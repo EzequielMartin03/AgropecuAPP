@@ -56,6 +56,6 @@
         </div>
     </form>
 </div>
-<script src = "assets/js/ValidarModal.js" ></script>
+<script src = "assets/js/ValidarFormSoporte.js" ></script>
 </body>
 </html>

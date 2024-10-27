@@ -50,6 +50,7 @@
       <!-- Alertas Js -->
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Validar modales -->
-    <script src="../assets/js/validarModal.js"></script>
+    <script src="../assets/js/ValidarAlta.js"></script>
+    <script src="../assets/js/ValidarModificar.js"></script>
 </body>
 </html>

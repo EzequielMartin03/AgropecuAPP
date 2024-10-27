@@ -66,6 +66,12 @@ class UsuarioControlador {
         
         header("Location: ?c=Usuario&a=GestionUsuarios");
     }
+
+    public function Eliminar() {
+        $IdUsuario = $_POST['IdUsuario'];
+        $this->modeloUsuario->Eliminar($IdUsuario);
+        header("Location: ?c=Usuario&a=GestionUsuarios");
+    }
     
     public function BlanquearClaveUsuario() {
         $Usuario = $_POST['Usuario'];

@@ -61,4 +61,9 @@ class FumigadorControlador {
 
         header ("location:?c=Fumigador");
     }
+
+    public function ObtenerCuitsFumigadores() {
+        $cuits = $this->modelo->obtenerCuitsFumigadores();
+        echo json_encode($cuits);
+    }
 }

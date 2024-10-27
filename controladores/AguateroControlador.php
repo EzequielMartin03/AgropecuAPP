@@ -55,4 +55,9 @@ class AguateroControlador {
         $this->modelo->EliminarAguatero($Aguatero);    
         header ("location:?c=Aguatero");
     }
+
+    public function ObtenerCuitsAguateros() {
+        $cuits = $this->modelo->obtenerCuitsAguateros();
+        echo json_encode($cuits);
+    }
 }

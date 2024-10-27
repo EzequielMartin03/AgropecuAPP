@@ -2,7 +2,7 @@
     <form class="mt-3" method="POST" action="?c=Trabajo&a=FiltrarTrabajoFumigador&tab=fumigador">
         <div class="row mb-3">
             <div class="col-md-4">
-                <label for="FumigadorSelect" class="form-label">Selecciona Aguatero</label>
+                <label for="FumigadorSelect" class="form-label">Selecciona Fumigador</label>
                 <select id="FumigadorSelect" class="form-select" name="FumigadorSelect">
                     <?php foreach ($ListaFumigadores as $Fumigador): ?>
                         <option value="<?= $Fumigador->IdFumigador ?>"><?= $Fumigador->NombreFumigador ?></option>
@@ -29,7 +29,7 @@
 </div>
 
 <div class="table-container mt-4">
-    <table class="table table-striped">
+    <table id="TrFumigador" class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Fumigador</th>

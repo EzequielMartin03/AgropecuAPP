@@ -127,28 +127,40 @@ class TrabajoRealizado {
             $consulta = "UPDATE trabajorealizado SET EstadoTrabajo = 'Inactivo' WHERE IdTrabajo = ?";
             $stmt = $this->pdo->prepare($consulta);
             $stmt->execute([$IdTrabajo]);
+
+            $consulta = "UPDATE fumigadortrabajo SET EstadoFumigadorTr = 'Inactivo' WHERE IdTrabajo = ?";
+            $stmt = $this->pdo->prepare($consulta);
+            $stmt->execute([$IdTrabajo]);
+
+            $consulta = "UPDATE aguaterotrabajo SET EstadoAguateroTr = 'Inactivo' WHERE IdTrabajo = ?";
+            $stmt = $this->pdo->prepare($consulta);
+            $stmt->execute([$IdTrabajo]);
+
         } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
     public function InsertarTrabajo(TrabajoRealizado $trabajo, $fumigadores, $aguateros) {
+        $fechaPago = empty($trabajo->getFechaPago()) ? null : $trabajo->getFechaPago();
+        $NroFacturaAfip = empty($trabajo->getNroFacturaAfip()) ? null : $trabajo->getNroFacturaAfip();
+        
         // Insertar el trabajo en la tabla de trabajos
         $query = "INSERT INTO trabajorealizado (Descripcion, FechaTrabajo, FechaPago, CantidadHectareasTrabajadas, NroFacturaAfip, EstadoTrabajo, IdCliente) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([
             $trabajo->getDescripcion(),
             $trabajo->getFechaTrabajo(),
-            $trabajo->getFechaPago(),
+            $fechaPago,
             $trabajo->getCantidadHectareasTrabajadas(),
-            $trabajo->getNroFacturaAfip(),
+            $NroFacturaAfip,
             'Activo',
             $trabajo->getIdCliente()
         ]);
 
         $idTrabajo = $this->pdo->lastInsertId();
 
-        // Insertar las relaciones en la tabla trabajo_fumigador
+        // Insertar las relaciones en la tabla trabajofumigador
         foreach ($fumigadores as $IdFumigador) {
             $query = "INSERT INTO fumigadortrabajo (IdTrabajo, IdFumigador) VALUES (?, ?)";
             $stmt = $this->pdo->prepare($query);
@@ -168,7 +180,8 @@ class TrabajoRealizado {
         $sql = "UPDATE trabajorealizado SET 
                     IdCliente = ?, 
                     CantidadHectareasTrabajadas = ?, 
-                    FechaTrabajo = ?, 
+                    FechaTrabajo = ?,
+                    FechaPago = ?, 
                     Descripcion = ? 
                 WHERE IdTrabajo = ?";
 
@@ -178,6 +191,7 @@ class TrabajoRealizado {
             $trabajo->getIdCliente(),
             $trabajo->getCantidadHectareasTrabajadas(),
             $trabajo->getFechaTrabajo(),
+            $trabajo->getFechaPago(),
             $trabajo->getDescripcion(),
             $trabajo->getIdTrabajo() 
         ]);
@@ -191,9 +205,9 @@ class TrabajoRealizado {
     
      
         foreach ($aguateros as $idAguatero) {
-            $sql = "INSERT INTO aguaterotrabajo (IdTrabajo, IdAguatero) VALUES (?, ?)";
+            $sql = "INSERT INTO aguaterotrabajo (IdTrabajo, IdAguatero, EstadoAguateroTr) VALUES (?, ?, ?)";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$idTrabajo, $idAguatero]); 
+            $stmt->execute([$idTrabajo, $idAguatero,"Activo"]); 
         }
     }
 
@@ -205,9 +219,9 @@ class TrabajoRealizado {
     
      
         foreach ($fumigadores as $IdFumigador) {
-            $sql = "INSERT INTO fumigadortrabajo (IdTrabajo, IdFumigador) VALUES (?, ?)";
+            $sql = "INSERT INTO fumigadortrabajo (IdTrabajo, IdFumigador, EstadoFumigadorTr) VALUES (?, ?, ?)";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$idTrabajo, $IdFumigador]); 
+            $stmt->execute([$idTrabajo, $IdFumigador,"Activo"]); 
         }
     }
     
@@ -382,6 +396,8 @@ class TrabajoRealizado {
 
         return $hectareasMensuales; // Devuelve el arreglo con hectáreas trabajadas por mes
     }
+
+   
 
    
 }

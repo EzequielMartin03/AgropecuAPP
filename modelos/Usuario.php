@@ -43,9 +43,10 @@ class Usuario {
 
         public function ListarUsuarios() {
             try {
-                $consulta = $this->pdo->prepare("SELECT * FROM usuario;");
-                $consulta->execute();
-                return $consulta->fetchAll(PDO::FETCH_OBJ);
+                $consulta = "SELECT * FROM usuario WHERE EstadoUsuario = 'Activo'";
+                $stmt = $this->pdo->prepare($consulta);
+                $stmt->execute();
+                return $stmt->fetchAll(PDO::FETCH_OBJ);
             } catch (Exception $e) {
                 die($e->getMessage());
             }
@@ -69,6 +70,17 @@ class Usuario {
                 die($e->getMessage());
             }
         }
+
+        public function Eliminar($IdUsuario) {
+            try {
+                $consulta = $this->pdo->prepare("UPDATE usuario SET EstadoUsuario = 'Inactivo' WHERE IdUsuario = ?");
+                $consulta->execute(array($IdUsuario));
+                
+            } catch (Exception $e) {
+                die($e->getMessage());
+            }
+    }
+
     
     
     

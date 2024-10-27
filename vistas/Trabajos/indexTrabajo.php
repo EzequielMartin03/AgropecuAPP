@@ -14,28 +14,17 @@
     <!-- Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet" />
 
+    <!-- CSS de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+
     <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
     
     <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
 
     <title>Filtrar Trabajos</title>
 
-    <style>
-       
-        .modal-backdrop {
-        z-index: 1040; 
-        }
-
-        .modal {
-        z-index: 1050;
-        }
-        .select2-container--default .select2-results {
-        z-index: 1060; 
-        }
-
-
-
-    </style>
+  
 </head>
 
 
@@ -58,8 +47,6 @@
         </li>
         
     </ul>
-
-
     
     <div class="tab-content" id="filterTabsContent">
 
@@ -76,10 +63,12 @@
 
     <div class="tab-pane fade" id="fumigador" role="tabpanel" aria-labelledby="fumigador-tab">
     <?php include 'vistas/Trabajos/PestaniaFumigador/pestaniaFumigador.php';?>
+    
     </div>
 </div>
 
     <!-- Botones flotantes -->
+
      <!-- Boton para nuevo trabajo -->
     <a href="#" class="btn btn-primary btn-add-work" data-bs-toggle="modal" data-bs-target="#altaClienteModal">
     <i class="bi-plus-circle"></i> Nuevo Trabajo
@@ -109,6 +98,8 @@
 
 <!-- JS de Select2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <!-- Tu JavaScript personalizado -->
 <script src="../assets/js/indexTrabajoJS.js"></script>

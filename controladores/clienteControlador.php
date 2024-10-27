@@ -10,7 +10,13 @@ class clienteControlador {
     }
 
     public function Inicio() {
-        $clientes = $this->modelo->ListarCliente();
+        $Busqueda = isset($_GET['q']) ? $_GET['q'] : ''; 
+
+        if (!empty($Busqueda)) {
+            $clientes = $this->modelo->BuscarCliente($Busqueda);
+        } else {
+            $clientes = $this->modelo->ListarCliente();
+        }
         
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/clientes/indexClientes.php";
@@ -49,6 +55,11 @@ class clienteControlador {
         $this->modelo->EliminarCliente($cliente);    
 
         header ("location:?c=cliente");
+    }
+
+    public function ObtenerCuitsClientes() {
+        $cuits = $this->modelo->obtenerCuitsClientes();
+        echo json_encode($cuits);
     }
 
    

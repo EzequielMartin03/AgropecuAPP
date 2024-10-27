@@ -116,4 +116,13 @@ class Aguatero {
         $consulta->execute(array("%$termino%", "%$termino%", 'Activo'));
         return $consulta->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function obtenerCuitsAguateros() {
+        $query = "SELECT CuitAguatero FROM aguateros where EstadoAguatero = 'Activo'"; 
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN); // Devuelve un array de CUITs
+    }
+
+    
 }

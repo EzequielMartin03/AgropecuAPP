@@ -28,9 +28,7 @@ class TrabajoControlador {
             header('Location: ?c=Usuario&a=Inicio');
             exit();
         }
-
-
-        
+ 
     }
 
     public function Inicio() {
@@ -42,9 +40,6 @@ class TrabajoControlador {
         $ListaAguateros = $this->modeloAguatero->ListarAguatero();
         $AllTrabajos = $this->modelo->ListarTrabajos();
         
-    
-        
-
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/Trabajos/indexTrabajo.php";
     }
@@ -84,6 +79,7 @@ class TrabajoControlador {
     $Trabajo->setCantidadHectareasTrabajadas($_POST['CantidadHectareas']);
     $Trabajo->setFechaTrabajo($_POST['FechaTrabajo']);
     $Trabajo->setDescripcion($_POST['Descripcion']);
+    $Trabajo->setFechaPago($_POST['FechaPago']);
 
 
     $this->modelo->ActualizarTrabajo($Trabajo);    
@@ -92,7 +88,6 @@ class TrabajoControlador {
     $this->modelo->ActualizarAguaterosTrabajo($Trabajo->getIdTrabajo(), $aguateros);
     $this->modelo->ActualizarFumigadoresTrabajo($Trabajo->getIdTrabajo(), $fumigadores);
 
-    // Redirigir a la lista de trabajos
     header("location:?c=Trabajo");
 }
 

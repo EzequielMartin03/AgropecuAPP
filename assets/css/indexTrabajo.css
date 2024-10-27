@@ -25,6 +25,17 @@
         overflow-y: auto; 
     }
 
+    
+    .modal-backdrop {
+        z-index: 1040; 
+        }
+
+        .modal {
+        z-index: 1050;
+        }
+        .select2-container--default .select2-results {
+        z-index: 1060; 
+        }
   
 
    

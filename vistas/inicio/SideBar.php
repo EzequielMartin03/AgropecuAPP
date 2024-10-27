@@ -83,8 +83,7 @@
 
  
 
-    <!-- Validar modal-->
-    <script src="../assets/js/validarModal.js"></script>
+   
 
 
 </body>

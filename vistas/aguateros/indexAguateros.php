@@ -52,5 +52,12 @@
     <!-- Validar modales -->
     <script src="../assets/js/ValidarAlta.js"></script>
     <script src="../assets/js/ValidarModificar.js"></script>
+
+    <script>
+            // Enfocar el campo "Nombre" cuando el modal se muestra
+            document.getElementById('altaaguateroModal').addEventListener('shown.bs.modal', function () {
+                document.getElementById('NombreAguatero').focus();
+            });
+    </script>
 </body>
 </html>

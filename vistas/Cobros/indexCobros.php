@@ -33,7 +33,10 @@
                             <select id="cobroSelect" class="form-select" name="cobroSelect">
                             <?php foreach ($clientes as $cliente): ?>
 
-                                <option value="<?= $cliente->IdCliente ?>"><?= $cliente->Nombre ?></option>
+                                <option value="<?= $cliente->IdCliente ?>" 
+                                <?php if (isset($_SESSION['ClienteCobros']) && $_SESSION['ClienteCobros'] == $cliente->IdCliente) echo 'selected'; ?>>
+                                <?= $cliente->Nombre ?>
+                                </option>
 
                             <?php endforeach; ?>
                               
@@ -43,25 +46,27 @@
                             <input type="hidden" name="tab" value="cobro">
                             <label for="cobroSelect2" class="form-label">Selecciona tipo de filtro</label>
                             <select id="cobroSelect2" class="form-select" name="cobroSelect2">
-                                <option value="1">Trabajos Adeudados</option>
-                                <option value="2">Trabajos Abonados</option>
+                            <option value="1" <?php if (isset($_SESSION['Select']) && $_SESSION['Select'] == "1") echo 'selected'; ?>>Trabajos Adeudados</option>
+                            <option value="2" <?php if (isset($_SESSION['Select']) && $_SESSION['Select'] == "2") echo 'selected'; ?>>Trabajos Abonados</option>
                               
                             </select>
                         </div>
                     </div>
                     
                     <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
-                            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="fechaFin" class="form-label">Fecha de Fin</label>
-                            <input type="date" class="form-control" id="fechaFin" name="fechaFin">
-                        </div>
+                    <div class="col-md-4">
+                        <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
+                        <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" 
+                            value="<?php echo isset($_SESSION['fechaInicio']) ? $_SESSION['fechaInicio'] : ''; ?>">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="fechaFin" class="form-label">Fecha de Fin</label>
+                        <input type="date" class="form-control" id="fechaFin" name="fechaFin" 
+                            value="<?php echo isset($_SESSION['fechaFin']) ? $_SESSION['fechaFin'] : ''; ?>">
+                    </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary col-md-8">
+                    <button id="botonFiltrar" type="submit" class="btn btn-primary col-md-8">
                         <i class="bi bi-search"></i> Filtrar
                     </button>
                 </form>
@@ -114,6 +119,9 @@
 <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
         window.history.replaceState(null, null, '/MVCC/index.php/?c=cobros');
+
+       
+
     </script>
 </body>
 </html>

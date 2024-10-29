@@ -33,19 +33,20 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
 
             // Obtén el IdCliente desde el input oculto
-            const idCliente = formModificarAguatero.querySelector('input[name="IdAguatero"]').value;
+            const IdAguatero = formModificarAguatero.querySelector('input[name="IdAguatero"]').value;
 
             validarFormulario(
-                `NombreModificar${idCliente}`,
-                `CuitModificar${idCliente}`,
-                `DireccionModificar${idCliente}`,
-                `TelefonoModificar${idCliente}`,
-                `errorNombreModificar${idCliente}`,
-                `errorCuitModificar${idCliente}`,
-                `errorDireccionModificar${idCliente}`,
-                `errorTelefonoModificar${idCliente}`,
-                formModificarCliente
+                `NombreModificarAguatero${IdAguatero}`,
+                `CuitModificarAguatero${IdAguatero}`,
+                `DireccionModificarAguatero${IdAguatero}`,
+                `TelefonoModificarAguatero${IdAguatero}`,
+                `errorNombreModificarAguatero${IdAguatero}`,
+                `errorCuitModificarAguatero${IdAguatero}`,
+                `errorDireccionModificarAguatero${IdAguatero}`,
+                `errorTelefonoModificarAguatero${IdAguatero}`,
+                formModificarAguatero
             );
+            
         });
 
     });

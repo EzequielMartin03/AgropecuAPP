@@ -12,16 +12,17 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-4">
-                <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
-                <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
-            </div>
-            <div class="col-md-4">
-                <label for="fechaFin" class="form-label">Fecha de Fin</label>
-                <input type="date" class="form-control" id="fechaFin" name="fechaFin">
-            </div>
+        <div class="col-md-4">
+            <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
+            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" 
+                value="<?php echo isset($_SESSION['fechaInicioAguatero']) ? $_SESSION['fechaInicioAguatero'] : ''; ?>" required>
         </div>
-
+        <div class="col-md-4">
+            <label for="fechaFin" class="form-label">Fecha de Fin</label>
+            <input type="date" class="form-control" id="fechaFin" name="fechaFin" 
+                value="<?php echo isset($_SESSION['fechaFinAguatero']) ? $_SESSION['fechaFinAguatero'] : ''; ?>" required>
+        </div>
+    </div>
         <button type="submit" class="btn btn-primary col-md-8">
             <i class="bi bi-search"></i> Filtrar
         </button>

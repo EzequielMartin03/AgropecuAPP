@@ -45,18 +45,3 @@
 
         </tbody>
     </table>
-
-<script>
-        
-  $(document).ready(function() {
-    // Inicializa DataTables en la tabla con el ID miTabla
-    $('#TrCliente').DataTable({
-      "paging": true,        // Habilitar la paginación
-      "lengthMenu": [5, 10, 25, 50],  // Opciones de elementos por página
-      "pageLength": 5,       // Número de filas por página por defecto
-      "searching": true,     // Habilitar la búsqueda
-      "ordering": true,      // Habilitar la ordenación
-      "info": true           // Mostrar información de la tabla
-    });
-  });
-</script>

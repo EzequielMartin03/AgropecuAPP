@@ -17,6 +17,8 @@
     <!-- CSS de DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
 
     <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
     
@@ -101,8 +103,13 @@
 
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 <!-- Tu JavaScript personalizado -->
 <script src="../assets/js/indexTrabajoJS.js"></script>
+
+<script src="../assets/js/ValidarAltaTrabajo.js"></script>
 
 <?php
 $tab = isset($_GET['tab']) ? $_GET['tab'] : null;

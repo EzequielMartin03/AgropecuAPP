@@ -129,7 +129,7 @@
       <div class="flex-row">
         <div class="flex-item text-right">
           <p class="font-bold text-main"><?= htmlspecialchars($_SESSION['Tipo']) ?>: <?= htmlspecialchars($_SESSION['Nombre']) ?></p>
-          <p class="font-bold text-main">Detalle del <?= $_SESSION['fechainicio'] ?> al <?= $_SESSION['fechafin'] ?></p>
+          <p class="font-bold text-main">Detalle del <?= $_SESSION['fechaInicioCliente'] ?> al <?= $_SESSION['fechaFinCliente'] ?></p>
         </div>
       </div>
     </div>

@@ -10,22 +10,22 @@
                         <form id="formAltaAguatero" method="POST" action="?c=aguatero&a=Guardar">
                             <div class="mb-3">
                                 <label for="NombreAguatero" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="NombreAguatero" name="NombreAguatero" >
+                                <input type="text" class="form-control" id="NombreAguatero" name="NombreAguatero" placeholder="ingrese el nombre del aguatero" >
                                 <div id="errorNombreAguatero" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="DireccionAguatero" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="DireccionAguatero" name="DireccionAguatero" >
+                                <input type="text" class="form-control" id="DireccionAguatero" name="DireccionAguatero" placeholder="ingrese la dirección del aguatero" >
                                 <div id="errorDireccionAguatero" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="TelefonoAguatero" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="TelefonoAguatero" name="TelefonoAguatero" >
+                                <input type="tel" class="form-control" id="TelefonoAguatero" name="TelefonoAguatero" placeholder="ingrese el telefono del aguatero" >
                                 <div id="errorTelefonoAguatero" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="CuitAguatero" class="form-label">Cuit</label>
-                                <input type="number" class="form-control" id="CuitAguatero" name="CuitAguatero">
+                                <input type="number" class="form-control" id="CuitAguatero" name="CuitAguatero" placeholder="ingrese el cuit del aguatero">
                                 <div id="errorCuitAguatero" class="invalid-feedback"></div>
                             </div>
                             <div class="modal-footer">

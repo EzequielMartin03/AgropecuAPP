@@ -10,22 +10,22 @@
                         <input type="hidden" name="IdCliente" value="<?= $cliente->IdCliente ?>">
                         <div class="mb-3">
                             <label for="NombreModificar<?= $cliente->IdCliente ?>" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="NombreModificar<?= $cliente->IdCliente ?>" name="NombreModificar" value="<?= $cliente->Nombre ?>">
+                            <input type="text" class="form-control" placeholder="ingrese el nombre del cliente" id="NombreModificar<?= $cliente->IdCliente ?>" name="NombreModificar" value="<?= $cliente->Nombre ?>">
                             <div id="errorNombreModificar<?= $cliente->IdCliente ?>" class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="DireccionModificar<?= $cliente->IdCliente ?>" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="DireccionModificar<?= $cliente->IdCliente ?>" name="DireccionModificar" value="<?= $cliente->Direccion ?>">
+                            <input type="text" class="form-control" placeholder="ingrese la dirección del cliente" id="DireccionModificar<?= $cliente->IdCliente ?>" name="DireccionModificar" value="<?= $cliente->Direccion ?>">
                             <div id="errorDireccionModificar<?= $cliente->IdCliente ?>" class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="TelefonoModificar<?= $cliente->IdCliente ?>" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="TelefonoModificar<?= $cliente->IdCliente ?>" name="TelefonoModificar" value="<?= $cliente->Telefono ?>">
+                            <input type="tel" class="form-control" placeholder="ingrese el telefono del cliente" id="TelefonoModificar<?= $cliente->IdCliente ?>" name="TelefonoModificar" value="<?= $cliente->Telefono ?>">
                             <div id="errorTelefonoModificar<?= $cliente->IdCliente ?>" class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="CuitModificar<?= $cliente->IdCliente ?>" class="form-label">Cuit</label>
-                            <input type="number" class="form-control" id="CuitModificar<?= $cliente->IdCliente ?>" name="CuitModificar" value="<?= $cliente->Cuit ?>">
+                            <input type="number" class="form-control" placeholder="ingrese el CUIT del cliente" id="CuitModificar<?= $cliente->IdCliente ?>" name="CuitModificar" value="<?= $cliente->Cuit ?>">
                             <div id="errorCuitModificar<?= $cliente->IdCliente ?>" class="invalid-feedback"></div>
                         </div>
                         <div class="modal-footer">

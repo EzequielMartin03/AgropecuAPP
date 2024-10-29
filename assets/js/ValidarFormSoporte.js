@@ -1,22 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
-    let formSoporte = document.getElementById("formSoporte");
+    const formSoporte = document.getElementById("formSoporte");
 
     if (formSoporte) {
         formSoporte.addEventListener("submit", function(e) {
-            e.preventDefault();
+            e.preventDefault(); // Evitar el envío inmediato del formulario
             validarFormularioSoporte(
                 "NombreSoporte",
                 "EmailSoporte",
                 "MensajeSoporte",
-                "errorNombreSoporte",
-                "errorEmailSoporte",
-                "errorMensajeSoporte"
+                "errorNombre",
+                "errorEmail",
+                "errorMensaje"
             );
         });
     }
 
     function validarFormularioSoporte(nombre, email, mensaje, errorNombre, errorEmail, errorMensaje) {
-        let ExpresionNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+\s[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+        let ExpresionNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ' ]+$/;
         let expresionEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         let valido = true;
 
@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let emailInput = document.getElementById(email);
         let mensajeInput = document.getElementById(mensaje);
 
+        // Limpiar mensajes de error previos
         document.getElementById(errorNombre).innerText = '';
         document.getElementById(errorEmail).innerText = '';
         document.getElementById(errorMensaje).innerText = '';
@@ -33,21 +34,21 @@ document.addEventListener("DOMContentLoaded", function() {
         mensajeInput.classList.remove('is-invalid');
 
         // Validar Nombre
-        if (nombreInput.value == "" || !ExpresionNombre.test(nombreInput.value)) {
+        if (nombreInput.value.trim() === "" || !ExpresionNombre.test(nombreInput.value)) {
             nombreInput.classList.add('is-invalid');
             document.getElementById(errorNombre).innerText = 'El nombre ingresado es inválido.';
             valido = false;
         }
 
         // Validar Email
-        if (emailInput.value == "" || !expresionEmail.test(emailInput.value)) {
+        if (emailInput.value.trim() === "" || !expresionEmail.test(emailInput.value)) {
             emailInput.classList.add('is-invalid');
             document.getElementById(errorEmail).innerText = 'El email ingresado es inválido.';
             valido = false;
         }
 
         // Validar Mensaje
-        if (mensajeInput.value == "" || mensajeInput.value.length < 10) {
+        if (mensajeInput.value.trim() === "" || mensajeInput.value.length < 10) {
             mensajeInput.classList.add('is-invalid');
             document.getElementById(errorMensaje).innerText = 'El mensaje debe tener al menos 10 caracteres.';
             valido = false;
@@ -71,7 +72,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         'El mensaje ha sido enviado correctamente.',
                         'success'
                     ).then(() => {
-                        document.getElementById(nombre).form.submit();
+                        
+                        formSoporte.submit(); 
                     });
                 }
             });

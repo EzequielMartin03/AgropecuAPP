@@ -8,8 +8,6 @@ $(document).ready(function() {
 });
 
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
   const urlParams = new URLSearchParams(window.location.search);
   const activeTab = urlParams.get('tab') || 'todos'; // Por defecto a 'Cliente' si no hay parámetro

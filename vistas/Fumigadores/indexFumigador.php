@@ -48,5 +48,12 @@
     <script src="../assets/js/ValidarAlta.js"></script>
     <script src="../assets/js/ValidarModificar.js"></script>
 
+    <script>
+            // Enfocar el campo "Nombre" cuando el modal se muestra
+            document.getElementById('altaFumigadorModal').addEventListener('shown.bs.modal', function () {
+                document.getElementById('NombreFumigador').focus();
+            });
+    </script>
+
 </body>
 </html>

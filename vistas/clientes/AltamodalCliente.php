@@ -10,22 +10,22 @@
                         <form id="formAltaCliente" method="POST" action="?c=cliente&a=Guardar">
                             <div class="mb-3">
                                 <label for="NombreCliente" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="NombreCliente" name="Nombre">
+                                <input type="text" class="form-control" id="NombreCliente" name="Nombre" placeholder="ingrese el nombre del cliente">
                                 <div id="errorNombreCliente" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="DireccionCliente" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="DireccionCliente" name="Direccion">
+                                <input type="text" class="form-control" id="DireccionCliente" name="Direccion" placeholder="ingrese la dirección del cliente">
                                 <div id="errorDireccionCliente" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="TelefonoCliente" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="TelefonoCliente" name="Telefono" >
+                                <input type="tel" class="form-control" id="TelefonoCliente" name="Telefono" placeholder="ingrese el telefono del cliente" >
                                 <div id="errortelefonoCliente" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="CuitCliente" class="form-label">Cuit</label>
-                                <input type="number" class="form-control" id="CuitCliente" name="Cuit">
+                                <input type="number" class="form-control" id="CuitCliente" name="Cuit" placeholder="ingrese el CUIT del cliente">
                                 <div id="errorCuitCliente" class="invalid-feedback"></div>
                             </div>
                             <div class="modal-footer">

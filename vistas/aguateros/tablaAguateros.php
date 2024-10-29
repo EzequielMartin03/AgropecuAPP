@@ -19,7 +19,7 @@
                         <td><?= $aguatero->TelefonoAguatero ?></td>
                         <td><?= $aguatero->CuitAguatero ?></td>
                         <td>
-                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Modificaraguatero<?= $aguatero->IdAguatero ?>">
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#ModificarAguatero<?= $aguatero->IdAguatero?>">
                                 <i class="bi-pencil"></i> Modificar
                             </button>
 

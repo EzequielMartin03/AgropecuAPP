@@ -48,7 +48,16 @@
         <script src="../assets/js/ValidarModificar.js"></script>
 
 
-       
+        <script>
+            // Enfocar el campo "Nombre" cuando el modal se muestra
+            document.getElementById('altaClienteModal').addEventListener('shown.bs.modal', function () {
+                document.getElementById('NombreCliente').focus();
+            });
+
+            document.getElementById('altaClienteModal').addEventListener('shown.bs.modal', function () {
+                document.getElementById('NombreCliente').focus();
+            });
+        </script>
    
 </body>
 </html>

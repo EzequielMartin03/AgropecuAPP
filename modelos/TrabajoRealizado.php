@@ -181,7 +181,8 @@ class TrabajoRealizado {
                     IdCliente = ?, 
                     CantidadHectareasTrabajadas = ?, 
                     FechaTrabajo = ?,
-                    FechaPago = ?, 
+                    FechaPago = ?,
+                    NroFacturaAfip = ?,
                     Descripcion = ? 
                 WHERE IdTrabajo = ?";
 
@@ -192,6 +193,7 @@ class TrabajoRealizado {
             $trabajo->getCantidadHectareasTrabajadas(),
             $trabajo->getFechaTrabajo(),
             $trabajo->getFechaPago(),
+            $trabajo->getNroFacturaAfip(),
             $trabajo->getDescripcion(),
             $trabajo->getIdTrabajo() 
         ]);

@@ -26,11 +26,24 @@ class CobrosControlador {
         $fechaInicio = $_POST['fechaInicio'];
         $fechaFin = $_POST['fechaFin'];
 
+        $_SESSION['Select'] = $selectCobro;
+        $_SESSION['ClienteCobros'] = $cliente;
+        $_SESSION['fechaInicio'] = $fechaInicio;
+        $_SESSION['fechaFin'] = $fechaFin;
+
+       
+
+
+
+        
+
         if($_POST['cobroSelect2'] == 1) {
-            $cobros = $this->modelo->filtrarCobrosAbonados($fechaInicio, $fechaFin); 
+            $cobros = $this->modelo->filtrarCobrosAdeudados($fechaInicio, $fechaFin, $cliente);
+
+           
 
         }else {
-            $cobros = $this->modelo->filtrarCobrosAdeudados($fechaInicio, $fechaFin); 
+            $cobros = $this->modelo->filtrarCobrosAbonados($fechaInicio, $fechaFin, $cliente); 
 
         }
         $clientes = $this->modeloCliente->ListarCliente();

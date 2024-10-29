@@ -59,10 +59,10 @@
                             <label for="CantidadHectareas<?= $Trabajo->IdTrabajo ?>" class="form-label">Cantidad de Hectáreas Trabajadas</label>
                             <input type="number" class="form-control" id="CantidadHectareas<?= $Trabajo->IdTrabajo ?>" name="CantidadHectareas" value="<?= $Trabajo->CantidadHectareasTrabajadas ?>" required>
                         </div>
-                         <!-- Numero Factura Afip -->
+                         <!-- Numero Factura -->
                          <div class="mb-3">
-                            <label for="NroFactura<?= $Trabajo->IdTrabajo ?>" class="form-label">Cantidad de Hectáreas Trabajadas</label>
-                            <input type="number" class="form-control" id="NroFactura<?= $Trabajo->IdTrabajo ?>" name="NroFactura" value="<?= $Trabajo->CantidadHectareasTrabajadas ?>" required>
+                            <label for="NroFactura<?= $Trabajo->IdTrabajo ?>" class="form-label">Numero de Factura</label>
+                            <input type="number" class="form-control" id="NroFactura<?= $Trabajo->IdTrabajo ?>" name="NroFactura" value="<?= $Trabajo->NroFactura ?>" required>
                         </div>
 
                         <!-- Fecha de Trabajo -->

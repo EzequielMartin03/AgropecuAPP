@@ -5,22 +5,27 @@
                 <label for="FumigadorSelect" class="form-label">Selecciona Fumigador</label>
                 <select id="FumigadorSelect" class="form-select" name="FumigadorSelect">
                     <?php foreach ($ListaFumigadores as $Fumigador): ?>
-                        <option value="<?= $Fumigador->IdFumigador ?>"><?= $Fumigador->NombreFumigador ?></option>
+                        <option value="<?= $Fumigador->IdFumigador ?>" 
+                        <?php echo (isset($_SESSION['IdFumigadorTR']) && $_SESSION['IdFumigadorTR'] == $Fumigador->IdFumigador) ? 'selected' : ''; ?>>
+                        <?= $Fumigador->NombreFumigador ?>
+                    </option>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-4">
-                <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
-                <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
-            </div>
-            <div class="col-md-4">
-                <label for="fechaFin" class="form-label">Fecha de Fin</label>
-                <input type="date" class="form-control" id="fechaFin" name="fechaFin">
-            </div>
+        <div class="col-md-4">
+            <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
+            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" 
+                value="<?php echo isset($_SESSION['fechaInicioFumigador']) ? $_SESSION['fechaInicioFumigador'] : ''; ?>" required>
         </div>
+        <div class="col-md-4">
+            <label for="fechaFin" class="form-label">Fecha de Fin</label>
+            <input type="date" class="form-control" id="fechaFin" name="fechaFin" 
+                value="<?php echo isset($_SESSION['fechaFinFumigador']) ? $_SESSION['fechaFinFumigador'] : ''; ?>" required>
+        </div>
+    </div>
 
         <button type="submit" class="btn btn-primary col-md-8">
             <i class="bi bi-search"></i> Filtrar

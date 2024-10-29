@@ -84,9 +84,9 @@ class UsuarioControlador {
 
     public function EnviarMail() {
      
-        $Mensaje = $_POST['Mensaje'];
-        $Email = $_POST['Email'];
-        $Nombre = $_POST['Nombre']; 
+        $Mensaje = $_POST['MensajeSoporte'];
+        $Email = $_POST['EmailSoporte'];
+        $Nombre = $_POST['NombreSoporte']; 
 
         $to = "ezequielmartin093@gmail.com"; 
         $subject = "mensaje de {$Nombre} ";

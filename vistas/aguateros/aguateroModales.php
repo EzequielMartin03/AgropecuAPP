@@ -12,25 +12,25 @@
 
                     <div class="mb-3">
                         <label for="NombreModificarAguatero<?= $aguatero->IdAguatero ?>" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="NombreModificarAguatero<?= $aguatero->IdAguatero ?>" name="NombreModificarAguatero" value="<?= $aguatero->NombreAguatero ?>">
+                        <input type="text" class="form-control" placeholder="ingrese el nombre del aguatero" id="NombreModificarAguatero<?= $aguatero->IdAguatero ?>" name="NombreModificarAguatero" value="<?= $aguatero->NombreAguatero ?>">
                         <div id="errorNombreModificarAguatero<?= $aguatero->IdAguatero ?>" class="invalid-feedback"></div>
                     </div>
 
                     <div class="mb-3">
                         <label for="DireccionModificarAguatero<?= $aguatero->IdAguatero ?>" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="DireccionModificarAguatero<?= $aguatero->IdAguatero ?>" name="DireccionModificarAguatero" value="<?= $aguatero->DireccionAguatero ?>">
+                        <input type="text" class="form-control" placeholder="ingrese la dirección del aguatero" id="DireccionModificarAguatero<?= $aguatero->IdAguatero ?>" name="DireccionModificarAguatero" value="<?= $aguatero->DireccionAguatero ?>">
                         <div id="errorDireccionModificarAguatero<?= $aguatero->IdAguatero ?>" class="invalid-feedback"></div>
                     </div>
 
                     <div class="mb-3">
                         <label for="TelefonoModificarAguatero<?= $aguatero->IdAguatero ?>" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="TelefonoModificarAguatero<?= $aguatero->IdAguatero ?>" name="TelefonoModificarAguatero" value="<?= $aguatero->TelefonoAguatero ?>">
+                        <input type="tel" class="form-control" placeholder="ingrese el telefono del aguatero" id="TelefonoModificarAguatero<?= $aguatero->IdAguatero ?>" name="TelefonoModificarAguatero" value="<?= $aguatero->TelefonoAguatero ?>">
                         <div id="errorTelefonoModificarAguatero<?= $aguatero->IdAguatero ?>" class="invalid-feedback"></div>
                     </div>
 
                     <div class="mb-3">
                         <label for="CuitModificarAguatero<?= $aguatero->IdAguatero ?>" class="form-label">Cuit</label>
-                        <input type="number" class="form-control" id="CuitModificarAguatero<?= $aguatero->IdAguatero ?>" name="CuitModificarAguatero" value="<?= $aguatero->CuitAguatero ?>">
+                        <input type="number" class="form-control" placeholder="ingrese el cuit del aguatero" id="CuitModificarAguatero<?= $aguatero->IdAguatero ?>" name="CuitModificarAguatero" value="<?= $aguatero->CuitAguatero ?>">
                         <div id="errorCuitModificarAguatero<?= $aguatero->IdAguatero ?>" class="invalid-feedback"></div>
                     </div>
 

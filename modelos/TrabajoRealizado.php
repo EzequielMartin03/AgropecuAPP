@@ -177,6 +177,10 @@ class TrabajoRealizado {
     }
 
     public function ActualizarTrabajo($trabajo) {
+        $fechaPago = empty($trabajo->getFechaPago()) ? null : $trabajo->getFechaPago();
+        $NroFacturaAfip = empty($trabajo->getNroFacturaAfip()) ? null : $trabajo->getNroFacturaAfip();
+
+
         $sql = "UPDATE trabajorealizado SET 
                     IdCliente = ?, 
                     CantidadHectareasTrabajadas = ?, 
@@ -192,8 +196,8 @@ class TrabajoRealizado {
             $trabajo->getIdCliente(),
             $trabajo->getCantidadHectareasTrabajadas(),
             $trabajo->getFechaTrabajo(),
-            $trabajo->getFechaPago(),
-            $trabajo->getNroFacturaAfip(),
+            $fechaPago,
+            $nroFacturaAfip,
             $trabajo->getDescripcion(),
             $trabajo->getIdTrabajo() 
         ]);

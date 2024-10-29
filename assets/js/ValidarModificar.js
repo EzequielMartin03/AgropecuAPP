@@ -51,6 +51,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
+    formsModificarFumigador.forEach(formsModificarFumigador => {
+        formsModificarFumigador.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            // Obtén el IdCliente desde el input oculto
+            const IdFumigador = formsModificarFumigador.querySelector('input[name="IdFumigador"]').value;
+
+            validarFormulario(
+                `Nombre${IdFumigador}`,
+                `Cuit${IdFumigador}`,
+                `Direccion${IdFumigador}`,
+                `Telefono${IdFumigador}`,
+                `errorNombreFumigador${IdFumigador}`,
+                `errorCuitFumigador${IdFumigador}`,
+                `errorDireccionFumigador${IdFumigador}`,
+                `errorTelefonoFumigador${IdFumigador}`,
+                formsModificarFumigador
+            );
+            
+        });
+
+    });
+
     function validarFormulario(nombre, cuit, direccion, telefono, errorNombre, errorCuit, errorDireccion, errorTelefono, form) {
         let ExpresionNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ' ]+$/;
         let expresionDireccion = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s,.]+$/;

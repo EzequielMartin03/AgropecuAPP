@@ -111,6 +111,8 @@
 
 <script src="../assets/js/ValidarAltaTrabajo.js"></script>
 
+<script src="../assets/js/ValidarModificarTR.js"></script>
+
 <?php
 $tab = isset($_GET['tab']) ? $_GET['tab'] : null;
 

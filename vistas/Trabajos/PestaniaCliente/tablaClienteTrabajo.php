@@ -34,7 +34,7 @@
                                 <i class="bi-trash"></i> Eliminar
                             </button>
 
-                            <?php include 'vistas/Trabajos/PestaniaCliente/ClientesModales.php'; ?>
+                            <?php include 'vistas/Trabajos/PestaniaCliente/CLmodalesTrabajo.php'; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -10,22 +10,42 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Obtén el IdCliente desde el input oculto
             const idCliente = formModificarCliente.querySelector('input[name="IdCliente"]').value;
+            let cuitOriginal = sessionStorage.getItem('cuitguardadoCliente');
 
-            validarFormulario(
-                `NombreModificar${idCliente}`,
-                `CuitModificar${idCliente}`,
-                `DireccionModificar${idCliente}`,
-                `TelefonoModificar${idCliente}`,
-                `errorNombreModificar${idCliente}`,
-                `errorCuitModificar${idCliente}`,
-                `errorDireccionModificar${idCliente}`,
-                `errorTelefonoModificar${idCliente}`,
-                formModificarCliente
-            );
+           
+                fetch('http://localhost/MVCC/index.php/?c=Cliente&a=ObtenerCuitsClientes', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json' // Especifica el tipo de contenido
+                    }
+                })
+                .then(response => response.json()) // Convierte la respuesta a JSON
+                .then(cuits => {
+                    validarFormulario(
+                        `NombreModificar${idCliente}`,
+                        `CuitModificar${idCliente}`,
+                        `DireccionModificar${idCliente}`,
+                        `TelefonoModificar${idCliente}`,
+                        `errorNombreModificar${idCliente}`,
+                        `errorCuitModificar${idCliente}`,
+                        `errorDireccionModificar${idCliente}`,
+                        `errorTelefonoModificar${idCliente}`,
+                        formModificarCliente,
+                        cuitOriginal,
+                        cuits
+                    );
+                  
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Manejo de errores
+                });
+            });
+
+           
         });
 
 
-    });
+    
 
     
     formsModificarAguatero.forEach(formModificarAguatero => {
@@ -34,6 +54,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Obtén el IdCliente desde el input oculto
             const IdAguatero = formModificarAguatero.querySelector('input[name="IdAguatero"]').value;
+            let cuitOriginal = sessionStorage.getItem('cuitguardadoAguatero');
+
+            formModificarAguatero.addEventListener("submit", function(e) {
+                e.preventDefault(); // Previene el comportamiento por defecto del formulario
+                // Realiza una solicitud GET para obtener los CUITs de los aguateros
+                fetch('http://localhost/MVCC/index.php/?c=Aguatero&a=ObtenerCuitsAguateros', {
+                    method: 'GET',
+                    headers: { 
+                        'Content-Type': 'application/json' // Especifica el tipo de contenido
+                    }
+                })
+                .then(response => response.json()) // Convierte la respuesta a JSON
+                .then(cuits => {
 
             validarFormulario(
                 `NombreModificarAguatero${IdAguatero}`,
@@ -44,9 +77,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 `errorCuitModificarAguatero${IdAguatero}`,
                 `errorDireccionModificarAguatero${IdAguatero}`,
                 `errorTelefonoModificarAguatero${IdAguatero}`,
-                formModificarAguatero
+                formModificarAguatero,
+                cuitOriginal,
+                cuits
             );
             
+        });
+
+    });
+
         });
 
     });
@@ -57,6 +96,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Obtén el IdCliente desde el input oculto
             const IdFumigador = formsModificarFumigador.querySelector('input[name="IdFumigador"]').value;
+            let cuitOriginal = sessionStorage.getItem('cuitguardadoFumigador');
+            formsModificarFumigador.addEventListener("submit", function(e) {
+                e.preventDefault(); // Previene el comportamiento por defecto del formulario
+                // Realiza una solicitud GET para obtener los CUITs de los fumigadores
+                fetch('http://localhost/MVCC/index.php/?c=Fumigador&a=ObtenerCuitsFumigadores', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json' // Especifica el tipo de contenido
+                    }
+                })
+                .then(response => response.json()) // Convierte la respuesta a JSON
+                .then(cuits => {
 
             validarFormulario(
                 `Nombre${IdFumigador}`,
@@ -67,19 +118,26 @@ document.addEventListener("DOMContentLoaded", function() {
                 `errorCuitFumigador${IdFumigador}`,
                 `errorDireccionFumigador${IdFumigador}`,
                 `errorTelefonoFumigador${IdFumigador}`,
-                formsModificarFumigador
+                formsModificarFumigador,
+                cuitOriginal,
+                cuits
             );
             
         });
 
     });
 
-    function validarFormulario(nombre, cuit, direccion, telefono, errorNombre, errorCuit, errorDireccion, errorTelefono, form) {
+        });
+
+    });
+
+    function validarFormulario(nombre, cuit, direccion, telefono, errorNombre, errorCuit, errorDireccion, errorTelefono, form, cuitOriginal, cuits) {
         let ExpresionNombre = /^[A-Za-zÁÉÍÓÚáéíóúÑñ' ]+$/;
         let expresionDireccion = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s,.]+$/;
         let expresionTelefono = /^[0-9]{10}$/;
         let expresionCuit = /^[0-9]{11}$/;
         let valido = true;
+       
 
         const nombreInput = document.getElementById(nombre);
         const cuitInput = document.getElementById(cuit);
@@ -122,6 +180,16 @@ document.addEventListener("DOMContentLoaded", function() {
             cuitInput.classList.add('is-invalid');
             document.getElementById(errorCuit).innerText = 'El CUIT ingresado es inválido.';
             valido = false;
+        
+        } else if (cuitInput.value !== cuitOriginal) {
+            
+            const cuitIngresado = parseInt(cuitInput.value);
+                    if (cuits.includes(cuitIngresado)) {
+                        cuitInput.classList.add('is-invalid');
+                        document.getElementById(errorCuit).innerText = 'El CUIT ingresado ya se encuentra registrado.';
+                        valido = false;
+                    }
+            
         }
 
         // Si todo es válido, mostrar confirmación
@@ -148,4 +216,5 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     }
+
 });

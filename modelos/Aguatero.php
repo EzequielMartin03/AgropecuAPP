@@ -1,6 +1,8 @@
 <?php
 
+
 class Aguatero {
+    // Atributos de la clase "Aguatero".
     private $IdAguatero;
     private $NombreAguatero;
     private $DireccionAguatero;
@@ -8,10 +10,12 @@ class Aguatero {
     private $CuitAguatero;
     private $EstadoAguatero;
 
+    // Constructor que inicializa la conexión a la base de datos.
     public function __construct() {
         $this->pdo = database::connection();
     }
 
+    // Métodos "get" para obtener los valores de los atributos.
     public function getIdAguatero() {
         return $this->IdAguatero;
     }
@@ -36,6 +40,7 @@ class Aguatero {
         return $this->EstadoAguatero;
     }
 
+    // Métodos "set" para asignar valores a los atributos.
     public function setIdAguatero($IdAguatero) {
         $this->IdAguatero = $IdAguatero;
     }
@@ -60,20 +65,24 @@ class Aguatero {
         $this->EstadoAguatero = $EstadoAguatero;
     }
 
+    // Método para listar todos los aguateros activos.
     public function ListarAguatero() {
         try {
-            $consulta = $this->pdo->prepare("SELECT * FROM aguateros WHERE EstadoAguatero = 'Activo';");
-            $consulta->execute();
-            return $consulta->fetchAll(PDO::FETCH_OBJ);
+            $consulta = "SELECT * FROM aguateros WHERE EstadoAguatero = 'Activo';";
+            $stmt =  $this->pdo->prepare($consulta); 
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 
+    // Método para insertar un nuevo registro de aguatero en la base de datos.
     public function InsertarAguatero(Aguatero $Aguatero) {
         try {
             $consulta = "INSERT INTO aguateros (NombreAguatero, DireccionAguatero, TelefonoAguatero, CuitAguatero, EstadoAguatero) VALUES (?, ?, ?, ?, ?);";
-            $this->pdo->prepare($consulta)->execute(array(
+            $stmt = $this->pdo->prepare($consulta);
+            $stmt->execute(array(
                 $Aguatero->getNombreAguatero(),
                 $Aguatero->getDireccionAguatero(),
                 $Aguatero->getTelefonoAguatero(),
@@ -85,10 +94,12 @@ class Aguatero {
         }
     }
 
+    // Método para actualizar los datos de un aguatero existente en la base de datos.
     public function ActualizarAguatero(Aguatero $Aguatero) {
         try {
             $consulta = "UPDATE aguateros SET NombreAguatero = ?, DireccionAguatero = ?, TelefonoAguatero = ?, CuitAguatero = ? WHERE IdAguatero = ?;";
-            $this->pdo->prepare($consulta)->execute(array(
+            $stmt = $this->pdo->prepare($consulta);
+            $stmt->execute(array(
                 $Aguatero->getNombreAguatero(),
                 $Aguatero->getDireccionAguatero(),
                 $Aguatero->getTelefonoAguatero(),
@@ -100,10 +111,12 @@ class Aguatero {
         }
     }
 
+    // Método para marcar un aguatero como "Inactivo" en la base de datos.
     public function EliminarAguatero(Aguatero $Aguatero) {
         try {
             $consulta = "UPDATE aguateros SET EstadoAguatero = 'Inactivo' WHERE IdAguatero = ?";
-            $this->pdo->prepare($consulta)->execute(array(
+            $stmt = $this->pdo->prepare($consulta);
+            $stmt->execute(array(
                 $Aguatero->getIdAguatero()
             ));
         } catch (Exception $e) {
@@ -111,18 +124,19 @@ class Aguatero {
         }
     }
 
+    // Método para buscar aguateros activos según un término de búsqueda en nombre o CUIT.
     public function BuscarAguatero($termino) {
-        $consulta = $this->pdo->prepare("SELECT * FROM aguateros WHERE (NombreAguatero LIKE ? OR CuitAguatero LIKE ?) AND EstadoAguatero = ?");
-        $consulta->execute(array("%$termino%", "%$termino%", 'Activo'));
-        return $consulta->fetchAll(PDO::FETCH_OBJ);
+        $consulta = "SELECT * FROM aguateros WHERE (NombreAguatero LIKE ? OR CuitAguatero LIKE ?) AND EstadoAguatero = ?";
+        $stmt = $this->pdo->prepare($consulta);
+        $stmt->execute(array("%$termino%", "%$termino%", 'Activo'));
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    // Método para obtener una lista de CUITs de aguateros activos.
     public function obtenerCuitsAguateros() {
-        $query = "SELECT CuitAguatero FROM aguateros where EstadoAguatero = 'Activo'"; 
-        $stmt = $this->pdo->prepare($query);
+        $consulta = "SELECT CuitAguatero FROM aguateros where EstadoAguatero = 'Activo';"; 
+        $stmt = $this->pdo->prepare($consulta);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN); // Devuelve un array de CUITs
     }
-
-    
 }

@@ -7,8 +7,8 @@ require_once "modelos/aguatero.php";
 require_once 'pdf/vendor/autoload.php';  // Ajusta la ruta según tu estructura de directorios
 
 
-    use Dompdf\Dompdf;
-    use Dompdf\Options;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 class TrabajoControlador {
@@ -24,17 +24,12 @@ class TrabajoControlador {
         $this->modeloFumigador = new Fumigador();
         $this->modeloAguatero = new Aguatero();
 
-        if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-            header('Location: ?c=Usuario&a=Inicio');
-            exit();
-        }
+        
  
     }
 
     public function Inicio() {
 
-        
-    
         $clientes = $this->modeloCliente->ListarCliente();
         $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
         $ListaAguateros = $this->modeloAguatero->ListarAguatero();
@@ -146,6 +141,11 @@ class TrabajoControlador {
             // Guardar el tipo de filtro en la sesión
             $_SESSION['Tipo'] = 'Cliente';
 
+            $_SESSION['fechainicio'] = $fechaInicio;
+            $_SESSION['fechafin'] = $fechaFin;
+
+
+
             foreach ($resultados as $resultado) {
                 $resultado->aguaterosSeleccionados = $this->modelo->ObtenerAguaterosPorTrabajo($resultado->IdTrabajo);
                 $resultado->fumigadoresSeleccionados = $this->modelo->ObtenerFumigadoresPorTrabajo($resultado->IdTrabajo);
@@ -172,14 +172,15 @@ class TrabajoControlador {
         $_SESSION['fechaFinFumigador'] = $fechaFin;
        
 
-        if (isset($_POST['FumigadorSelect'], $_POST['fechaInicio'], $_POST['fechaFin'])) {
-            $ResultadosFumigadores = $this->modelo->FiltrarTrabajosFumigador($IdFumigador, $fechaInicio, $fechaFin);
-            $_SESSION['resultados_filtrados'] = $ResultadosFumigadores;
-            $_SESSION['Nombre'] = $ResultadosFumigadores[0]->NombreFumigador;
-            $_SESSION['Tipo'] = 'Fumigador';
-        } else {
-            $ResultadosFumigadores = [];
-        }
+      
+        $ResultadosFumigadores = $this->modelo->FiltrarTrabajosFumigador($IdFumigador, $fechaInicio, $fechaFin);
+        $_SESSION['resultados_filtrados'] = $ResultadosFumigadores;
+        $_SESSION['Nombre'] = $ResultadosFumigadores[0]->NombreFumigador;
+        $_SESSION['Tipo'] = 'Fumigador';
+
+        $_SESSION['fechainicio'] = $fechaInicio;
+        $_SESSION['fechafin'] = $fechaFin;
+        
 
         $clientes = $this->modeloCliente->ListarCliente();
         $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
@@ -201,16 +202,17 @@ class TrabajoControlador {
         $_SESSION['fechaFinAguatero'] = $fechaFin;
 
         
-        if (isset($_POST['AguateroSelect'], $_POST['fechaInicio'], $_POST['fechaFin'])) {
+       
 
-            $ResultadoAguateros = $this->modelo->FiltrarTrabajosAguatero($IdAguatero,$fechaInicio, $fechaFin);
-            $_SESSION['resultados_filtrados'] = $ResultadoAguateros;
-            $_SESSION['Nombre'] = $ResultadoAguateros[0]->NombreAguatero;
-            $_SESSION['Tipo'] = 'Aguatero';
-        } else {
-            header ("location:?c=Trabajo");
-            
-        }
+        $ResultadoAguateros = $this->modelo->FiltrarTrabajosAguatero($IdAguatero,$fechaInicio, $fechaFin);
+        $_SESSION['resultados_filtrados'] = $ResultadoAguateros;
+        $_SESSION['Nombre'] = $ResultadoAguateros[0]->NombreAguatero;
+        $_SESSION['Tipo'] = 'Aguatero';
+
+        $_SESSION['fechainicio'] = $fechaInicio;
+        $_SESSION['fechafin'] = $fechaFin;
+        
+
         $clientes = $this->modeloCliente->ListarCliente();
         $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
         $ListaAguateros = $this->modeloAguatero->ListarAguatero();
@@ -228,12 +230,13 @@ class TrabajoControlador {
             alert('No hay resultados para generar el PDF.');
             window.history.back(); 
           </script>";
-         exit(); // Termina la ejecución aquí para que no intente seguir generando el PDF
+         exit();
         }
         
        
     
         $resultados = $_SESSION['resultados_filtrados'];
+
 
         $fechaI = new DateTime($_SESSION['fechainicio']);
         $fechaF = new DateTime($_SESSION['fechafin']);
@@ -252,7 +255,7 @@ class TrabajoControlador {
         $options->set('isPhpEnabled', true);
         $dompdf->setOptions($options);
     
-        // Obtener la plantilla HTML, pasarle $resultados
+        // Cargar la plantilla HTML
         ob_start();
         include './vistas/Informes/index.php'; // La plantilla HTML debe usar $resultados
         $html = ob_get_clean();
@@ -269,9 +272,22 @@ class TrabajoControlador {
         // Enviar el archivo PDF al navegador para descargar
         $dompdf->stream("reporte_cliente.pdf", ["Attachment" => true]);
     
-        // Opcional: Limpiar la sesión después de generar el PDF
+        // Limpiar la sesión
         unset($_SESSION['resultados_filtrados']);
     }
+
+   public function ListarTrabajos() {
+
+    $resultados = $this->modelo->ListarTrabajos();
+    foreach ($resultados as &$resultado) {
+        ob_start();
+        include 'vistas/Trabajos/PestaniaCliente/CLmodalesTrabajo.php';
+        $resultado->modal = ob_get_clean(); // Captura el contenido de 'CLmodalesTrabajo.php'
+    }
+    echo json_encode($resultados);
+    
+    
+   }
 
 
    

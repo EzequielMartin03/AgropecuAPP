@@ -9,7 +9,7 @@ class Usuario {
         $this->pdo = database::connection();
     }
 
-    // Getters
+ 
     public function getIdUsuario() {
         return $this->IdUsuario;
     }
@@ -22,7 +22,7 @@ class Usuario {
         return $this->clave;
     }
 
-    // Setters
+ 
     public function setIdUsuario($IdUsuario) {
         $this->IdUsuario = $IdUsuario;
     }
@@ -35,9 +35,9 @@ class Usuario {
         $this->clave = $clave;
     }
  
-        public function getUserByUsername($username) {
+        public function ConsultarUsuario($Usuario) {
             $stmt = $this->pdo->prepare("SELECT * FROM usuario WHERE Usuario = ?");
-            $stmt->execute([$username]);
+            $stmt->execute([$Usuario]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
 

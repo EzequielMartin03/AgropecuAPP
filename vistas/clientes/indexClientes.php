@@ -18,7 +18,7 @@
 <body>
     <div class="col py-3">
         <!-- Barra de búsqueda -->
-        <form class="d-flex mb-3" method="GET" action="index.php">
+        <form class="d-flex mb-3" method="GET" action="?c=cliente">
             <input type="hidden" name="c" value="cliente">
             <input class="form-control me-2 w-50" type="search" placeholder="Buscar por nombre o CUIT" name="q" value="<?= isset($_GET['q']) ? $_GET['q'] : '' ?>">
             <button class="btn btn-success" type="submit">Buscar</button>

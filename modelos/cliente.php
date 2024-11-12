@@ -110,6 +110,7 @@ class Cliente {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN); // Devuelve un array de CUITs
     }
+    
     public function BuscarCliente($Busqueda) {
         $consulta = $this->pdo->prepare("SELECT * FROM clientes WHERE (Nombre LIKE ? OR Cuit LIKE ?) AND EstadoCliente = ?");
         $consulta->execute(array("%$Busqueda%", "%$Busqueda%", 'Activo'));

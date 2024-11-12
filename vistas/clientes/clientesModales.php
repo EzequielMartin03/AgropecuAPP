@@ -59,3 +59,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+    // Función para guardar el CUIT en sessionStorage al abrir el modal
+    function guardarCuitOriginal(cuit) {
+        sessionStorage.setItem('cuitguardadoCliente', cuit);
+    }
+
+    // Escucha el evento de apertura de este modal en específico
+    document.getElementById('ModificarCliente<?= $cliente->IdCliente ?>').addEventListener('shown.bs.modal', function () {
+        guardarCuitOriginal('<?= $cliente->Cuit ?>');
+    });
+</script>

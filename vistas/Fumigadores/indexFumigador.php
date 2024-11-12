@@ -22,7 +22,7 @@
 
     <div class="col py-3">
         
-        <form class="d-flex mb-3 " method="GET" action="index.php" >
+        <form class="d-flex mb-3 " method="GET" action="?c=Fumigador" >
             <input type="hidden" name="c" value="Fumigador">
             <input class="form-control me-2 w-50" type="search" placeholder="Buscar por nombre o CUIT" name="q" value="<?= isset($_GET['q']) ? $_GET['q'] : '' ?>">
             <button class="btn btn btn-success" type="submit">Buscar</button>

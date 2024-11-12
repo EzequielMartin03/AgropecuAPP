@@ -19,43 +19,30 @@ class UsuarioControlador {
     }
 
     public function login() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['usuario'];
+            $Usuario = $_POST['usuario'];
             $password = $_POST['contrasena'];
 
-          
-
-            $user = $this->modeloUsuario->getUserByUsername($username);
+            $user = $this->modeloUsuario->ConsultarUsuario($Usuario);
 
             if ($user && password_verify($password, $user['Clave'])) {
-                $_SESSION['authenticated'] = true;
-                $_SESSION['user'] = $user;
+                $_SESSION['Autenticado'] = true;
+                $_SESSION['user'] = $user['Usuario'];
                 header('Location: ?c=inicio'); 
                 exit();
             } else {
                 $error = 'Nombre de usuario o contraseña incorrectos';
                 include 'vistas/Usuario/loginUsuario.php';
             }
-        } else {
-          
-            include 'vistas/Usuario/loginUsuario.php';
-        }
     }
+    
 
     public function cerrarSesion() {
        
         session_unset(); 
         session_destroy(); 
 
-     
         header('Location: ?c=Usuario&a=Inicio');
         exit();
-    }
-
-    public function Ajustes() {
-        require_once 'vistas/inicio/SideBar.php';
-        require_once 'vistas/Usuario/indexAjustes.php';
-        
     }
 
     public function AgregarUsuario() { 

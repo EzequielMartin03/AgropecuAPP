@@ -59,12 +59,12 @@
                     <div class="dropdown pb-4 " >
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                           
-                            <span class="d-none d-sm-inline mx-1"> Hola <?php  $usuario = $_SESSION['user']['Usuario'];; echo $usuario ?>!</span>
+                            <span class="d-none d-sm-inline mx-1"> Hola <?php  $usuario = $_SESSION['user']; echo $usuario ?>!</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="?c=Ajustes">Ajustes</a></li>
+                            <li><a class="dropdown-item" href="?c=Ajustes">Copia de Seguridad</a></li>
                             
-                            <li><a class="dropdown-item" class="dropdown-item" href="?c=ajustes&a=Soporte">Formulario soporte</a></li>
+                         
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

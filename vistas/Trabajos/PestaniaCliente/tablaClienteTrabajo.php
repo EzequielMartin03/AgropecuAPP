@@ -13,7 +13,7 @@
                   
             </tr>
         </thead>
-        <tbody>
+        <tbody id ="tbody">
         <?php if (isset($resultados) && !empty($resultados)): ?>
                 <?php foreach ($resultados as $Trabajo): ?>
                     <tr>
@@ -22,8 +22,8 @@
                         <td><?= $Trabajo->CantidadHectareasTrabajadas ?></td>
                         <td><?= $Trabajo->FechaTrabajo ?></td>
                         <td><?= $Trabajo->FechaPago ?></td>
-                        <td><?php echo $Trabajo->NombreFumigador ? $Trabajo->NombreFumigador : 'No Asignado'; ?></td>
-                        <td><?php echo $Trabajo->NombreAguatero ? $Trabajo->NombreAguatero : 'No Asignado'; ?></td>
+                        <td><?= $Trabajo->NombreFumigador?></td>
+                        <td><?= $Trabajo->NombreAguatero?></td>
                         <td><?= $Trabajo->NroFacturaAfip ?></td>
                         <td>
                         <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#ModificarTrabajo<?= $Trabajo->IdTrabajo ?>">Modificar</button>
@@ -39,7 +39,6 @@
                     </tr>
                 <?php endforeach; ?>
            
-               
             <?php endif; ?>
 
 

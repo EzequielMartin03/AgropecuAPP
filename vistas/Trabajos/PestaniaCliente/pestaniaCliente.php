@@ -1,5 +1,12 @@
 <!-- Pestaña Cliente -->
 <div>
+<form id="FormCheck">
+    <label>
+        <input type="checkbox" name="MostrarTrabajos" id="MostrarTrabajos"> Mostrar detalles del cliente
+    </label>
+</form>
+
+
     <form class="mt-3" method="POST" action="?c=Trabajo&a=filtrarPorCliente&tab=Cliente">
         <div class="row mb-3">
             <div class="col-md-4">
@@ -10,11 +17,13 @@
                         <option value="<?= $cliente->IdCliente ?>" 
                         <?php echo (isset($_SESSION['IdclienteTR']) && $_SESSION['IdclienteTR'] == $cliente->IdCliente) ? 'selected' : ''; ?>>
                         <?= $cliente->Nombre ?>
-                    </option>
+                        </option>
                     <?php endforeach; ?>
                 </select>
             </div>
+            
         </div>
+      
         
         <div class="row mb-3">
         <div class="col-md-4">
@@ -27,12 +36,14 @@
             <input type="date" class="form-control" id="fechaFin" name="fechaFin" 
                 value="<?php echo isset($_SESSION['fechaFinCliente']) ? $_SESSION['fechaFinCliente'] : ''; ?>" required>
         </div>
+        
     </div>
 
         <button type="submit" class="btn btn-primary col-md-8">
             <i class="bi bi-search"></i> Filtrar
         </button>
     </form>
+    
     
 </div>
 

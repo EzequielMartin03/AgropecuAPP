@@ -125,7 +125,55 @@ if (($tab == 'Cliente' ) || ($tab == 'aguatero' ) || ($tab == 'fumigador')): ?>
     
 <?php endif; ?>
 
+<script>
+    document.getElementById('MostrarTrabajos').addEventListener('change', function() {
+        const isChecked = this.checked;
+        const tbody = document.getElementById('tbody');
 
+        if (!isChecked) {
+            // Limpia la tabla si se desmarca el checkbox
+            tbody.innerHTML = '';
+            return;
+        }
+
+        // Enviar solicitud AJAX al controlador cuando el checkbox está marcado
+        fetch('?c=Trabajo&a=ListarTrabajos', {
+            method: 'POST',
+            body: JSON.stringify({ checkbox: isChecked }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            tbody.innerHTML = ''; // Limpia la tabla antes de agregar nuevos resultados
+
+            // Itera sobre el objeto de datos y crea filas en la tabla
+            data.forEach(trabajo => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${trabajo.Nombre}</td>
+                    <td>${trabajo.Descripcion}</td>
+                    <td>${trabajo.CantidadHectareasTrabajadas}</td>
+                    <td>${trabajo.FechaTrabajo}</td>
+                    <td>${trabajo.FechaPago}</td>
+                    <td>${trabajo.NombreFumigador}</td>
+                    <td>${trabajo.NombreAguatero}</td>
+                    <td>${trabajo.NroFacturaAfip}</td>
+                    <td>
+                        <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#ModificarTrabajo${trabajo.IdTrabajo}">Modificar</button>
+                        <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#EliminarTrabajo${trabajo.IdTrabajo}">
+                            <i class="bi-trash"></i> Eliminar
+                        </button>
+                        ${trabajo.modal}
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error al obtener los resultados:', error));
+    });
+</script>
 
 </body>
 </html>

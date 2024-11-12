@@ -58,35 +58,35 @@ document.addEventListener("DOMContentLoaded", function() {
         fechaTrabajoInput.classList.remove('is-invalid');
 
         // Validar Cliente
-        if (clienteSelect.value === "") {
+        if (clienteSelect.value == "") {
             clienteSelect.classList.add('is-invalid');
             document.getElementById(errorCliente).innerText = "Por favor, selecciona un cliente.";
             valido = false;
         }
 
         // Validar Aguateros
-        if (aguateroSelect.selectedOptions.length === 0) {
+        if (aguateroSelect.selectedOptions.length == 0) {
             aguateroSelect.classList.add('is-invalid');
             document.getElementById(errorAguatero).innerText = "Por favor, selecciona al menos un aguatero.";
             valido = false;
         }
 
         // Validar Fumigadores
-        if (fumigadorSelect.selectedOptions.length === 0) {
+        if (fumigadorSelect.selectedOptions.length == 0) {
             fumigadorSelect.classList.add('is-invalid');
             document.getElementById(errorFumigador).innerText = "Por favor, selecciona al menos un fumigador.";
             valido = false;
         }
 
         // Validar Hectáreas
-        if (hectareasInput.value === "" || hectareasInput.value <= 0) {
+        if (hectareasInput.value == "" || hectareasInput.value <= 0) {
             hectareasInput.classList.add('is-invalid');
             document.getElementById(errorHectareas).innerText = "Por favor, ingresa un número de hectáreas válido.";
             valido = false;
         }
 
         // Validar Descripción
-        if (descripcionInput.value === "") {
+        if (descripcionInput.value == "") {
             descripcionInput.classList.add('is-invalid');
             document.getElementById(errorDescripcion).innerText = "Por favor, ingresa una descripción.";
             valido = false;
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
        
         // Validar Fecha de Trabajo
-        if (fechaTrabajoInput.value === "") {
+        if (fechaTrabajoInput.value == "") {
             fechaTrabajoInput.classList.add('is-invalid');
             document.getElementById(errorFechaTrabajo).innerText = "Por favor, selecciona una fecha de trabajo.";
             valido = false;

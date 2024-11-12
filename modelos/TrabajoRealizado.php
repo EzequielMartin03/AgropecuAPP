@@ -97,28 +97,43 @@ class TrabajoRealizado {
         $this->NroFacturaAfip = $NroFacturaAfip;
     }
 
-    public function ListarTrabajos() {
-        try {
-            $consulta = $this->pdo->prepare("
-                SELECT trabajorealizado.IdCliente, trabajorealizado.IdTrabajo,trabajorealizado.Descripcion,trabajorealizado.CantidadHectareasTrabajadas,
-                trabajorealizado.FechaTrabajo,trabajorealizado.FechaPago,trabajorealizado.NroFacturaAfip,
-                 clientes.Nombre,GROUP_CONCAT(DISTINCT fumigadores.NombreFumigador SEPARATOR ', ') AS NombreFumigador,
-                   GROUP_CONCAT(DISTINCT aguateros.NombreAguatero SEPARATOR ', ') AS NombreAguatero
-            FROM trabajorealizado
-            JOIN clientes ON trabajorealizado.IdCliente = clientes.IdCliente
-            LEFT JOIN fumigadortrabajo ON trabajorealizado.IdTrabajo = fumigadortrabajo.IdTrabajo
-            LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador
-            LEFT JOIN aguaterotrabajo ON trabajorealizado.IdTrabajo = aguaterotrabajo.IdTrabajo
-            LEFT JOIN aguateros ON aguaterotrabajo.IdAguatero = aguateros.IdAguatero
-            WHERE trabajorealizado.EstadoTrabajo = 'Activo'
-            GROUP BY trabajorealizado.IdTrabajo, trabajorealizado.Descripcion, clientes.Nombre
+    
 
-            ");
-            $consulta->execute();
-            return $consulta->fetchAll(PDO::FETCH_OBJ);
-        } catch (Exception $e) {
-            die($e->getMessage());
+   
+
+    public function InsertarTrabajo(TrabajoRealizado $trabajo, $fumigadores, $aguateros) {
+        $fechaPago = empty($trabajo->getFechaPago()) ? null : $trabajo->getFechaPago();
+        $NroFacturaAfip = empty($trabajo->getNroFacturaAfip()) ? null : $trabajo->getNroFacturaAfip();
+        
+        // Insertar el trabajo en la tabla de trabajos
+        $consulta = "INSERT INTO trabajorealizado (Descripcion, FechaTrabajo, FechaPago, CantidadHectareasTrabajadas, NroFacturaAfip, EstadoTrabajo, IdCliente) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->pdo->prepare($consulta);
+        $stmt->execute([
+            $trabajo->getDescripcion(),
+            $trabajo->getFechaTrabajo(),
+            $fechaPago,
+            $trabajo->getCantidadHectareasTrabajadas(),
+            $NroFacturaAfip,
+            'Activo',
+            $trabajo->getIdCliente()
+        ]);
+
+        $idTrabajo = $this->pdo->lastInsertId();
+
+        // Insertar las relaciones en la tabla trabajofumigador
+        foreach ($fumigadores as $IdFumigador) {
+            $consulta = "INSERT INTO fumigadortrabajo (IdTrabajo, IdFumigador, EstadoFumigadorTr) VALUES (?, ?, ?)";
+            $stmt = $this->pdo->prepare($consulta);
+            $stmt->execute([$idTrabajo, $IdFumigador, 'Activo']);
         }
+
+     
+        foreach ($aguateros as $IdAguatero) {
+            $consulta = "INSERT INTO aguaterotrabajo (IdTrabajo, IdAguatero, EstadoAguateroTr) VALUES (?, ?, ?)";
+            $stmt = $this->pdo->prepare($consulta);
+            $stmt->execute([$idTrabajo, $IdAguatero, 'Activo']);
+        }
+        
     }
 
 
@@ -139,41 +154,6 @@ class TrabajoRealizado {
         } catch (Exception $e) {
             die($e->getMessage());
         }
-    }
-
-    public function InsertarTrabajo(TrabajoRealizado $trabajo, $fumigadores, $aguateros) {
-        $fechaPago = empty($trabajo->getFechaPago()) ? null : $trabajo->getFechaPago();
-        $NroFacturaAfip = empty($trabajo->getNroFacturaAfip()) ? null : $trabajo->getNroFacturaAfip();
-        
-        // Insertar el trabajo en la tabla de trabajos
-        $query = "INSERT INTO trabajorealizado (Descripcion, FechaTrabajo, FechaPago, CantidadHectareasTrabajadas, NroFacturaAfip, EstadoTrabajo, IdCliente) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute([
-            $trabajo->getDescripcion(),
-            $trabajo->getFechaTrabajo(),
-            $fechaPago,
-            $trabajo->getCantidadHectareasTrabajadas(),
-            $NroFacturaAfip,
-            'Activo',
-            $trabajo->getIdCliente()
-        ]);
-
-        $idTrabajo = $this->pdo->lastInsertId();
-
-        // Insertar las relaciones en la tabla trabajofumigador
-        foreach ($fumigadores as $IdFumigador) {
-            $query = "INSERT INTO fumigadortrabajo (IdTrabajo, IdFumigador) VALUES (?, ?)";
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute([$idTrabajo, $IdFumigador]);
-        }
-
-     
-        foreach ($aguateros as $IdAguatero) {
-            $query = "INSERT INTO aguaterotrabajo (IdTrabajo, IdAguatero) VALUES (?, ?)";
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute([$idTrabajo, $IdAguatero]);
-        }
-        
     }
 
     public function ActualizarTrabajo($trabajo) {
@@ -197,7 +177,7 @@ class TrabajoRealizado {
             $trabajo->getCantidadHectareasTrabajadas(),
             $trabajo->getFechaTrabajo(),
             $fechaPago,
-            $nroFacturaAfip,
+            $NroFacturaAfip,
             $trabajo->getDescripcion(),
             $trabajo->getIdTrabajo() 
         ]);
@@ -205,28 +185,28 @@ class TrabajoRealizado {
 
     public function ActualizarAguaterosTrabajo($idTrabajo, $aguateros) {
  
-        $sql = "DELETE FROM aguaterotrabajo WHERE IdTrabajo = ?";
-        $stmt = $this->pdo->prepare($sql);
+        $consulta = "DELETE FROM aguaterotrabajo WHERE IdTrabajo = ?";
+        $stmt = $this->pdo->prepare($consulta);
         $stmt->execute([$idTrabajo]); 
     
      
         foreach ($aguateros as $idAguatero) {
-            $sql = "INSERT INTO aguaterotrabajo (IdTrabajo, IdAguatero, EstadoAguateroTr) VALUES (?, ?, ?)";
-            $stmt = $this->pdo->prepare($sql);
+            $consulta = "INSERT INTO aguaterotrabajo (IdTrabajo, IdAguatero, EstadoAguateroTr) VALUES (?, ?, ?)";
+            $stmt = $this->pdo->prepare($consulta);
             $stmt->execute([$idTrabajo, $idAguatero,"Activo"]); 
         }
     }
 
     public function ActualizarFumigadoresTrabajo($idTrabajo, $fumigadores) {
  
-        $sql = "DELETE FROM fumigadortrabajo WHERE IdTrabajo = ?";
-        $stmt = $this->pdo->prepare($sql);
+        $consulta = "DELETE FROM fumigadortrabajo WHERE IdTrabajo = ?";
+        $stmt = $this->pdo->prepare($consulta);
         $stmt->execute([$idTrabajo]); 
     
      
         foreach ($fumigadores as $IdFumigador) {
-            $sql = "INSERT INTO fumigadortrabajo (IdTrabajo, IdFumigador, EstadoFumigadorTr) VALUES (?, ?, ?)";
-            $stmt = $this->pdo->prepare($sql);
+            $consulta = "INSERT INTO fumigadortrabajo (IdTrabajo, IdFumigador, EstadoFumigadorTr) VALUES (?, ?, ?)";
+            $stmt = $this->pdo->prepare($consulta);
             $stmt->execute([$idTrabajo, $IdFumigador,"Activo"]); 
         }
     }
@@ -254,19 +234,36 @@ class TrabajoRealizado {
 
     public function FiltrarTrabajosCliente($IdCliente, $FechaInicio, $FechaFin) {
         $consulta = $this->pdo->prepare("
-                SELECT trabajorealizado.IdCliente, trabajorealizado.IdTrabajo,trabajorealizado.Descripcion,trabajorealizado.CantidadHectareasTrabajadas,
-                trabajorealizado.FechaTrabajo,trabajorealizado.FechaPago,trabajorealizado.NroFacturaAfip,
-                 clientes.Nombre,GROUP_CONCAT(DISTINCT fumigadores.NombreFumigador SEPARATOR ', ') AS NombreFumigador,
-                   GROUP_CONCAT(DISTINCT aguateros.NombreAguatero SEPARATOR ', ') AS NombreAguatero
-            FROM trabajorealizado
-            JOIN clientes ON trabajorealizado.IdCliente = clientes.IdCliente
-            LEFT JOIN fumigadortrabajo ON trabajorealizado.IdTrabajo = fumigadortrabajo.IdTrabajo
-            LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador
-            LEFT JOIN aguaterotrabajo ON trabajorealizado.IdTrabajo = aguaterotrabajo.IdTrabajo
-            LEFT JOIN aguateros ON aguaterotrabajo.IdAguatero = aguateros.IdAguatero
-            WHERE trabajorealizado.EstadoTrabajo = 'Activo' and clientes.IdCliente = ? AND trabajorealizado.FechaTrabajo BETWEEN ? AND ?
-            GROUP BY trabajorealizado.IdTrabajo, trabajorealizado.Descripcion, clientes.Nombre
-            ");
+              SELECT 
+                trabajorealizado.IdCliente, 
+                trabajorealizado.IdTrabajo,
+                trabajorealizado.Descripcion,
+                trabajorealizado.CantidadHectareasTrabajadas,
+                trabajorealizado.FechaTrabajo,
+                trabajorealizado.FechaPago,
+                trabajorealizado.NroFacturaAfip,
+                clientes.Nombre,
+                GROUP_CONCAT(DISTINCT fumigadores.NombreFumigador SEPARATOR ', ') AS NombreFumigador,
+                GROUP_CONCAT(DISTINCT aguateros.NombreAguatero SEPARATOR ', ') AS NombreAguatero
+                FROM 
+                    trabajorealizado
+                JOIN 
+                    clientes ON trabajorealizado.IdCliente = clientes.IdCliente
+                JOIN 
+                    fumigadortrabajo ON trabajorealizado.IdTrabajo = fumigadortrabajo.IdTrabajo
+                JOIN 
+                    fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador
+                JOIN 
+                    aguaterotrabajo ON trabajorealizado.IdTrabajo = aguaterotrabajo.IdTrabajo
+                JOIN 
+                    aguateros ON aguaterotrabajo.IdAguatero = aguateros.IdAguatero
+                WHERE 
+                    trabajorealizado.EstadoTrabajo = 'Activo' 
+                    AND clientes.IdCliente = ? 
+                    AND trabajorealizado.FechaTrabajo BETWEEN ? AND ?
+                GROUP BY 
+                    trabajorealizado.IdTrabajo, trabajorealizado.Descripcion, clientes.Nombre
+");
         $consulta->execute([$IdCliente, $FechaInicio, $FechaFin]);
         return $consulta->fetchAll(PDO::FETCH_OBJ);
     }
@@ -292,12 +289,12 @@ class TrabajoRealizado {
 
     public function ObtenerAguaterosPorTrabajo($idTrabajo) {
        
-        $sql = "SELECT aguateros.IdAguatero FROM aguaterotrabajo 
+        $consulta = "SELECT aguateros.IdAguatero FROM aguaterotrabajo 
                 inner join aguateros ON aguaterotrabajo.IdAguatero =  aguateros.IdAguatero
                 WHERE aguaterotrabajo.IdTrabajo = ? 
                 AND aguateros.EstadoAguatero = 'Activo';
         " ; 
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $this->pdo->prepare($consulta);
         $stmt->execute([$idTrabajo]);
         return $stmt->fetchAll(PDO::FETCH_COLUMN); 
     }
@@ -312,16 +309,16 @@ class TrabajoRealizado {
 
     public function filtrarCobrosXFecha($FechaInicio, $FechaFin) {
         try {
-        $query = "SELECT trabajorealizado.IdTrabajo, 
+        $consulta = "SELECT trabajorealizado.IdTrabajo, 
                  trabajorealizado.CantidadHectareasTrabajadas, 
                  trabajorealizado.Descripcion,
                  trabajorealizado.FechaTrabajo,
                  trabajorealizado.FechaPago, 
                  Clientes.Nombre 
                 FROM trabajorealizado
-                INNER JOIN Clientes ON trabajorealizado.IdCliente = Clientes.IdCliente
+                JOIN Clientes ON trabajorealizado.IdCliente = Clientes.IdCliente
                 WHERE FechaTrabajo BETWEEN ? AND ?";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->prepare($consulta);
         $stmt->execute([$FechaInicio, $FechaFin]);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
         } catch (Exception $e) {
@@ -401,6 +398,30 @@ class TrabajoRealizado {
         }
 
         return $hectareasMensuales; // Devuelve el arreglo con hectáreas trabajadas por mes
+    }
+
+    public function ListarTrabajos() {
+        try {
+            $consulta = $this->pdo->prepare("
+                SELECT trabajorealizado.IdCliente, trabajorealizado.IdTrabajo,trabajorealizado.Descripcion,trabajorealizado.CantidadHectareasTrabajadas,
+                trabajorealizado.FechaTrabajo,trabajorealizado.FechaPago,trabajorealizado.NroFacturaAfip,
+                 clientes.Nombre,GROUP_CONCAT(DISTINCT fumigadores.NombreFumigador SEPARATOR ', ') AS NombreFumigador,
+                   GROUP_CONCAT(DISTINCT aguateros.NombreAguatero SEPARATOR ', ') AS NombreAguatero
+            FROM trabajorealizado
+            JOIN clientes ON trabajorealizado.IdCliente = clientes.IdCliente
+            LEFT JOIN fumigadortrabajo ON trabajorealizado.IdTrabajo = fumigadortrabajo.IdTrabajo
+            LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador
+            LEFT JOIN aguaterotrabajo ON trabajorealizado.IdTrabajo = aguaterotrabajo.IdTrabajo
+            LEFT JOIN aguateros ON aguaterotrabajo.IdAguatero = aguateros.IdAguatero
+            WHERE trabajorealizado.EstadoTrabajo = 'Activo'
+            GROUP BY trabajorealizado.IdTrabajo, trabajorealizado.Descripcion, clientes.Nombre
+
+            ");
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 
    

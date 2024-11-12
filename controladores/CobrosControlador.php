@@ -32,21 +32,15 @@ class CobrosControlador {
         $_SESSION['fechaFin'] = $fechaFin;
 
        
-
-
-
-        
-
         if($_POST['cobroSelect2'] == 1) {
             $cobros = $this->modelo->filtrarCobrosAdeudados($fechaInicio, $fechaFin, $cliente);
-
-           
 
         }else {
             $cobros = $this->modelo->filtrarCobrosAbonados($fechaInicio, $fechaFin, $cliente); 
 
         }
         $clientes = $this->modeloCliente->ListarCliente();
+        
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/Cobros/indexCobros.php";
     }

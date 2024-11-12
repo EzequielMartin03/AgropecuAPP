@@ -3,19 +3,20 @@ session_start();
 require_once "modelos/database.php";
 
 // Verifica si el usuario está autenticado
-function checkAuth() {
-    // Lista de controladores y acciones permitidas sin autenticación
-    $allowedActions = [
-        'Usuario' => ['Inicio', 'login'] // Aquí defines las acciones que no requieren autenticación
+function VerificarLogin() {
+    // Lista de controladores y acciones permitidas sin login
+    $AccionesPermitidas = [
+        'Usuario' => ['Inicio', 'login']
     ];
 
-    $currentController = isset($_GET['c']) ? $_GET['c'] : 'Inicio';
-    $currentAction = isset($_GET['a']) ? $_GET['a'] : 'Inicio';
+    $ControladorActual = isset($_GET['c']) ? $_GET['c'] : 'Inicio';
 
-    // Si el usuario NO está autenticado
-    if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    $AccionActual = isset($_GET['a']) ? $_GET['a'] : 'Inicio';
+
+    // Si el usuario no está autenticado
+    if (!isset($_SESSION['Autenticado']) || $_SESSION['Autenticado'] !== true) {
         // Si el controlador actual NO es Usuario o la acción no es permitida, redirige al login
-        if (!isset($allowedActions[$currentController]) || !in_array($currentAction, $allowedActions[$currentController])) {
+        if (!isset($AccionesPermitidas[$ControladorActual]) || !in_array($AccionActual, $AccionesPermitidas[$ControladorActual])) {
             header('Location: ?c=Usuario&a=Inicio'); // Redirige al login
             exit();
         }
@@ -23,32 +24,31 @@ function checkAuth() {
 }
 
 // Verifica la autenticación antes de determinar el controlador
-checkAuth();
+VerificarLogin();
 
 // Determina el controlador y la acción
 if (!isset($_GET["c"])) {
     require_once "controladores/InicioControlador.php";
     $controlador = new InicioControlador();
-    $accion = "Inicio";
+ 
 } else {
     $controlador = $_GET["c"];
     require_once "controladores/" . $controlador . "Controlador.php";    
     $controlador = ucwords($controlador) . "Controlador";
 
-    // Asegúrate de que el controlador existe antes de instanciarlo
     if (class_exists($controlador)) {
         $controlador = new $controlador;
         $accion = isset($_GET['a']) ? $_GET['a'] : "Inicio";        
 
         // Verifica si el método (acción) existe en el controlador
         if (method_exists($controlador, $accion)) {
-            call_user_func(array($controlador, $accion));
+            call_user_func(array($controlador, $accion)); //Llama al método (accion) del controlador 
         } else {
-            // Maneja el caso en que la acción no existe
+            // si la accion no existe
             echo "Acción no encontrada";
         }
     } else {
-        // Maneja el caso en que el controlador no existe
+        // si el controlador no existe
         echo "Controlador no encontrado";
     }
 }

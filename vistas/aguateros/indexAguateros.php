@@ -19,10 +19,8 @@
 <body>
 
     <div class="col py-3">
-        
-      
-
-        <form class="d-flex mb-3 " method="GET" action="index.php" >
+    
+        <form class="d-flex mb-3 " method="GET" action="?c=aguatero" >
             <input type="hidden" name="c" value="aguatero">
             <input class="form-control me-2 w-50" type="search" placeholder="Buscar por Nombre o Cuit/Cuil" name="q" value="<?= isset($_GET['q']) ? $_GET['q'] : '' ?>">
             <button class="btn btn btn-success" type="submit">Buscar</button>
@@ -42,9 +40,7 @@
          <?php include './vistas/Aguateros/ModalAltaAguatero.php'; ?>
          
     </div>
-
-   
-   
+    
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
       <!-- Alertas Js -->

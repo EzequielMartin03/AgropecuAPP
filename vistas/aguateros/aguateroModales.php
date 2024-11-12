@@ -65,3 +65,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Función para guardar el CUIT en sessionStorage al abrir el modal
+    function guardarCuitOriginal(cuit) {
+        sessionStorage.setItem('cuitguardadoAguatero', cuit);
+    }
+
+    // Escucha el evento de apertura de este modal en específico
+    document.getElementById('ModificarAguatero<?= $aguatero->IdAguatero ?>').addEventListener('shown.bs.modal', function () {
+        guardarCuitOriginal('<?= $aguatero->CuitAguatero ?>');
+    });
+</script>

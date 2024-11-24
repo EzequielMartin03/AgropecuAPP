@@ -1,7 +1,6 @@
 <table id="TrCliente" class="table table-striped ">
         <thead>
             <tr>
-                    <th scope="col">Cliente</th>
                     <th scope="col">Descripcion</th>
                     <th scope="col">Hectareas</th>
                     <th scope="col">Fecha de Trabajo</th>
@@ -17,7 +16,6 @@
         <?php if (isset($resultados) && !empty($resultados)): ?>
                 <?php foreach ($resultados as $Trabajo): ?>
                     <tr>
-                        <td><?= $Trabajo->Nombre ?></td>
                         <td><?= $Trabajo->Descripcion ?></td>
                         <td><?= $Trabajo->CantidadHectareasTrabajadas ?></td>
                         <td><?= $Trabajo->FechaTrabajo ?></td>

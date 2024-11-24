@@ -20,6 +20,13 @@
 </head>
 <body>
 
+        <div class="container py-3">
+            <!-- Título de Clientes -->
+            <div class="text-left mb-2">
+                <h4 class="fw-semibold">Gestión Fumigadores</h4>
+            </div>
+
+
     <div class="col py-3">
         
         <form class="d-flex mb-3 " method="GET" action="?c=Fumigador" >

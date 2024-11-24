@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Panel de Indicadores Clave</title>
     <link rel="stylesheet" href="../assets/css/SideBarStyle.css">
     <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
+    
     <style>
         body {
-            font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            width: 70%; /* Ajuste del ancho para que se acomode con la sidebar */
+            width: 70%;
             margin: 0 auto;
             padding: 20px;
         }
@@ -27,7 +26,7 @@
 
         .dashboard {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Tres columnas */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
@@ -69,73 +68,69 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%; /* Usa todo el ancho disponible */
+            height: auto; /* Ajusta la altura automáticamente */
         }
 
         #myChart {
-            width: 100% !important; /* Asegúrate de que el gráfico use todo el ancho disponible */
-            height: 400px; /* Ajusta la altura según tus necesidades */
+            width: 100%;
+            height: 400px; /* Altura inicial */
+            max-width: 100%; /* No exceder el ancho del contenedor */
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-   
     <div class="dashboard">
-        <!-- Indicador 1: Total de Hectáreas Trabajadas -->
         <div class="metric">
             <div class="icon">🌾</div>
             <h3>Total de Hectáreas Trabajadas</h3>
-            <p><?php echo $totalHectareas; ?></p> <!-- Valor dinámico -->
-            <div class="month">Mes: <?php echo date('F Y'); ?></div> <!-- Mes actual -->
+            <p><?php echo $totalHectareas; ?></p>
+            <div class="month">Mes: <?php echo date('F Y'); ?></div>
         </div>
-
-        <!-- Indicador 2: Cantidad de Trabajos Realizados -->
         <div class="metric">
             <div class="icon">📝</div>
             <h3>Cantidad de Trabajos Realizados</h3>
-            <p><?php echo $totalTrabajos; ?></p> <!-- Valor dinámico -->
-            <div class="month">Mes: <?php echo date('F Y'); ?></div> <!-- Mes actual -->
+            <p><?php echo $totalTrabajos; ?></p>
+            <div class="month">Mes: <?php echo date('F Y'); ?></div>
         </div>
-
-        <!-- Indicador 3: Cliente Más Activo -->
         <div class="metric">
             <div class="icon">👤</div>
             <h3>Cliente Más Activo</h3>
-            <p><?php echo $ClienteMasActivo; ?></p> <!-- Valor dinámico -->
-            <div class="month">Mes: <?php echo date('F Y'); ?></div> <!-- Mes actual -->
+            <p><?php echo $ClienteMasActivo; ?></p>
+            <div class="month">Mes: <?php echo date('F Y'); ?></div>
         </div>
     </div>
 
-    <!-- Gráfico de Tendencias -->
     <div class="chart-container">
         <canvas id="myChart"></canvas>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap CSS -->
-
 <script>
+  // Crear gráfico
   const ctx = document.getElementById('myChart').getContext('2d');
 
   const myChart = new Chart(ctx, {
-      type: 'line', // Tipo de gráfico (línea)
+      type: 'line',
       data: {
-         
           datasets: [{
               label: 'Hectáreas Trabajadas por Mes',
-              data: <?php echo json_encode($Hectareasmensuales); ?>, // Datos de ingresos
+              data: <?php echo json_encode($Hectareasmensuales); ?>,
               borderColor: 'rgba(75, 192, 192, 1)',
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderWidth: 2,
-              fill: true // Rellenar el área debajo de la línea
+              fill: true
           }]
       },
       options: {
           responsive: true,
+          maintainAspectRatio: false, // Permitir ajuste flexible
           scales: {
               y: {
                   beginAtZero: true,
@@ -147,22 +142,30 @@
               x: {
                   title: {
                       display: true,
-                      text: 'Meses' // Título del eje X
+                      text: 'Meses'
                   }
               }
           },
           plugins: {
               legend: {
                   display: true,
-                  position: 'top' // Posición de la leyenda
+                  position: 'top'
               },
               tooltip: {
-                  enabled: true // Habilitar tooltips
+                  enabled: true
               }
           }
       }
   });
+
+  // Redimensionar al cambiar el tamaño de la ventana
+  window.addEventListener('resize', () => {
+      myChart.resize(); // Ajustar gráfico dinámicamente
+  });
 </script>
+
+    <!-- Incluir Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

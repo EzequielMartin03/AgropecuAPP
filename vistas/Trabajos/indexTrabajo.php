@@ -125,6 +125,14 @@ if (($tab == 'Cliente' ) || ($tab == 'aguatero' ) || ($tab == 'fumigador')): ?>
     
 <?php endif; ?>
 
+<?php if (isset($_SESSION['mensajeAlerta'])): ?>
+    <script>
+        alert("<?php echo $_SESSION['mensajeAlerta']; ?>");
+    </script>
+    <?php unset($_SESSION['mensajeAlerta']); // Limpiar el mensaje después de mostrarlo ?>
+<?php endif; ?>
+
+
 <script>
     document.getElementById('MostrarTrabajos').addEventListener('change', function() {
         const isChecked = this.checked;

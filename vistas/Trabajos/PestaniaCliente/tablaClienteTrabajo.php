@@ -21,10 +21,10 @@
                         <td><?= $Trabajo->Descripcion ?></td>
                         <td><?= $Trabajo->CantidadHectareasTrabajadas ?></td>
                         <td><?= $Trabajo->FechaTrabajo ?></td>
-                        <td><?= $Trabajo->FechaPago ?></td>
+                        <td><?=  ($Trabajo->FechaPago) ? $Trabajo->FechaPago : 'Fecha no ingresada'; ?></td>
                         <td><?= $Trabajo->NombreFumigador?></td>
                         <td><?= $Trabajo->NombreAguatero?></td>
-                        <td><?= $Trabajo->NroFacturaAfip ?></td>
+                        <td><?=  ($Trabajo->NroFacturaAfip) ? $Trabajo->NroFacturaAfip : 'numero de factura no ingresada'; ?></td>
                         <td>
                         <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#ModificarTrabajo<?= $Trabajo->IdTrabajo ?>">Modificar</button>
 

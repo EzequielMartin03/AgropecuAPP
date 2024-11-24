@@ -73,14 +73,14 @@
                     <!-- Fecha de Trabajo -->
                     <div class="mb-3">
                         <label for="FechaTrabajo<?= $Trabajo->IdTrabajo ?>" class="form-label">Fecha de Trabajo</label>
-                        <input type="date" class="form-control" id="FechaTrabajo<?= $Trabajo->IdTrabajo ?>" name="FechaTrabajo" value="<?= $Trabajo->FechaTrabajo ?>" >
+                        <input type="date" class="form-control" id="FechaTrabajo<?= $Trabajo->IdTrabajo ?>" name="FechaTrabajo" value="<?= $Trabajo->fechaTrabajoOriginal ?>" >
                         <div id="invalidFechaTrabajo<?= $Trabajo->IdTrabajo ?>" class="invalid-feedback"></div>
                     </div>
 
                     <!-- Fecha de Pago -->
                     <div class="mb-3">
                         <label for="FechaPago<?= $Trabajo->IdTrabajo ?>" class="form-label">Fecha de Pago</label>
-                        <input type="date" class="form-control" id="FechaPago<?= $Trabajo->IdTrabajo ?>" name="FechaPago" value="<?= $Trabajo->FechaPago ?>" >
+                        <input type="date" class="form-control" id="FechaPago<?= $Trabajo->IdTrabajo ?>" name="FechaPago" value="<?= $Trabajo->fechaPagoOriginal ?>" >
                         <div id="invalidFechaPago<?= $Trabajo->IdTrabajo ?>" class="invalid-feedback"></div>
                     </div>
 

@@ -1,10 +1,6 @@
 <!-- Pestaña Cliente -->
 <div>
-<form id="FormCheck">
-    <label>
-        <input type="checkbox" name="MostrarTrabajos" id="MostrarTrabajos"> Mostrar detalles del cliente
-    </label>
-</form>
+
 
 
     <form class="mt-3" method="POST" action="?c=Trabajo&a=filtrarPorCliente&tab=Cliente">

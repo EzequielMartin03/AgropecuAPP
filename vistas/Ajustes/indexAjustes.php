@@ -14,31 +14,28 @@
     <!-- Estilos personalizados -->
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+          
             background-color: #f4f4f9;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Bloquea el scroll de la página */
         }
 
-        h2 {
+        h4 {
             color: #007bff;
-            text-align: center;
-            margin-bottom: 30px;
         }
 
         .container {
+            height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh; /* Centra todo el contenido vertical y horizontalmente */
+            justify-content: center;
+            padding: 20px;
         }
 
         .form-container {
-            max-width: 700px; /* Ajustar el tamaño del formulario */
-            margin-left: 200px; /* Añadir espacio extra a la izquierda */
-            margin-right: auto; /* Mantener centrado, pero con un pequeño desplazamiento a la izquierda */
-            padding: 20px;
+            max-width: 700px;
+            width: 100%; /* Asegura que se ajuste al ancho de pantalla en móviles */
+            padding: 15px;
         }
 
         .card {
@@ -68,10 +65,49 @@
             background-color: #f9f9f9;
             border-radius: 10px;
         }
+
+        /* --- Media Queries para Responsividad --- */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 10px; /* Reducir padding en tabletas */
+            }
+
+            .card {
+                margin-bottom: 15px; /* Reducir espacio entre tarjetas */
+            }
+
+            .btn-primary, .btn-secondary {
+                font-size: 14px; /* Reducir tamaño de texto en botones */
+                padding: 10px;
+            }
+
+            .form-group input {
+                font-size: 14px;
+                padding: 8px; /* Reducir tamaño en campos de entrada */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .form-container {
+                padding: 5px;
+            }
+
+            h4 {
+                font-size: 18px; /* Reducir tamaño del título en móviles */
+            }
+
+            .btn-primary, .btn-secondary {
+                font-size: 14px;
+                padding: 8px; /* Botones más compactos */
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
-
     <div class="container">
         <div class="form-container">
           
@@ -87,8 +123,6 @@
                 </div>
             </div>
 
-            <br><br>
-
             <!-- Panel de Restauración -->
             <div class="card">
                 <div class="card-body">
@@ -96,7 +130,7 @@
                     <p>Selecciona un archivo SQL para restaurar la base de datos a un estado anterior.</p>
                     
                     <form action="index.php?c=Ajustes&a=restaurarBackup" method="POST" enctype="multipart/form-data">
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="sql_file">Selecciona el archivo SQL:</label>
                             <input type="file" name="sql_file" id="sql_file" class="form-control" required>
                         </div>
@@ -108,6 +142,9 @@
     </div>
 
     <!-- Incluir Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 </body>
 </html>

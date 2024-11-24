@@ -27,6 +27,9 @@ class UsuarioControlador {
             if ($user && password_verify($password, $user['Clave'])) {
                 $_SESSION['Autenticado'] = true;
                 $_SESSION['user'] = $user['Usuario'];
+                $_SESSION['IdUsuario'] = $user['IdUsuario'];
+                
+
                 header('Location: ?c=inicio'); 
                 exit();
             } else {

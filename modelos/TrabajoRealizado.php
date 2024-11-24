@@ -104,9 +104,10 @@ class TrabajoRealizado {
     public function InsertarTrabajo(TrabajoRealizado $trabajo, $fumigadores, $aguateros) {
         $fechaPago = empty($trabajo->getFechaPago()) ? null : $trabajo->getFechaPago();
         $NroFacturaAfip = empty($trabajo->getNroFacturaAfip()) ? null : $trabajo->getNroFacturaAfip();
+        $IdUsuario = $_SESSION['IdUsuario'];
         
         // Insertar el trabajo en la tabla de trabajos
-        $consulta = "INSERT INTO trabajorealizado (Descripcion, FechaTrabajo, FechaPago, CantidadHectareasTrabajadas, NroFacturaAfip, EstadoTrabajo, IdCliente) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $consulta = "INSERT INTO trabajorealizado (Descripcion, FechaTrabajo, FechaPago, CantidadHectareasTrabajadas, NroFacturaAfip, EstadoTrabajo, IdCliente, IdUsuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($consulta);
         $stmt->execute([
             $trabajo->getDescripcion(),
@@ -115,7 +116,9 @@ class TrabajoRealizado {
             $trabajo->getCantidadHectareasTrabajadas(),
             $NroFacturaAfip,
             'Activo',
-            $trabajo->getIdCliente()
+            $trabajo->getIdCliente(),
+            $IdUsuario
+            
         ]);
 
         $idTrabajo = $this->pdo->lastInsertId();

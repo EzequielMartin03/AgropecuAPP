@@ -1,36 +1,124 @@
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+
+
 .usuario-info {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
     padding: 10px;
-    background-color: #333; 
-    color: white; 
-    text-align: center; 
+    background-color: #333;
+    color: white;
+    text-align: center;
+    font-size: 14px; /* Tamaño de fuente ajustado para pantallas pequeñas */
 }
 
 .sidebar {
-    position: relative; 
-    height: 100vh; 
+    position: fixed; /* Fija la barra lateral en su lugar */
+    top: 0;
+    left: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
+    background-color: #2c3e50; /* Color oscuro para barra lateral */
+    overflow-y: auto; /* Permite desplazamiento si el contenido es muy largo */
+    width: 250px; /* Ancho inicial */
+    transition: width 0.3s; /* Transición suave al cambiar tamaño */
 }
 
-.sidebar {
-    min-height: 100vh; 
+.sidebar:hover {
+    width: 280px; /* Ampliar ligeramente al pasar el cursor */
 }
+
+.sidebar.collapsed {
+    width: 70px; /* Barra lateral colapsada para pantallas pequeñas */
+}
+
 .btn-custom {
-    margin: 0 5px; 
+    margin: 0 5px;
 }
+
+/* Botones del sidebar */
 .btn-sidebar {
     display: flex;
     align-items: center;
-    padding: 10px 15px; 
+    padding: 12px 14px;  /* Reducir el padding para que los botones sean más pequeños */
     text-align: left;
     width: 100%;
     border: none;
+    background: none;
+    color: white;
+    font-size: 14px; /* Reducir el tamaño de la fuente */
+    transition: background-color 0.3s;
 }
+
+/* Al pasar el cursor sobre los botones */
+.btn-sidebar:hover {
+    background-color: #34495e; /* Color de fondo al pasar el cursor */
+}
+
+/* Tamaño de los íconos dentro de los botones */
 .btn-sidebar i {
-    margin-right: 10px; 
+    margin-right: 8px; /* Reducir el espacio entre el ícono y el texto */
+    font-size: 16px; /* Reducir el tamaño del ícono */
 }
+
+
 .dropdown-menu {
     min-width: 200px;
+}
+
+.dropdown-menu a {
+    padding: 10px;
+    color: #2c3e50;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+/* --- Media Queries para Responsividad --- */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px; /* Barra lateral colapsada en pantallas pequeñas */
+    }
+
+    .btn-sidebar span {
+        display: none; /* Ocultar texto de los botones en pantallas pequeñas */
+    }
+
+    .btn-sidebar i {
+        margin-right: 0; /* Centrar íconos */
+    }
+
+    .usuario-info {
+        font-size: 12px; /* Reducir tamaño de texto */
+        padding: 5px;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        position: fixed;
+        z-index: 1000;
+        width: 100%; /* Barra lateral ocupa todo el ancho */
+        height: auto;
+        flex-direction: row; /* Cambiar orientación a fila */
+        overflow-x: auto; /* Permitir desplazamiento horizontal */
+    }
+
+    .btn-sidebar {
+        flex: 1; /* Ocupa un espacio equitativo en la barra */
+        justify-content: center; /* Centrar contenido */
+        padding: 5px;
+    }
+
+    .btn-sidebar i {
+        font-size: 20px; /* Íconos más grandes en móviles */
+    }
 }

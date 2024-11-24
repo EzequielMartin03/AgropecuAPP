@@ -16,7 +16,14 @@
     <link rel="stylesheet" href="../assets/css/indexTrabajo.css">
 </head>
 <body>
-    <div class="col py-3">
+    <div class="container py-3">
+        <!-- Título de Clientes -->
+        <div class="text-left mb-2">
+            <h4 class="fw-semibold">Gestión Clientes</h4>
+        </div>
+
+        
+
         <!-- Barra de búsqueda -->
         <form class="d-flex mb-3" method="GET" action="?c=cliente">
             <input type="hidden" name="c" value="cliente">
@@ -29,35 +36,30 @@
             <i class="bi-plus-circle"></i> Dar de alta cliente
         </button>
 
-        
-
         <!-- Tabla de Clientes -->
         <?php include './vistas/Clientes/tablaClientes.php'; ?>
         <?php include './vistas/Clientes/AltamodalCliente.php'; ?>
 
-    
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- Alertas Js -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
         <!-- Validar modales -->
         <script src="../assets/js/ValidarAlta.js"></script>
         <script src="../assets/js/ValidarModificar.js"></script>
-
 
         <script>
             // Enfocar el campo "Nombre" cuando el modal se muestra
             document.getElementById('altaClienteModal').addEventListener('shown.bs.modal', function () {
                 document.getElementById('NombreCliente').focus();
             });
-
-            document.getElementById('altaClienteModal').addEventListener('shown.bs.modal', function () {
-                document.getElementById('NombreCliente').focus();
-            });
         </script>
-   
+
+        <script>
+            
+        </script>
+    </div>
 </body>
 </html>

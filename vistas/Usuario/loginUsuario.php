@@ -7,6 +7,7 @@
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../assets/img/favicon.ico" />
     
     <link rel="stylesheet" href="../assets/css/login.css">
 </head>

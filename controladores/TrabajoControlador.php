@@ -298,7 +298,7 @@ class TrabajoControlador {
         $dompdf->render();
     
         // Enviar el archivo PDF al navegador para descargar
-        $dompdf->stream("reporte_cliente.pdf", ["Attachment" => true]);
+        $dompdf->stream("reporte " . $_SESSION['fechainicio'] . "-" . $_SESSION['fechafin'] . " $_SESSION[Tipo]". " $_SESSION[Nombre]" .".pdf", ["Attachment" => true]);
     
         // Limpiar la sesión
         unset($_SESSION['resultados_filtrados']);

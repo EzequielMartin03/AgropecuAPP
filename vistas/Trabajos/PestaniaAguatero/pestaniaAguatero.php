@@ -5,7 +5,10 @@
                 <label for="AguateroSelect" class="form-label">Selecciona Aguatero</label>
                 <select id="AguateroSelect" class="form-select" name="AguateroSelect">
                     <?php foreach ($ListaAguateros as $aguatero): ?>
-                        <option value="<?= $aguatero->IdAguatero ?>"><?= $aguatero->NombreAguatero ?></option>
+                        <option value="<?= $aguatero->IdAguatero ?>" 
+                        <?php echo (isset($_SESSION['IdAguateroTR']) && $_SESSION['IdAguateroTR'] == $aguatero->IdAguatero) ? 'selected' : ''; ?>>
+                        <?= $aguatero->NombreAguatero ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
             </div>

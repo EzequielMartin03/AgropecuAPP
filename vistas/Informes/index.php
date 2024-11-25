@@ -111,7 +111,7 @@
               <td class="w-full align-top">
                 <div>
                   <?php
-                  $path = 'assets/img/logo_pulveriagro.png';
+                  $path = 'assets/img/logo_agropecuapp.png';
                   $type = pathinfo($path, PATHINFO_EXTENSION);
                   $data = file_get_contents($path);
                   $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);

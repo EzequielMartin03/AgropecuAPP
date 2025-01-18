@@ -1,5 +1,5 @@
 <div>
-    <form class="mt-3" method="POST" action="?c=Trabajo&a=FiltrarTrabajoAguatero&tab=aguatero">
+    <form class="mt-3" id="formFiltrarAguatero" method="POST" action="?c=Trabajo&a=FiltrarTrabajoAguatero&tab=aguatero">
         <div class="row mb-3">
             <div class="col-md-4">
                 <label for="AguateroSelect" class="form-label">Selecciona Aguatero</label>
@@ -36,7 +36,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Aguatero</th>
+    
                 <th scope="col">Descripción</th>
                 <th scope="col">Hectáreas</th>
                 <th scope="col">Fecha de Trabajo</th>
@@ -47,7 +47,7 @@
         <?php if (isset($ResultadoAguateros) && !empty($ResultadoAguateros)): ?>
                 <?php foreach ($ResultadoAguateros as $Aguatero): ?>
                     <tr>
-                        <td><?= $Aguatero->NombreAguatero ?></td>
+                        
                         <td><?= $Aguatero->Descripcion ?></td>
                         <td><?= $Aguatero->CantidadHectareasTrabajadas ?></td>
                         <td><?= $Aguatero->FechaTrabajo ?></td>

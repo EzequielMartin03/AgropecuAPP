@@ -3,7 +3,7 @@
 
 
 
-    <form class="mt-3" method="POST" action="?c=Trabajo&a=filtrarPorCliente&tab=Cliente">
+    <form class="mt-3" id="formFiltrarPorCliente" method="POST" action="?c=Trabajo&a=filtrarPorCliente&tab=Cliente">
         <div class="row mb-3">
             <div class="col-md-4">
                 <input type="hidden" name="tab" value="Cliente">

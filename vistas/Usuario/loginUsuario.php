@@ -25,7 +25,7 @@
             
         <form action="?c=Usuario&a=login" method="POST">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Correo Electrónico" name="usuario" required>
+                <input type="text" class="form-control" placeholder="Usuario" name="usuario" required>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Contraseña" name="contrasena" required>

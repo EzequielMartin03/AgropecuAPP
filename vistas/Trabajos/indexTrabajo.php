@@ -47,6 +47,11 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="fumigador-tab" data-bs-toggle="tab" data-bs-target="#fumigador" type="button" role="tab" aria-controls="fumigador" aria-selected="false">Filtrar por Fumigador</button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="ultimosTr-tab" data-bs-toggle="tab" data-bs-target="#ultimosTr" type="button" role="tab" aria-controls="ultimosTr" aria-selected="false">Ultimos trabajos Realizados</button>
+        </li>
+       
+
         
     </ul>
     
@@ -67,6 +72,11 @@
     <?php include 'vistas/Trabajos/PestaniaFumigador/pestaniaFumigador.php';?>
     
     </div>
+
+    <div class="tab-pane fade" id="ultimosTr" role="tabpanel" aria-labelledby="ultimosTr-tab">
+    <?php include 'vistas/Trabajos/UltimosTR/ultimosTrabajos.php';?>
+    
+    </div>
 </div>
 
     <!-- Botones flotantes -->
@@ -76,7 +86,7 @@
     <i class="bi-plus-circle"></i> Nuevo Trabajo
 </a>
 
-<form action="?c=Trabajo&a=generarPDF" method="POST">
+<form action="?c=Trabajo&a=generarPDF" method="POST" id="detallePDFForm">
     <!-- Boton para PDF -->
    <button type="submit" class="btn btn-primary btn-add-work2">
         <i class="bi-file-text"></i> Detalle PDF
@@ -113,6 +123,28 @@
 
 <script src="../assets/js/ValidarModificarTR.js"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Selecciona el botón Detalle PDF
+        const detallePDFForm = document.getElementById('detallePDFForm');
+
+        // Agrega un listener para el cambio de pestañas
+        document.getElementById('filterTabs').addEventListener('click', function (e) {
+            if (e.target && e.target.matches('button[data-bs-toggle="tab"]')) {
+                const targetTab = e.target.getAttribute('data-bs-target');
+
+                // Si la pestaña activa es 'ultimosTr', ocultar el botón
+                if (targetTab === '#ultimosTr') {
+                    detallePDFForm.style.display = 'none';
+                } else {
+                    // Mostrar el botón en otras pestañas
+                    detallePDFForm.style.display = 'block';
+                }
+            }
+        });
+    });
+</script>
+
 <?php
 $tab = isset($_GET['tab']) ? $_GET['tab'] : null;
 
@@ -133,55 +165,6 @@ if (($tab == 'Cliente' ) || ($tab == 'aguatero' ) || ($tab == 'fumigador')): ?>
 <?php endif; ?>
 
 
-<script>
-    document.getElementById('MostrarTrabajos').addEventListener('change', function() {
-        const isChecked = this.checked;
-        const tbody = document.getElementById('tbody');
-
-        if (!isChecked) {
-            // Limpia la tabla si se desmarca el checkbox
-            tbody.innerHTML = '';
-            return;
-        }
-
-        // Enviar solicitud AJAX al controlador cuando el checkbox está marcado
-        fetch('?c=Trabajo&a=ListarTrabajos', {
-            method: 'POST',
-            body: JSON.stringify({ checkbox: isChecked }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            tbody.innerHTML = ''; // Limpia la tabla antes de agregar nuevos resultados
-
-            // Itera sobre el objeto de datos y crea filas en la tabla
-            data.forEach(trabajo => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${trabajo.Nombre}</td>
-                    <td>${trabajo.Descripcion}</td>
-                    <td>${trabajo.CantidadHectareasTrabajadas}</td>
-                    <td>${trabajo.FechaTrabajo}</td>
-                    <td>${trabajo.FechaPago}</td>
-                    <td>${trabajo.NombreFumigador}</td>
-                    <td>${trabajo.NombreAguatero}</td>
-                    <td>${trabajo.NroFacturaAfip}</td>
-                    <td>
-                        <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#ModificarTrabajo${trabajo.IdTrabajo}">Modificar</button>
-                        <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#EliminarTrabajo${trabajo.IdTrabajo}">
-                            <i class="bi-trash"></i> Eliminar
-                        </button>
-                        ${trabajo.modal}
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        })
-        .catch(error => console.error('Error al obtener los resultados:', error));
-    });
-</script>
-
+<script src="../assets/js/validarFechas.js"></script>
 </body>
 </html>

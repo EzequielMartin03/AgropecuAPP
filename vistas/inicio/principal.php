@@ -1,3 +1,10 @@
+<?php
+
+$date = new DateTime();
+$formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+$formatter->setPattern('MMMM yyyy'); 
+$formattedDate = $formatter->format($date);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,21 +97,22 @@
             <div class="icon">🌾</div>
             <h3>Total de Hectáreas Trabajadas</h3>
             <p><?php echo $totalHectareas; ?></p>
-            <div class="month">Mes: <?php echo date('F Y'); ?></div>
+            <div class="month">Mes: <?php echo ucfirst($formattedDate); ?></div>
         </div>
         <div class="metric">
             <div class="icon">📝</div>
             <h3>Cantidad de Trabajos Realizados</h3>
             <p><?php echo $totalTrabajos; ?></p>
-            <div class="month">Mes: <?php echo date('F Y'); ?></div>
+            <div class="month">Mes: <?php echo ucfirst($formattedDate); ?></div>
         </div>
         <div class="metric">
             <div class="icon">👤</div>
             <h3>Cliente Más Activo</h3>
             <p><?php echo $ClienteMasActivo; ?></p>
-            <div class="month">Mes: <?php echo date('F Y'); ?></div>
+            <div class="month">Mes: <?php echo ucfirst($formattedDate); ?></div>
         </div>
     </div>
+
 
     <div class="chart-container">
         <canvas id="myChart"></canvas>

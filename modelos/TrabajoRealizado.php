@@ -356,7 +356,13 @@ class TrabajoRealizado {
         $stmt = $this->pdo->prepare($consulta);
         $stmt->execute([$mes, $anio]); 
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $resultado['total_Trabajos'] ? $resultado['total_Trabajos'] : 0;
+        if (!$resultado) {
+            return 0; // Retorna 0 si no hay resultados.
+        }else {
+            return $resultado['total_Trabajos'];
+            
+        }
+        
     }
 
     public function ClienteMasActivo() {
@@ -376,7 +382,12 @@ class TrabajoRealizado {
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
         
 
-        return $resultado['cliente'] ? $resultado['cliente'] : 'Sin datos'; 
+        if (!$resultado) {
+            return 0; // Retorna 0 si no hay resultados.
+        }else {
+            return $resultado['cliente'];
+            
+        }
     }
 
     public function HectareasPorMes() {
@@ -400,7 +411,7 @@ class TrabajoRealizado {
             $hectareasMensuales[(int)$row['mes']] = (float)$row['total_hectareas'];
         }
 
-        return $hectareasMensuales; // Devuelve el arreglo con hectáreas trabajadas por mes
+        return $hectareasMensuales;
     }
 
     public function ListarTrabajos() {
@@ -416,7 +427,7 @@ class TrabajoRealizado {
             LEFT JOIN fumigadores ON fumigadortrabajo.IdFumigador = fumigadores.IdFumigador
             LEFT JOIN aguaterotrabajo ON trabajorealizado.IdTrabajo = aguaterotrabajo.IdTrabajo
             LEFT JOIN aguateros ON aguaterotrabajo.IdAguatero = aguateros.IdAguatero
-            WHERE trabajorealizado.EstadoTrabajo = 'Activo'
+            WHERE trabajorealizado.EstadoTrabajo = 'Activo' and clientes.EstadoCliente = 'Activo'
             GROUP BY trabajorealizado.IdTrabajo, trabajorealizado.Descripcion, clientes.Nombre
 
             ");
@@ -426,6 +437,10 @@ class TrabajoRealizado {
             die($e->getMessage());
         }
     }
+
+
+
+    
 
    
 

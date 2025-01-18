@@ -33,6 +33,7 @@ class TrabajoControlador {
         $clientes = $this->modeloCliente->ListarCliente();
         $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
         $ListaAguateros = $this->modeloAguatero->ListarAguatero();
+        $resultadosTr = $this->modelo->ListarTrabajos();
 
         if ($_GET['c'] === 'Trabajo') {
            
@@ -77,31 +78,30 @@ class TrabajoControlador {
     }
     
 
-   public function Modificar() {                           
-  
-    $Trabajo = new TrabajoRealizado();
-    $Trabajo->setIdTrabajo($_POST['IdTrabajo']);
+    public function Modificar() {
+        $Trabajo = new TrabajoRealizado();
+        $Trabajo->setIdTrabajo($_POST['IdTrabajo']);
+        $aguateros = $_POST['aguatero'];
+        $fumigadores = $_POST['fumigador'];
     
-    $aguateros = $_POST['aguatero'];
-    $fumigadores = $_POST['fumigador'];
-
-
-    $Trabajo->setIdCliente($_POST['ClienteSelect']);
-    $Trabajo->setCantidadHectareasTrabajadas($_POST['CantidadHectareas']);
-    $Trabajo->setFechaTrabajo($_POST['FechaTrabajo']);
-    $Trabajo->setDescripcion($_POST['Descripcion']);
-    $Trabajo->setNroFacturaAfip($_POST['NroFactura']);
-    $Trabajo->setFechaPago($_POST['FechaPago']);
-
-
-    $this->modelo->ActualizarTrabajo($Trabajo);    
-
-
-    $this->modelo->ActualizarAguaterosTrabajo($Trabajo->getIdTrabajo(), $aguateros);
-    $this->modelo->ActualizarFumigadoresTrabajo($Trabajo->getIdTrabajo(), $fumigadores);
-
-    header("location:?c=Trabajo");
-}
+        $Trabajo->setIdCliente($_POST['ClienteSelect']);
+        $Trabajo->setCantidadHectareasTrabajadas($_POST['CantidadHectareas']);
+        $Trabajo->setFechaTrabajo($_POST['FechaTrabajo']);
+        $Trabajo->setDescripcion($_POST['Descripcion']);
+        $Trabajo->setNroFacturaAfip($_POST['NroFactura']);
+        $Trabajo->setFechaPago($_POST['FechaPago']);
+    
+        // Actualizamos el trabajo
+        $this->modelo->ActualizarTrabajo($Trabajo);
+        $this->modelo->ActualizarAguaterosTrabajo($Trabajo->getIdTrabajo(), $aguateros);
+        $this->modelo->ActualizarFumigadoresTrabajo($Trabajo->getIdTrabajo(), $fumigadores);
+    
+        // Redirigir a filtrarPorCliente para que se ejecute la consulta con los filtros actuales
+      
+        header("Location: ?c=Trabajo&a=filtrarPorCliente");
+        exit();
+    }
+    
 
 
     public function EliminarTrabajo() {
@@ -114,65 +114,80 @@ class TrabajoControlador {
     }
 
     public function filtrarPorCliente() {
-        $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
-        $ListaAguateros = $this->modeloAguatero->ListarAguatero();
-        $clientes = $this->modeloCliente->ListarCliente();
+        // Verificar si los valores de los filtros llegaron por POST, de lo contrario usar los valores de la sesión
+        $IdCliente = isset($_POST['ClienteSelect']) ? $_POST['ClienteSelect'] : $_SESSION['IdclienteTR'] ?? null;
+        $fechaInicio = isset($_POST['fechaInicio']) ? $_POST['fechaInicio'] : $_SESSION['fechaInicioCliente'] ?? null;
+        $fechaFin = isset($_POST['fechaFin']) ? $_POST['fechaFin'] : $_SESSION['fechaFinCliente'] ?? null;
     
-        $IdCliente = $_POST['ClienteSelect'];
-        $fechaInicio = $_POST['fechaInicio'];
-        $fechaFin = $_POST['fechaFin'];
+        // Guardar los filtros en la sesión para que se mantengan
+        if (isset($_POST['ClienteSelect'])) {
+            $_SESSION['IdclienteTR'] = $IdCliente;
+            $_SESSION['fechaInicioCliente'] = $fechaInicio;
+            $_SESSION['fechaFinCliente'] = $fechaFin;
+        }
     
-        $_SESSION['IdclienteTR'] = $IdCliente;
-        $_SESSION['fechaInicioCliente'] = $fechaInicio;
-        $_SESSION['fechaFinCliente'] = $fechaFin;
+        // Verificar que los filtros sean válidos (no vacíos)
+        if (!$IdCliente || !$fechaInicio || !$fechaFin) {
+            $_SESSION['mensajeAlerta'] = "Faltan filtros. Por favor, seleccione un cliente y un rango de fechas.";
+            header("Location: ?c=Trabajo");
+            exit();
+        }
     
-        // Filtra los trabajos según el cliente y las fechas
+        // Ejecutar la consulta con los filtros recibidos o los de la sesión
         $resultados = $this->modelo->FiltrarTrabajosCliente($IdCliente, $fechaInicio, $fechaFin);
     
-        // Si no hay resultados, guarda un mensaje en la sesión y redirige o carga la vista
+        // Verificar si hay resultados
         if (empty($resultados)) {
             $_SESSION['mensajeAlerta'] = "No se encontraron datos para el filtro seleccionado.";
-        } else {
-            // Recorre cada registro en $resultados y aplica el formato a las fechas
-            foreach ($resultados as &$resultado) {
-                $resultado->fechaTrabajoOriginal = $resultado->FechaTrabajo;
-                $resultado->fechaPagoOriginal = $resultado->FechaPago;
+            header("Location: ?c=Trabajo");
+            exit();
+        }
     
-                // Verifica si la fecha de trabajo no es nula antes de formatear
-                if ($resultado->FechaTrabajo) {
-                    $fechaI = new DateTime($resultado->FechaTrabajo);
-                    $resultado->FechaTrabajo = $fechaI->format('d-m-Y');
-                } else {
-                    $resultado->FechaTrabajo = null; // Si es null, asigna null
-                }
+        // Recorremos los resultados para formatear las fechas
+        foreach ($resultados as &$resultado) {
+            $resultado->fechaTrabajoOriginal = $resultado->FechaTrabajo;
+            $resultado->fechaPagoOriginal = $resultado->FechaPago;
     
-                // Verifica si la fecha de pago no es nula antes de formatear
-                if ($resultado->FechaPago) {
-                    $fechaF = new DateTime($resultado->FechaPago);
-                    $resultado->FechaPago = $fechaF->format('d-m-Y');
-                } else {
-                    $resultado->FechaPago = null; // Si es null, asigna null
-                }
+            if ($resultado->FechaTrabajo) {
+                $fechaI = new DateTime($resultado->FechaTrabajo);
+                $resultado->FechaTrabajo = $fechaI->format('d-m-Y');
+            } else {
+                $resultado->FechaTrabajo = null;
             }
     
-            // Guardar los resultados y otros datos en la sesión si hay resultados
-            $_SESSION['resultados_filtrados'] = $resultados;
-            $_SESSION['Nombre'] = $resultados[0]->Nombre;
-            $_SESSION['Tipo'] = 'Cliente';
-            $_SESSION['fechainicio'] = $fechaInicio;
-            $_SESSION['fechafin'] = $fechaFin;
-    
-            // Obtener aguateros y fumigadores para cada trabajo
-            foreach ($resultados as $resultado) {
-                $resultado->aguaterosSeleccionados = $this->modelo->ObtenerAguaterosPorTrabajo($resultado->IdTrabajo);
-                $resultado->fumigadoresSeleccionados = $this->modelo->ObtenerFumigadoresPorTrabajo($resultado->IdTrabajo);
+            if ($resultado->FechaPago) {
+                $fechaF = new DateTime($resultado->FechaPago);
+                $resultado->FechaPago = $fechaF->format('d-m-Y');
+            } else {
+                $resultado->FechaPago = null;
             }
         }
     
-        // Cargar la vista
+        // Guardar los resultados y otros datos en la sesión si hay resultados
+        $_SESSION['resultados_filtrados'] = $resultados;
+        $_SESSION['Nombre'] = $resultados[0]->Nombre;
+        $_SESSION['Tipo'] = 'Cliente';
+        $_SESSION['fechainicio'] = $fechaInicio;
+        $_SESSION['fechafin'] = $fechaFin;
+    
+        // Obtener aguateros y fumigadores para cada trabajo
+        foreach ($resultados as $resultado) {
+            $resultado->aguaterosSeleccionados = $this->modelo->ObtenerAguaterosPorTrabajo($resultado->IdTrabajo);
+            $resultado->fumigadoresSeleccionados = $this->modelo->ObtenerFumigadoresPorTrabajo($resultado->IdTrabajo);
+        }
+    
+        // Cargar la vista con los resultados filtrados
+        $clientes = $this->modeloCliente->ListarCliente();
+        $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
+        $ListaAguateros = $this->modeloAguatero->ListarAguatero();
+        $resultadosTr = $this->modelo->ListarTrabajos();
+
+      
+    
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/Trabajos/IndexTrabajo.php";
     }
+    
     
     
     
@@ -207,6 +222,7 @@ class TrabajoControlador {
         $clientes = $this->modeloCliente->ListarCliente();
         $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
         $ListaAguateros = $this->modeloAguatero->ListarAguatero();
+        $resultadosTr = $this->modelo->ListarTrabajos();
     
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/Trabajos/IndexTrabajo.php";
@@ -244,6 +260,7 @@ class TrabajoControlador {
         $clientes = $this->modeloCliente->ListarCliente();
         $ListaFumigadores = $this->modeloFumigador->ListarFumigador();
         $ListaAguateros = $this->modeloAguatero->ListarAguatero();
+        $resultadosTr = $this->modelo->ListarTrabajos();
     
         require_once "vistas/inicio/SideBar.php";
         require_once "vistas/Trabajos/IndexTrabajo.php";
@@ -316,6 +333,9 @@ class TrabajoControlador {
     
     
    }
+
+  
+
 
 
    

@@ -13,6 +13,7 @@
             </tr>
         </thead>
         <tbody id ="tbody">
+            
         <?php if (isset($resultados) && !empty($resultados)): ?>
                 <?php foreach ($resultados as $Trabajo): ?>
                     <tr>

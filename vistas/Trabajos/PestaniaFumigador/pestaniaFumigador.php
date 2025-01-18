@@ -1,5 +1,5 @@
 <div>
-    <form class="mt-3" method="POST" action="?c=Trabajo&a=FiltrarTrabajoFumigador&tab=fumigador">
+    <form class="mt-3" id="formFiltrarFumigador" method="POST" action="?c=Trabajo&a=FiltrarTrabajoFumigador&tab=fumigador">
         <div class="row mb-3">
             <div class="col-md-4">
                 <label for="FumigadorSelect" class="form-label">Selecciona Fumigador</label>
@@ -37,7 +37,7 @@
     <table id="TrFumigador" class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Fumigador</th>
+           
                 <th scope="col">Descripción</th>
                 <th scope="col">Hectáreas</th>
                 <th scope="col">Fecha de Trabajo</th>
@@ -47,7 +47,7 @@
         <?php if (isset($ResultadosFumigadores) && !empty($ResultadosFumigadores)): ?>
             <?php foreach ($ResultadosFumigadores as $resultado): ?>
                 <tr>
-                    <td><?= htmlspecialchars($resultado->NombreFumigador) ?></td>
+                   
                     <td><?= htmlspecialchars($resultado->Descripcion) ?></td>
                     <td><?= htmlspecialchars($resultado->CantidadHectareasTrabajadas) ?></td>
                     <td><?= htmlspecialchars($resultado->FechaTrabajo) ?></td>
